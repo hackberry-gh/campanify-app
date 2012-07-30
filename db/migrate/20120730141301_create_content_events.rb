@@ -5,8 +5,8 @@ class CreateContentEvents < ActiveRecord::Migration
       t.string  :name
       t.string  :slug      
       t.text    :description
-      t.time    :start_time
-      t.time    :end_time
+      t.datetime    :start_time
+      t.datetime    :end_time
       t.string  :location
       t.text    :venue
       t.string  :privacy

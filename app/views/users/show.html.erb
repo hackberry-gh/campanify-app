@@ -1,0 +1,14 @@
+<% if me? %>
+<nav>
+	<%= link_to "profile", edit_user_registration_path %>
+</nav>
+<% else %>
+<script>
+$.post("<%= visits_user_path(user) %>", {_method:"PUT",action:"visits"}, "json");
+</script>
+<% end %>
+<article class="user">
+	<%= user.first_name %>
+	<br/>
+	<%= user.total_visits %>
+</article>	

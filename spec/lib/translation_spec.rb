@@ -1,12 +1,10 @@
 require 'spec_helper'
 
-Translation = I18n::Backend::ActiveRecord::Translation
-
 describe Translation do
 
   it "fallbacks into simple backend if translation record not available" do
     I18n.locale = :en
-    I18n.t('hello').should eq("Hello world")
+    I18n.t('hello').should eq("Hello")
   end
 
   it "supports dynamic creation" do

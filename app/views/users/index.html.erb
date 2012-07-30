@@ -1,0 +1,8 @@
+<section class="users">
+	<ul>
+		<% users.each do |user| %>
+		<li><%= link_to user.display_name, user %></li>
+		<% end %>
+	</ul>
+</section>
+<%= paginate users %>

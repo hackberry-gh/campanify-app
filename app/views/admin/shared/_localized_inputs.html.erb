@@ -1,0 +1,27 @@
+<div class="translations">
+	<% I18n.available_locales.each do |t| %>
+	<a href="#<%= t %>"><%= t %></a>
+	<% end %>
+</div>	
+
+<% I18n.available_locales.each do |t| %>
+
+	<%= f.inputs "Content", :id => t, :class => "inputs translation" do %>	
+	
+		<%= f.semantic_fields_for record.translation_for(t) do |tf| %>
+		
+		<% fields.each do |field| %>
+		
+			<%=	tf.input t, {
+				:label => field[:name].to_s.titleize, 
+				:input_html => { :value => record.translation_for(t).send(field[:name]) }
+			}.merge!(field[:options]) %>
+
+		<% end %>
+					
+		<% end %>
+	
+	<% end %>
+		
+	<% end %>	
+<% end %>

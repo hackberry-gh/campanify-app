@@ -1,0 +1,16 @@
+<%= semantic_form_for [:admin, @content_medium] do |f| %>
+
+<%= render "admin/shared/localized_inputs", f: f, record: @content_media, 
+fields: [	{name: :title, options: {} },
+					{name: :description, options: {} }
+] 
+%>
+
+	<%= f.inputs do %>
+		<%= f.input :link %>
+		<%= f.input :file, :as => :file %>      
+	<% end %>
+	
+	<%= f.buttons %>
+
+<% end %>

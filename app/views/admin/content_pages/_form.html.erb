@@ -1,0 +1,16 @@
+<%= semantic_form_for [:admin, @content_page] do |f| %>
+
+<%= render "admin/shared/localized_inputs", f: f, record: @content_page, 
+fields: [	{name: :title, options: {} },
+					{name: :body, options: {as: "code", mode: "html"} }
+] 
+%>
+
+	<%= f.inputs do %>
+		<%= f.input :published_at, :as => :datetime %>      
+		<%= f.input :widgets, :as => :check_boxes %>
+	<% end %>
+	
+	<%= f.buttons %>
+
+<% end %>

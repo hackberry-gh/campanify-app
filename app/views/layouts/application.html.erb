@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Campanify</title>
+	<title><%= t('content.title') %></title>
+	<meta name="description" content="<%= t('content.description') %>">
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="<%= body_class %> <%= "country-#{current_country} branch-#{current_branch["country_code"] if current_branch}" %>">
 
-	<p class="notice"><%= notice %></p>
-	<p class="alert"><%= alert %></p>
-	
+<%= render "shared/notifications" %>
+
+<%= render "shared/header" %>
+
 <%= yield %>
+
+<%= render "shared/footer" %>
 
 </body>
 </html>

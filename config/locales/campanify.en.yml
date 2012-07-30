@@ -1,0 +1,8 @@
+# Campanify defaults
+
+en:
+  hello: "Hello"
+  # Do not touch this if you your language latin based
+  i18n:
+    transliterate:
+      rule:

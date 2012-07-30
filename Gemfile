@@ -11,6 +11,19 @@ gem 'i18n-active_record',
 gem "yui-compressor", 							"~> 0.9.6"
 gem "aws-s3", 											"~> 0.6.3"
 gem "devise", 											"~> 2.1.2"
+gem 'globalize3', 
+			:git => "git://github.com/svenfuchs/globalize3.git"
+gem 'rmagick',											'~> 2.13.1'			
+gem 'carrierwave'
+gem "fog", 													"~> 1.3.1"
+gem 'koala',												'~> 1.4.1'
+gem "httparty", 										"~> 0.8.3"
+gem "delayed_job", 									"~> 3.0.3"  
+gem "delayed_job_active_record"
+gem 'geoip'
+gem 'cancan'
+gem 'heroku',												'2.26.3'
+gem 'activeadmin',									'~> 0.4.4'
 
 group :assets do
   gem 'sass-rails',   							'~> 3.2.3'

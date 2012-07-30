@@ -3,7 +3,7 @@ class CreateContentWidgets < ActiveRecord::Migration
     create_table :content_widgets do |t|
       t.string  :title
       t.text    :body
-      t.integer :position
+      t.integer :position, :default => 1
 
       t.timestamps
     end

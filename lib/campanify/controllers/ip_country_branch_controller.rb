@@ -9,9 +9,9 @@ module Campanify
         threaded :ip
         threaded :country        
         threaded :branch
-        helper_method :current_ip
-        helper_method :current_country
-        helper_method :current_branch
+        helpers = %w(current_ip current_country current_branch)
+        helper_method *helpers
+        hide_action *helpers       
         prepend_before_filter :set_current_country_and_branch, :set_current_remote_ip
       end
     

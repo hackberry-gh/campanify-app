@@ -1,0 +1,42 @@
+<%= render "users/shared/bindings" %>
+
+<article class="user">
+	
+<h2>Sign up</h2>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), 
+	:remote => true,
+	:html => {
+	:"data-prefix" => "user",
+	:"data-type" => "json",
+	:"data-post-action" => "post_signup"
+	}) do |f| %>
+
+  <%= devise_error_messages! %>
+
+	<div id="errors"></div>
+
+	<% Settings.user(current_branch)["fields"].map(&:to_sym).each do |field| %>
+  <div><%= f.label field %><br />
+  <%= f.text_field field %></div>
+	<% end %>	
+
+	<% if Settings.user(current_branch)["password_required"] == "always" %>
+  <div><%= f.label :password %><br />
+  <%= f.password_field :password %></div>
+
+  <div><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></div>
+	<% end %>
+	
+	<% Settings.user(current_branch)["options"].each do |field, checked| %>
+  <div><%= f.label field.to_sym %><br />
+  <%= f.check_box field.to_sym, :checked => checked %></div>
+	<% end %>	
+
+  <div><%= f.submit "Sign up" %></div>
+
+<% end %>
+
+<%= render "users/shared/links" %>
+</article>

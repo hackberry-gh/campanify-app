@@ -4,7 +4,7 @@ class CreateContentPages < ActiveRecord::Migration
       t.string :title
       t.string :slug      
       t.text :body
-      t.time :published_at
+      t.datetime :published_at
 
       t.timestamps
     end

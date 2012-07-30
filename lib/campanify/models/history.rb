@@ -19,44 +19,43 @@ module Campanify
               update_historical_field("#{field_name}", "set", value, owner)
             end
 
-            def total_#{field_name}(uniq = true, owner = self)
+            def total_#{field_name}(uniq = true)
               unless self['#{field_name}'].empty?
-                tracks = self['#{field_name}'][owner.id]
+                tracks = self['#{field_name}']
                 values = tracks.values.map{|h| h.values}.flatten.map{|h| h.values}.flatten.map{|h| h.values}.flatten if tracks
                 tracks_count values, uniq if tracks
               else
                 0
               end
             end
-            
-            def yearly_#{field_name}(uniq = true, owner = self, year = Time.now.year)
+            def yearly_#{field_name}(uniq = true, year = Time.now.year)
               unless self['#{field_name}'].empty?
-                tracks = self['#{field_name}'][owner.id][year]
+                tracks = self['#{field_name}'][year]
                 tracks_count tracks.values.first.values.first.values, uniq if tracks
               else
                 0
               end
             end
-            def monthly_#{field_name}(uniq = true, owner = self, month = Time.now.month, year = Time.now.year)
+            def monthly_#{field_name}(uniq = true, month = Time.now.month, year = Time.now.year)
               unless self['#{field_name}'].empty?
-                tracks = self['#{field_name}'][owner.id][year][month]
+                tracks = self['#{field_name}'][year][month]
                 tracks_count  tracks.values.first.values, uniq if tracks
               else
                 0
               end
             end
-            def daily_#{field_name}(uniq = true, owner = self, day = Time.now.day, month = Time.now.month, year = Time.now.year)
+            def daily_#{field_name}(uniq = true, day = Time.now.day, month = Time.now.month, year = Time.now.year)
               unless self['#{field_name}'].empty?
-                tracks = self['#{field_name}'][owner.id][year][month][day]
+                tracks = self['#{field_name}'][year][month][day]
                 tracks_count  tracks.values, uniq if tracks
               else
                 0
               end                
             end
-            def hourly_#{field_name}(uniq = true, owner = self, hour = Time.now.hour, day = Time.now.day, month = Time.now.month, year = Time.now.year)
+            def hourly_#{field_name}(uniq = true, hour = Time.now.hour, day = Time.now.day, month = Time.now.month, year = Time.now.year)
               unless self['#{field_name}'].empty?              
-                tracks = self['#{field_name}'][owner.id][year][month][day][hour]
-                tracks_count  tracks.values, uniq if tracks
+                tracks = self['#{field_name}'][year][month][day][hour]
+                tracks_count  tracks, uniq if tracks
               else
                 0
               end              
@@ -81,7 +80,7 @@ module Campanify
           year, month, day, hour = time_stamp.split(".").map(&:to_i)
           
           begin
-            current_value = self.send(field_name.to_sym)[owner.id][year][month][day][hour][ip_stamp] || 0
+            current_value = self.send(field_name.to_sym)[year][month][day][hour][uniq_stamp(owner)] || 0
           rescue NoMethodError => e
             current_value = 0
           end
@@ -94,12 +93,11 @@ module Campanify
           when "set"
             value = value            
           end
-          self.send(field_name.to_sym)[owner.id] = {} unless self.send(field_name.to_sym)[owner.id]
-          self.send(field_name.to_sym)[owner.id][year] = {} unless self.send(field_name.to_sym)[owner.id][year]          
-          self.send(field_name.to_sym)[owner.id][year][month] = {} unless self.send(field_name.to_sym)[owner.id][year][month]                    
-          self.send(field_name.to_sym)[owner.id][year][month][day] = {} unless self.send(field_name.to_sym)[owner.id][year][month][day]
-          self.send(field_name.to_sym)[owner.id][year][month][day][hour] = {} unless self.send(field_name.to_sym)[owner.id][year][month][day][hour]
-          self.send(field_name.to_sym)[owner.id][year][month][day][hour][ip_stamp] = value 
+          self.send(field_name.to_sym)[year] = {} unless self.send(field_name.to_sym)[year]          
+          self.send(field_name.to_sym)[year][month] = {} unless self.send(field_name.to_sym)[year][month]                    
+          self.send(field_name.to_sym)[year][month][day] = {} unless self.send(field_name.to_sym)[year][month][day]
+          self.send(field_name.to_sym)[year][month][day][hour] = {} unless self.send(field_name.to_sym)[year][month][day][hour]
+          self.send(field_name.to_sym)[year][month][day][hour][uniq_stamp(owner)] = value 
           self.save!(validate: false)
         end
       end          
@@ -114,8 +112,8 @@ module Campanify
         # Time.now.to_key
       end
 
-      def ip_stamp
-        current_ip.parameterize.underscore
+      def uniq_stamp(owner)
+        "#{owner.id}_#{current_ip}"
       end
 
       def tracks_count(tracks, uniq = true)

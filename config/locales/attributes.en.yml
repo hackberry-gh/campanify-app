@@ -1,0 +1,26 @@
+en:
+  user:
+    attributes:
+      first_name: First Name
+      last_name: Last Name
+      full_name: Full Name
+      display_name: Display Name
+      birth_year: Birth Year
+      birth_date: Birth Date
+      country: Country
+      region: Region
+      city: City
+      address: Address
+      post_code: Post code
+      phone: Phone
+      mobile_phone: Mobile Phone
+      branch: Branch
+      language: Language
+      send_updates: Send Updates
+      legal_aggrement: Legal Aggrement
+      visits: Visits
+      recruits: Recruits
+  post:
+    attributes:
+      title: Title
+      body: Body
