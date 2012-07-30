@@ -4,6 +4,10 @@ gem 'rails', 												'3.2.7'
 gem 'pg'
 gem 'thin'
 gem 'activerecord-postgres-hstore', '~> 0.4.0'
+gem 'i18n-active_record',
+      :git => 'git://github.com/svenfuchs/i18n-active_record.git',
+      :branch => 'rails-3.2',
+      :require => 'i18n/active_record'
 
 group :assets do
   gem 'sass-rails',   							'~> 3.2.3'

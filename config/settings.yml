@@ -1,0 +1,225 @@
+development: &development
+  # Application Name
+  # ---------------------------------------------  
+  application: Campanify
+  
+  # Mailer
+  # ---------------------------------------------
+  # application wide mailer settings    
+  mailer:
+    # mails will appear on from field on sent mail
+    sender: no-reply@campanify.it  
+    # mails will send from this domain
+    host: 'localhost:3000'
+  
+  # User
+  # ---------------------------------------------
+  # Mostly about petition form and other user centered settings  
+  user: &user
+    # Abilities
+    # -------------------------------------------
+    abilities:
+      can_post: true
+      can_comment: true
+      
+    # Fields
+    # -------------------------------------------
+    fields:
+      - email
+      - first_name
+      - last_name
+      # - full_name
+      # - display_name
+      # - birth_year
+      # - birth_date
+      # - country
+      # - region
+      # - city
+      # - address
+      # - post_code
+      # - phone
+      # - mobile_phone 
+      # - newsletter   
+
+    
+    # Options
+    # -------------------------------------------    
+    # uncomment below line to skip checkboxes
+    # options: []    
+    options: 
+      send_updates: true      
+      # legal_aggrement: true
+    
+    # Validations
+    # -------------------------------------------
+    # to make a field mandatory list it below
+    # email is default and can't be removed
+    validates:
+      - first_name
+      - last_name
+    
+    # Password
+    # -------------------------------------------
+    # never(default): never ask for password
+    # always: always ask for password
+    # after_signup: don't ask on signup but ask on signin, 
+    # if you gonna choose after_signup, you should auto generate
+    # reset password token. also sending instructions to user for resetting their
+    # auto generated password is meaningful to not skip.
+    # so to doing that, add send_reset_password_instructions or if you don't want to
+    # send instructions but generate password generate_reset_password_token 
+    # to post_signup_hooks
+    # auto default devise settings
+    password_required: never
+    
+    # Redirection Urls
+    # -------------------------------------------
+    redirects:
+      # can be any url or 'user' to redirect user profile page
+      post_signup: /
+      post_signin_confirmed: user
+      post_signin_unconfirmed: /
+        
+      
+    # Hooks
+    # -------------------------------------------
+    hooks:
+      # hooks for after creation
+      # uncomment below line to do nothing
+      # after_create: []
+      after_create:
+        # sends reset password instructions to user
+        # you should enable this if you choose after_signup for password_required
+        # user: send_reset_password_instructions
+        
+        # or skip sending password instructions and generate reset token, 
+        # so you can avoid sending two emails after signup if you'r planning
+        # to send welcome email, but don't forget to some instructions about
+        # resetting password!
+        # user: generate_reset_password_token
+        
+        # sends post_signup email to user
+        # don't forget change subject and body from translations
+        # user_mailer.post_signup_email.subject
+        # user_mailer.post_signup_email.subject
+        mail: post_signup_email
+        
+        # posts user fields to given url
+        http_post: http://localhost:5000/users/hooks/http_post
+        
+        # tweets user display name | first name with given message 
+        # to given account's timeline
+        # tweet: 
+        #     username:
+        #     consumer_key:
+        #     consumer_secret:
+        #     oauth_token:
+        #     oauth_token_secret:
+        #     status: t('hooks.after_crate.tweet.status')
+        
+        # posts user display name | first name with given message 
+        # to given target on facebook
+        # targets:  user, user must be signuped via facebook connect
+        #           PAGE_ID, page of given id must authorize the given app
+        # facebook:
+        #     target:
+        #     app_id:
+        #     app_secret:
+        #     message: t('hooks.after_crate.facebook.message')          
+      
+  # Completed Locales
+  # ---------------------------------------------
+  # enter language code to make available on site
+  i18n:
+    available_locales:
+      - en
+      - de
+      - tr
+    completed_locales:
+      - en  
+    
+  # Branches
+  # ---------------------------------------------
+  # to use general settings for all bracnhes or 
+  # skip branching uncomment below line
+  
+  # branches: []
+  
+  # to customize settings per branch use below settings
+  # unlisted branches will use default user settings set above
+  # branch id must valid ISO 3166-1 alpha-2 country code
+  # country code must be valid ISO 3166-1 alpha-2 ode
+  branches:
+    GB:
+      country_code: GB
+      locales:
+        - en
+      user:
+        fields:
+          - email
+        options: []
+        validates: []
+        password_required: never
+        redirects:
+          post_signup: /
+          post_signin_confirmed: user
+          post_signin_unconfirmed: /
+        hooks:
+          after_create: []
+                   
+  # Assets        
+  # ---------------------------------------------  
+  assets:
+    # valid options are s3, filesystem
+    host_type: filesystem  
+    
+  # Media
+  # ---------------------------------------------  
+  media:
+    # valid options are fog, file
+    storage: file   
+    thumbs:
+      - name: thumb
+        process: resize_to_fit
+        sizes: [48,48]
+         
+  # Devise
+  # ---------------------------------------------  
+  devise:
+    # value in days
+    allow_unconfirmed_access_for: 365    
+    # value in days
+    reset_password_within: 365
+  
+  # Content
+  # ---------------------------------------------  
+  pages:
+    # Home Page Slug
+    home_page_slug: home
+    
+    # Comments
+    # available options are false, facebook
+    comments: false
+  posts:
+    comments: facebook 
+  
+  # Facebook
+  # ---------------------------------------------
+  pagination:
+    per: 10
+  
+  # Facebook
+  # ---------------------------------------------
+  facebook:
+    app_id: "165494140246687"
+    app_secret: "177ff317289b4d7ddb237f7f2945b28b"
+    scope: "email"
+    connect: false
+    
+  # Development Settings
+  # ---------------------------------------------  
+  development:
+    ip: 86.176.176.71
+         
+test: *development
+production: *development
