@@ -116,24 +116,30 @@ module Campanify
         "#{owner.id}_#{current_ip}"
       end
 
-      def tracks_count(tracks, uniq = true)
+      def tracks_count(tracks, uniq = true, owner = :all)
         if uniq
           if tracks.is_a?(Array)
             tracks.delete_if{|h| h.values.first == 0}.
             map{|h| h.keys}.
-            flatten.uniq.size
+            flatten.uniq.
+            delete_if{ |s| owner != :all && owner != s.split(".").first.to_i }.
+            size
           elsif tracks.is_a?(Hash)
             tracks.delete_if{|k,v| v == 0}.
-            keys.flatten.uniq.size
+            keys.flatten.uniq.
+            delete_if{ |s| owner != :all && owner != s.split(".").first.to_i }.
+            size
           end
         else
           if tracks.is_a?(Array)
-            tracks.sum{|h| 
-              h.is_a?(Fixnum) ? h :
-              h.values.first
+            tracks.sum{|k,v| 
+              # h.is_a?(Fixnum) ? h :
+              owner != :all && owner != s.split(".").first.to_i ? 0 : v
             }
           elsif tracks.is_a?(Hash)
-            tracks.values.sum
+            tracks.values.sum{|k, v|
+            owner != :all && owner != s.split(".").first.to_i ? 0 : v  
+            }
           end
 
         end
