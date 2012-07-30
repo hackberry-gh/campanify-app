@@ -37,7 +37,7 @@ class UserObserver < ActiveRecord::Observer
     begin
       HTTParty.post url, { body: user.attributes.as_json }
     rescue Exception => e
-      puts e  
+      puts "ERROR on UserObserver.http_post -> #{e.message}" 
     end
   end
 

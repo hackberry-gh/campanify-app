@@ -17,7 +17,7 @@ describe User do
     user.inc_visits
     # user.reload
     t = Time.now
-    visits_hash = {user.id => {t.year => {t.month => {t.day => {t.hour => {"1_1_1_1" => 1}}}}}}
+    visits_hash = {t.year => {t.month => {t.day => {t.hour => {"#{user.id}_#{user.current_ip}" => 1}}}}}
     user.visits.should eq(visits_hash)
     user.dec_visits
     # user.reload

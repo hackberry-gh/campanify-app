@@ -19,43 +19,43 @@ module Campanify
               update_historical_field("#{field_name}", "set", value, owner)
             end
 
-            def total_#{field_name}(uniq = true)
+            def total_#{field_name}(uniq = true, owner = :all)
               unless self['#{field_name}'].empty?
                 tracks = self['#{field_name}']
                 values = tracks.values.map{|h| h.values}.flatten.map{|h| h.values}.flatten.map{|h| h.values}.flatten if tracks
-                tracks_count values, uniq if tracks
+                tracks_count values, uniq, owner if tracks
               else
                 0
               end
             end
-            def yearly_#{field_name}(uniq = true, year = Time.now.year)
+            def yearly_#{field_name}(uniq = true, owner = :all, year = Time.now.year)
               unless self['#{field_name}'].empty?
                 tracks = self['#{field_name}'][year]
-                tracks_count tracks.values.first.values.first.values, uniq if tracks
+                tracks_count tracks.values.first.values.first.values, uniq, owner if tracks
               else
                 0
               end
             end
-            def monthly_#{field_name}(uniq = true, month = Time.now.month, year = Time.now.year)
+            def monthly_#{field_name}(uniq = true, owner = :all, month = Time.now.month, year = Time.now.year)
               unless self['#{field_name}'].empty?
                 tracks = self['#{field_name}'][year][month]
-                tracks_count  tracks.values.first.values, uniq if tracks
+                tracks_count  tracks.values.first.values, uniq, owner if tracks
               else
                 0
               end
             end
-            def daily_#{field_name}(uniq = true, day = Time.now.day, month = Time.now.month, year = Time.now.year)
+            def daily_#{field_name}(uniq = true, owner = :all, day = Time.now.day, month = Time.now.month, year = Time.now.year)
               unless self['#{field_name}'].empty?
                 tracks = self['#{field_name}'][year][month][day]
-                tracks_count  tracks.values, uniq if tracks
+                tracks_count  tracks.values, uniq, owner if tracks
               else
                 0
               end                
             end
-            def hourly_#{field_name}(uniq = true, hour = Time.now.hour, day = Time.now.day, month = Time.now.month, year = Time.now.year)
+            def hourly_#{field_name}(uniq = true, owner = :all, hour = Time.now.hour, day = Time.now.day, month = Time.now.month, year = Time.now.year)
               unless self['#{field_name}'].empty?              
                 tracks = self['#{field_name}'][year][month][day][hour]
-                tracks_count  tracks, uniq if tracks
+                tracks_count  tracks, uniq, owner if tracks
               else
                 0
               end              
@@ -117,29 +117,32 @@ module Campanify
       end
 
       def tracks_count(tracks, uniq = true, owner = :all)
+        # puts "OWNER #{owner} #{owner.class}"
+        # tracks = tracks.clone
         if uniq
           if tracks.is_a?(Array)
             tracks.delete_if{|h| h.values.first == 0}.
             map{|h| h.keys}.
             flatten.uniq.
-            delete_if{ |s| owner != :all && owner != s.split(".").first.to_i }.
+            # delete_if{ |s| owner != :all && owner != s.split(".").first.to_i }.
             size
           elsif tracks.is_a?(Hash)
             tracks.delete_if{|k,v| v == 0}.
             keys.flatten.uniq.
-            delete_if{ |s| owner != :all && owner != s.split(".").first.to_i }.
+            # delete_if{ |s| owner != :all && owner != s.split(".").first.to_i }.
             size
           end
         else
           if tracks.is_a?(Array)
-            tracks.sum{|k,v| 
-              # h.is_a?(Fixnum) ? h :
-              owner != :all && owner != s.split(".").first.to_i ? 0 : v
+            # puts "ARRAY #{tracks}"
+            tracks.sum{|h| 
+              # h.delete_if{ |k,v| owner != :all && owner != k.split(".").first.to_i }.values.sum
+              h.values.sum
             }
           elsif tracks.is_a?(Hash)
-            tracks.values.sum{|k, v|
-            owner != :all && owner != s.split(".").first.to_i ? 0 : v  
-            }
+            # puts "HASH #{tracks}"            
+            # tracks.delete_if{ |k,v| owner != :all && owner != k.split(".").first.to_i }.sum
+            tracks.values.sum
           end
 
         end

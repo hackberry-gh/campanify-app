@@ -39,7 +39,6 @@ describe UsersController do
       xhr :put, :recruited, :id => user.id, :referrer => referrer.id
       assigns(:user).should eq(user)
       referrer.reload
-      puts referrer.recruits
       referrer.total_recruits(false).should eq(1)
       response.should be_success
     end

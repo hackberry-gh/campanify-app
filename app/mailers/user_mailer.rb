@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
   #
   def post_signup_email(user)
     @user = user
-    mail to: user.email, subject: I18n.with_locale(user.language){ 
+    mail to: user.email_address, subject: I18n.with_locale(user.language){ 
       I18n.t('user_mailer.post_signup_email.subject') 
     }
   end

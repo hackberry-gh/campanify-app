@@ -45,6 +45,10 @@ class User < ActiveRecord::Base
     self.full_name unless self["display_name"]
   end  
 
+  def email_address
+    self.email.present? ? self.email :  self.unconfirmed_email
+  end
+
   def password_required?
     case setting("password_required")
     when "never"
