@@ -185,7 +185,7 @@ development: &development
          
   # Devise
   # ---------------------------------------------  
-  devise:
+  devise_settings:
     # value in days
     allow_unconfirmed_access_for: 365    
     # value in days

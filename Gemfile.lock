@@ -9,6 +9,10 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    POpen4 (0.1.4)
+      Platform (>= 0.4.0)
+      open4
+    Platform (0.4.0)
     actionmailer (3.2.7)
       actionpack (= 3.2.7)
       mail (~> 2.4.4)
@@ -30,18 +34,21 @@ GEM
       activesupport (= 3.2.7)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activerecord-postgres-hstore (0.4.0)
-      pg
-      rails
-      rake
     activeresource (3.2.7)
       activemodel (= 3.2.7)
       activesupport (= 3.2.7)
     activesupport (3.2.7)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    acts_as_singleton (0.0.8)
+      activerecord (>= 3.1.0)
     addressable (2.3.2)
     arel (3.0.2)
+    aws-s3 (0.6.3)
+      builder
+      mime-types
+      xml-simple
+    bcrypt-ruby (3.0.1)
     builder (3.0.0)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -61,6 +68,11 @@ GEM
     coffee-script-source (1.3.3)
     daemons (1.1.8)
     database_cleaner (0.8.0)
+    devise (2.1.2)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (~> 3.1)
+      warden (~> 1.2.1)
     diff-lcs (1.1.3)
     erubis (2.7.0)
     eventmachine (0.12.10)
@@ -84,6 +96,8 @@ GEM
     mime-types (1.19)
     multi_json (1.3.6)
     nokogiri (1.5.5)
+    open4 (1.3.0)
+    orm_adapter (0.4.0)
     pg (0.14.0)
     polyglot (0.3.3)
     rack (1.4.1)
@@ -152,18 +166,25 @@ GEM
     uglifier (1.2.6)
       execjs (>= 0.3.0)
       multi_json (~> 1.3)
+    warden (1.2.1)
+      rack (>= 1.0)
     wirble (0.1.3)
+    xml-simple (1.1.1)
     xpath (0.1.4)
       nokogiri (~> 1.3)
+    yui-compressor (0.9.6)
+      POpen4 (>= 0.1.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-postgres-hstore (~> 0.4.0)
+  acts_as_singleton
+  aws-s3 (~> 0.6.3)
   capybara (~> 1.1.2)
   coffee-rails (~> 3.2.1)
   database_cleaner (~> 0.8.0)
+  devise (~> 2.1.2)
   hirb
   i18n-active_record!
   jquery-rails
@@ -174,3 +195,4 @@ DEPENDENCIES
   thin
   uglifier (>= 1.0.3)
   wirble
+  yui-compressor (~> 0.9.6)

@@ -3,11 +3,14 @@ source 'https://rubygems.org'
 gem 'rails', 												'3.2.7'
 gem 'pg'
 gem 'thin'
-gem 'activerecord-postgres-hstore', '~> 0.4.0'
+gem 'acts_as_singleton'
 gem 'i18n-active_record',
       :git => 'git://github.com/svenfuchs/i18n-active_record.git',
       :branch => 'rails-3.2',
       :require => 'i18n/active_record'
+gem "yui-compressor", 							"~> 0.9.6"
+gem "aws-s3", 											"~> 0.6.3"
+gem "devise", 											"~> 2.1.2"
 
 group :assets do
   gem 'sass-rails',   							'~> 3.2.3'

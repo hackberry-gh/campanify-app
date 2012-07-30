@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe Settings do
-	it "ensure that you never get duplicate records" do
-		-> { Settings.new }.should raise_error
-	end
+  
+  it "ensure that you never get duplicate records" do
+    -> { Settings.new }.should raise_error
+  end
 
 	it "contains default data" do
 		Settings.instance.data.should eq(Settings.defaults)
