@@ -10,5 +10,6 @@ $.post("<%= visits_user_path(user) %>", {_method:"PUT",action:"visits"}, "json")
 <article class="user">
 	<%= user.first_name %>
 	<br/>
-	<%= user.total_visits %>
+	visits: <%= user.total_visits %><br/>
+	recruits: <%= user.total_recruits %>	
 </article>	

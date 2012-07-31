@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   
+  include Campanify::Controllers::ParanoidController    
+    
   before_filter  :safe_request!, :only => [:visits, :recruited]
   before_filter  :ensure_user!, :only => [:show, :visits, :recruited]
   
@@ -19,13 +21,6 @@ class UsersController < ApplicationController
     @user.inc_visits
     render nothing: true
   end
-  
-  # PUT, add a visit to user
-  def recruited
-    self.referrer.inc_recruits(@user) if self.referrer
-    self.referrer = nil
-    render nothing: true
-  end  
 	
   private
 	

@@ -52,7 +52,17 @@ a.table_tools_button.active{
   -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7e858b, endColorstr=#3c4043);	
 }
 
-.translations a{
+.language-selection{
+	position:relative;
+	bottom:0px;
+	left:5px;
+}
+.language-selection li {
+	display:inline;
+	margin-right:-1px;
+}
+
+.language-selection li a{
 	display: inline-block;
 	background: #fff;
 	text-shadow: white 0 1px 0;
@@ -72,7 +82,7 @@ a.table_tools_button.active{
 	text-decoration:none;
 }
 
-.translations a.active{
+.language-selection li a.active{
 	color: #5E6469;
 	background: #EFEFEF;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#dfe1e2, endColorstr=#efefef);

@@ -14,7 +14,7 @@ $(document).ready(function(){
 		});
 
 		form.find('#errors').html(errorList);
-	}).on("ajax:success", function(event, xhr, status){
-		location.href = redirects[$(this).data('post-action')];
+	}).on("ajax:success", function(event, data, status){
+		location.href = redirects[$(this).data('post-action')] == "user" ? "/users/" + data.id : redirects[$(this).data('post-action')];
 	});
 });

@@ -63,23 +63,29 @@ development: &development
     # never(default): never ask for password
     # always: always ask for password
     # after_signup: don't ask on signup but ask on signin, 
-    # if you gonna choose after_signup, you should auto generate
-    # reset password token. also sending instructions to user for resetting their
-    # auto generated password is meaningful to not skip.
-    # so to doing that, add send_reset_password_instructions or if you don't want to
-    # send instructions but generate password generate_reset_password_token 
-    # to post_signup_hooks
-    # auto default devise settings
+    # if you gonna choose after_signup, auto generated password will be set. 
+    # but not send any email to user!!!
+    # so allow user to sign in website, you should add send_reset_password_instructions 
+    # to post_signup_hooks or send it later with custom email with reset password link below
+    # <%= link_to 'Change my password', edit_password_url(@user, :reset_password_token => @user.reset_password_token) %>
+    # after_signup_with_instructions: same as after_signup but sends 
+    # reset password instructions immediately
     password_required: never
+    
+    # Confirmation
+    # -------------------------------------------
+    # never: never send confirmation email and mark user confirmed!
+    # time_based(default): send confirmation email after signup but allow user to sign in for "devise/allow_unconfirmed_access_for" days
+    # loose: don't send email after signup/update and allow user to sign in for "devise/allow_unconfirmed_access_for" days
+    # strict: send confirmation email after sign up and don't allow user to sign in without confirmation
+    # CAUTION !!! Strict option can't be branched, so if you select strict it rules all branches    
+    confirmation_required: never
     
     # Redirection Urls
     # -------------------------------------------
     redirects:
       # can be any url or 'user' to redirect user profile page
-      post_signup: /
-      post_signin_confirmed: user
-      post_signin_unconfirmed: /
-        
+      post_signup: /  
       
     # Hooks
     # -------------------------------------------
@@ -127,16 +133,23 @@ development: &development
         #     app_secret:
         #     message: t('hooks.after_crate.facebook.message')          
       
+  # Time Zone
+  # ---------------------------------------------  
+  timezone: 'Europe/London'
+  
   # Completed Locales
   # ---------------------------------------------
   # enter language code to make available on site
   i18n:
+    default_locale: en
     available_locales:
       - en
       - de
       - tr
     completed_locales:
       - en  
+    # available options are from_browser, from_branch
+    preferred_source: from_browser  
     
   # Branches
   # ---------------------------------------------
@@ -148,7 +161,7 @@ development: &development
   # to customize settings per branch use below settings
   # unlisted branches will use default user settings set above
   # branch id must valid ISO 3166-1 alpha-2 country code
-  # country code must be valid ISO 3166-1 alpha-2 ode
+  # country code must valid ISO 3166-1 alpha-2 country code  
   branches:
     GB:
       country_code: GB
@@ -160,10 +173,9 @@ development: &development
         options: []
         validates: []
         password_required: never
+        confirmation_required: never
         redirects:
-          post_signup: /
-          post_signin_confirmed: user
-          post_signin_unconfirmed: /
+          post_signup: user
         hooks:
           after_create: []
                    

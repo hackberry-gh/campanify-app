@@ -16,12 +16,12 @@
 
 	<div id="errors"></div>
 
-	<% Settings.user(current_branch)["fields"].map(&:to_sym).each do |field| %>
+	<% Settings.user_setting("fields", current_branch).map(&:to_sym).each do |field| %>
   <div><%= f.label field %><br />
   <%= f.text_field field %></div>
 	<% end %>	
 
-	<% if Settings.user(current_branch)["password_required"] == "always" %>
+	<% if Settings.user_setting("password_required",current_branch) == "always" %>
   <div><%= f.label :password %><br />
   <%= f.password_field :password %></div>
 
@@ -29,7 +29,7 @@
   <%= f.password_field :password_confirmation %></div>
 	<% end %>
 	
-	<% Settings.user(current_branch)["options"].each do |field, checked| %>
+	<% Settings.user_setting("options",current_branch).each do |field, checked| %>
   <div><%= f.label field.to_sym %><br />
   <%= f.check_box field.to_sym, :checked => checked %></div>
 	<% end %>	

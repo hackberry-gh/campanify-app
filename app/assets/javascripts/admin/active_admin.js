@@ -25,13 +25,14 @@ $(document).ready(function(){
 		current_textarea = textarea;		
 	}
 
-	$(".translations a").click(function(){
-		var locale = $(this).prop('href').split("#")[1];
-		$("fieldset.translation").hide();
-		$("fieldset.translation#" + locale).show();
-		$(".translations a.active").removeClass('active');
+	$(".language-selection li a").click(function(){
+		var id = $(this).attr('href');
+		console.log(id)
+		$(".language-fields").hide();
+		$(id).show();
+		$(".language-selection li a.active").removeClass('active');
 		$(this).addClass('active');
-		var textarea = $("fieldset.translation#" + locale + " textarea.code");
+		var textarea = $(id + " textarea.code");
 		$(".ace_editor").insertAfter(textarea);
 		textarea.hide();
 		current_textarea.val(editor.getSession().getValue());
@@ -40,7 +41,7 @@ $(document).ready(function(){
 		return false;
 	});
 
-	$(".translations a:first").click();
+	$(".language-selection li a:first").click();
 	
 	function on_range_change(elm){
 		var target_id = $(elm).attr('id')+"_price";

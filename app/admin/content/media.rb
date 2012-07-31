@@ -4,14 +4,10 @@ ActiveAdmin.register Content::Media do
   index do
     column :title
     column :media do |content_medium|
-      if content_medium.link.present?
-        link_to content_medium.link, content_medium.link, target: "blank"
+      if %w(jpg jpeg gif png).include?(content_medium.file.url.split(".").last)
+        image_tag content_medium.file.thumb
       else
-        if %w(jpg jpeg gif png).include?(content_medium.file.url.split(".").last)
-          image_tag content_medium.file.thumb
-        else
-          content_medium.file
-        end
+        content_medium.file
       end
     end
     column :versions do |content_medium|
@@ -19,5 +15,19 @@ ActiveAdmin.register Content::Media do
     end
     default_actions
   end
-  form :partial => "form"
+  
+  form do |f|
+    f.globalize_inputs :translations do |lf|
+      lf.inputs :title, :body, :locale do
+        lf.input :title
+        lf.input :description, :as => :text
+
+        lf.input :locale, :as => :hidden
+      end
+    end
+    f.inputs do
+      f.input :file, :as => :file
+    end
+    f.buttons
+  end
 end

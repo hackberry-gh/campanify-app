@@ -30,18 +30,5 @@ describe UsersController do
       response.should be_success
     end
   end
-  
-  describe "PUT 'recruited'" do
-    it "returns http success" do
-      user = User.create!(email: "test@test.com", first_name: "first_name", last_name: "last_name")      
-      referrer = User.create!(email: "test@test2.com", first_name: "first_name", last_name: "last_name")            
-      session[:referrer] = referrer.id
-      xhr :put, :recruited, :id => user.id, :referrer => referrer.id
-      assigns(:user).should eq(user)
-      referrer.reload
-      referrer.total_recruits(false).should eq(1)
-      response.should be_success
-    end
-  end
 
 end

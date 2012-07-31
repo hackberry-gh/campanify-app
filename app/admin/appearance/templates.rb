@@ -1,5 +1,13 @@
 ActiveAdmin.register Appearance::Template do
   menu :parent => "Appearance"
+  index do
+    column :path
+    column :format
+    column :handler
+    column :locale    
+    column :partial            
+    default_actions
+  end
   form do |f|
     f.inputs do
       f.input :body, :as => :code, :mode => "html"

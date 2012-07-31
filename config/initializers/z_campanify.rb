@@ -1,9 +1,9 @@
 if Settings.has_table?
   # i18
   require 'i18n/backend/active_record'
-  
+
   Translation = I18n::Backend::ActiveRecord::Translation
-  
+
   I18n::Backend::ActiveRecord::Missing.class_eval do
     def translate(locale, key, options = {})
       super
@@ -80,32 +80,68 @@ if Settings.has_table?
     # ::ActionMailer::Base.default_url_options = { :host => Settings.mailer["host"] }          
     config.action_mailer.default_url_options = { :host => Settings.mailer["host"] }
     config.assets.initialize_on_precompile = false    
+    config.i18n.default_locale = Settings.i18n['default_locale']
+    config.time_zone = Settings.timezone
   end
 
   # devise
   Devise.setup do |config|
     config.mailer_sender = Settings.mailer["sender"]
-    config.allow_unconfirmed_access_for = Settings.devise_settings['allow_unconfirmed_access_for'].days
+    config.allow_unconfirmed_access_for = Settings.user['confirmation_required'] == "strict" ? 0 : Settings.devise_settings['allow_unconfirmed_access_for'].days
     config.reset_password_within = Settings.devise_settings['reset_password_within'].days
+    require "omniauth-facebook"
+    config.omniauth :facebook, Settings.facebook['app_id'], Settings.facebook['app_secret'], 
+                    {:scope => Settings.facebook['scope']}
   end
-  
+
   # controllers
   ::ActionMailer::Base.send :include, Campanify::Controllers::TemplateController
   ::ActionMailer::Base.send :include, Campanify::Cache
-  
-  ::Devise::RegistrationsController.send :include, Campanify::Controllers::ParanoidController
 end
 
 # carier wave
 CarrierWave.configure do |config|
   config.fog_credentials = {
-    :provider               => 'AWS',       # required
+    :provider               => 'AWS',                   # required
     :aws_access_key_id      => ENV['AWS_S3_KEY'],       # required
-    :aws_secret_access_key  => ENV['AWS_S3_SECRET'],       # required
+    :aws_secret_access_key  => ENV['AWS_S3_SECRET'],    # required
     # :region                 => 'eu-west-1'  # optional, defaults to 'us-east-1'
   }
-  config.fog_directory  = ENV['AWS_S3_BUCKET']                     # required
-  # config.fog_host       = 'https://assets.example.com'            # optional, defaults to nil
-  # config.fog_public     = false                                   # optional, defaults to true
+  config.fog_directory  = ENV['AWS_S3_BUCKET']                    # required
+  # config.fog_host       = 'https://assets.example.com'          # optional, defaults to nil
+  # config.fog_public     = false                                 # optional, defaults to true
   config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
+end
+
+module Formtastic
+  class FormBuilder
+    def globalize_inputs(*args, &proc)
+      index = options[:child_index] || "#{self.object.class.to_s.parameterize}-#{self.object.object_id}"
+      linker = ActiveSupport::SafeBuffer.new
+      fields = ActiveSupport::SafeBuffer.new
+      ::I18n.available_locales.each do |locale|
+        linker << self.template.content_tag(:li,
+                  self.template.content_tag(:a, locale, :href => "#lang-#{locale}-#{index}" )
+        )
+        fields << self.template.content_tag(:div,
+        self.semantic_fields_for(*(args.dup << self.object.translation_for(locale)), &proc),
+        :id => "lang-#{locale}-#{index}",
+        :class => "language-fields"
+        )
+      end
+
+      linker = self.template.content_tag(:ul, linker, :class => "language-selection")
+
+      self.template.content_tag(:div, linker + fields, :class => "language-tabs-#{index}");
+    end
+  end
+end
+
+module ActiveAdmin
+  class FormBuilder
+    def globalize_inputs(*args, &proc)
+      content = with_new_form_buffer { super }
+      form_buffers.last << content.html_safe
+    end
+  end
 end

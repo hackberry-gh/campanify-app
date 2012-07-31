@@ -13,3 +13,33 @@
 //= require jquery
 //= require jquery_ujs
 //= require_directory .
+
+(function($, undefined) {
+	var campanify;
+	$.campanify = campanify = {
+		changeLocale: function(locale){
+			var qs = location.href.
+												replace(location.pathname,'').
+												replace(location.host,'').
+												replace(location.protocol,'').
+												replace('//','');
+
+			var parts = location.pathname.split("/");
+			if ( parts[1] == parts[1].match(/\w{2}/) || parts[1] == parts[1].match(/\w{2}-\w{2}/) ){
+				parts.shift();
+				parts.shift();			
+				location.href = "/" + locale + "/" + parts.join("/") + qs;
+			}else{
+				location.href = "/" + locale + location.pathname + qs;			
+			}
+
+		}
+	};
+
+	$(document).ready( function(){
+		$("#language").change(function(){
+			campanify.changeLocale( $(this).val() );
+		});
+	});
+
+})( jQuery );

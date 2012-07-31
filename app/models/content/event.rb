@@ -2,11 +2,11 @@ class Content::Event < ActiveRecord::Base
   include Campanify::Models::Slug  
   include FacebookHelper
   attr_accessible :description, :end_time, :fb_id, :location, :name, :parent, 
-                  :privacy, :start_time, :venue, :translations_attributes
+                  :privacy, :start_time, :venue, :locale, :translations_attributes
   translates :name, :description, :fallbacks_for_empty_translations => true  
   slug :name
   serialize :venue, Hash
-  before_create :set_venue
+  after_initialize :set_venue
   validates_presence_of :name, :start_time
   
   validate :check_venue

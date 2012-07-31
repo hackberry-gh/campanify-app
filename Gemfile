@@ -13,6 +13,7 @@ gem "aws-s3", 											"~> 0.6.3"
 gem "devise", 											"~> 2.1.2"
 gem 'globalize3', 
 			:git => "git://github.com/svenfuchs/globalize3.git"
+gem 'routing-filter'			
 gem 'rmagick',											'~> 2.13.1'			
 gem 'carrierwave'
 gem "fog", 													"~> 1.3.1"
@@ -24,6 +25,7 @@ gem 'geoip'
 gem 'cancan'
 gem 'heroku',												'2.26.3'
 gem 'activeadmin',									'~> 0.4.4'
+gem "omniauth-facebook"
 
 group :assets do
   gem 'sass-rails',   							'~> 3.2.3'

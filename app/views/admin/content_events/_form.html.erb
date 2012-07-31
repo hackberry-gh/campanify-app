@@ -141,11 +141,16 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	</li>
 	<% end %>
 	
-	<%= render "admin/shared/localized_inputs", f: f, record: @content_event, 
-	fields: [	{name: :name, options: {} },
-						{name: :description, options: {as: "text"} }
-	] 
-	%>
+
+	<%= f.globalize_inputs :translations do |lf| %>
+		<%= lf.inputs :name, :description, :locale do %>
+			<%= lf.input :name %>
+			<%= lf.input :description, :as => :text %>
+
+			<%= lf.input :locale, :as => :hidden %>
+		<% end %>
+	<% end %>
+    
 	
 	<%= f.inputs do %>
 	<%= f.input :start_time, :as => :datetime %>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= t('content.title') %></title>
+  <%= javascript_include_tag "jquery" %>
+	<%= javascript_include_tag "jquery_ujs" %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= body_class %>">
+<%= yield %>
+</body>
+</html>

@@ -24,7 +24,7 @@ class Appearance::Asset < ActiveRecord::Base
   @@s3_bucket   = ENV["AWS_S3_BUCKET"]
   @@s3_key      = ENV["AWS_S3_KEY"]
   @@s3_secret   = ENV["AWS_S3_SECRET"]
-
+  
   def compile
     case content_type
     when VALID_TYPES[:css]
