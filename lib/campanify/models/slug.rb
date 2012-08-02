@@ -3,13 +3,13 @@ module Campanify
     module Slug
       extend ActiveSupport::Concern
       included do
-        before_save :set_slug
-        cattr_accessor :slug_field
-        validates_uniqueness_of :slug
+        before_create :set_slug
+        cattr_accessor :slug_field    
+        validates_uniqueness_of :slug                    
       end
       module ClassMethods
         def slug(field_name)
-          self.slug_field = field_name
+          self.slug_field = field_name          
         end
       end
       private

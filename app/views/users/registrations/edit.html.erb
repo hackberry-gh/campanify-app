@@ -1,42 +1,60 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:method => :put}) do |f| %>
-
+<article class="form">
+	<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:method => :put}) do |f| %>
+	
+	<legend>Edit <%= resource_name.to_s.humanize %></legend>
+	
   <%= devise_error_messages! %>
-
-	<div id="errors"></div>
 
 	<fieldset>
   <% resource.setting("fields").map(&:to_sym).each do |field| %>
-  <div><%= f.label field %><br />
+  <div><%= f.label field %>
   <%= f.text_field field %></div>
 	<% end %>	
 
 	<% resource.setting("options").each do |field, checked| %>
-  <div><%= f.label field.to_sym %><br />
+  <div><%= f.label field.to_sym %>
   <%= f.check_box field.to_sym, :checked => checked %></div>
+	<% end %>
+	
+	<div>
+	<%= f.label :avatar %>
+  <%= f.file_field :avatar %>
+	</div>
+	<% if current_user.avatar? %>
+	<div>
+		<label></label>
+		<%= image_tag(current_user.avatar_url) %>
+		<br/>
+		<label for="user_remove_avatar">Remove Avatar</label> <%= f.check_box :remove_avatar %>	
+	</div>
 	<% end %>
 	</fieldset>
 	
+	
 	<% if resource.setting("password_required") != "never" %>
 	<fieldset>
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
   <%= f.password_field :password, :autocomplete => "off" %></div>
 
-  <div><%= f.label :password_confirmation %><br />
+  <div><%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %></div>
 	</fieldset>
 
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
   <%= f.password_field :current_password %></div>	
 
 	<% end %>
 		
-  <div><%= f.submit "Update" %></div>
+  <div class="actions"><%= f.submit "Update" %></div>
+
+	<fieldset>
+		<h3>Cancel my account</h3>
+
+		<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>.</p>
+	</fieldset>	
+
 <% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>.</p>
-
-<%= link_to "Back", :back %>
+	<nav>
+		<%= link_to "Back", :back %>
+	</nav>
+</article>

@@ -2,8 +2,10 @@ Campanify::Application.routes.draw do
 
   filter :locale, :exclude => /^\/admin|^\/users\/auth/ if respond_to?('filter')
   
-  resources :pages, :only => [:show], :module => "content"
-  resources :widgets, :only => [:show], :module => "content"
+  resources :events,  :module => "content", :only => [:index, :show]
+  resources :posts,   :module => "content", :only => [:index, :show, :create]  
+  resources :pages,   :module => "content", :only => [:show]
+  resources :widgets, :module => "content", :only => [:show]
   
   devise_for :users, :controllers => {
     :registrations => "users/registrations",

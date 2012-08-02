@@ -1,0 +1,14 @@
+<section class="posts">
+	<h1>Posts</h1>
+	<% unless posts.empty? %>
+	<ul>
+		<% posts.each do |post| %>
+		<li><%= link_to post.title, post_path(post.slug) %></li>
+		<% end %>
+	</ul>
+	<% else %>
+	<p>Nothings here, <%= link_to_if !current_user, "would you like to write?", new_user_session_path %></p>
+	<% end %>
+</section>
+<%= paginate posts %>
+<%= render "form" if Settings.user_setting("abilities")['can_post'] && current_user %>

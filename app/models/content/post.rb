@@ -2,6 +2,8 @@ class Content::Post < ActiveRecord::Base
   include Campanify::Models::Slug  
   include Campanify::Models::Publishable 
   include Campanify::Models::Sanitized
+  include Campanify::Models::History
+  include Campanify::Models::Popularity  
    
   attr_accessible :body, :published_at, :title, :user_id, :locale, :translations_attributes
   translates :title, :body, :fallbacks_for_empty_translations => true
@@ -10,6 +12,8 @@ class Content::Post < ActiveRecord::Base
   accepts_nested_attributes_for :translations
   before_save :sanitize_inputs
   validates_presence_of :title, :body, :user_id
+  serialize :likes, Hash
+  track :likes
   
   def self.i18n_scope
   end

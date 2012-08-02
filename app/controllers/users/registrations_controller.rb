@@ -1,10 +1,15 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-
+  include Campanify::Controllers::TemplateController  
+  include Campanify::Controllers::ReferralsController 
+  include Campanify::Controllers::IpCountryBranchController     
   include Campanify::Controllers::ParanoidController    
 
   skip_before_filter :safe_request!, :only => [:update, :destroy]
 
   def create
+    # signout current logged in user
+    sign_out(:user)
+    
     build_resource
 
     if resource.save
@@ -35,13 +40,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
 
-    
-
     if Settings.user_setting('password_required',current_branch) == "never" ? 
       resource.update_attributes(resource_params) : 
       resource.update_with_password(resource_params)
     
-      resource.confirm! unless resource.confirmation_required?
+      resource.confirm! if !resource.confirmation_required? && !resource.confirmed?
       
       if is_navigational_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?

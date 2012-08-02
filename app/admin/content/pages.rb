@@ -1,11 +1,27 @@
 ActiveAdmin.register Content::Page do
   menu :parent => "Content"
   scope :published
+  scope :unpublished
+  member_action :unpublish do
+    Content::Page.find(params[:id]).unpublish!
+    redirect_to admin_content_pages_path, :notice => "Page has been unpublished successfully"    
+  end
+  
+  member_action :publish do
+    Content::Page.find(params[:id]).publish! 
+    redirect_to admin_content_pages_path, :notice => "Page has been published successfully"
+  end
+  
+  action_item :only => [:edit, :show] do
+    publish_status = content_page.published? ? "unpublish" : "publish"
+    link_to publish_status.titleize, self.send("#{publish_status}_admin_content_page_path".to_sym, content_page.id)
+  end
 
   index do
     column :title
     column :published do |content_page|
-      content_page.published?
+      publish_status = content_page.published? ? "published" : "unpublished"      
+      span(publish_status.titleize,:class => "status #{publish_status}")
     end
     default_actions
   end

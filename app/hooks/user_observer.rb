@@ -9,7 +9,7 @@ class UserObserver < ActiveRecord::Observer
   end
 
   def after_delete(user)
-    do_hook("after_delete",user)
+    do_hook("after_delete",user)   
   end
 
   private

@@ -1,0 +1,9 @@
+en:
+  html:
+    title: Campanify
+    description: Best Service Ever!  
+    header:
+      logo: campanify-logo-96.png
+    registration_form:
+      legend: 'This cause needs your help, <a href="/pages/facts">because</a> happening now!'
+      submit: "Count me in ↩"  

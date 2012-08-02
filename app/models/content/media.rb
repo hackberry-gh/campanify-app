@@ -1,6 +1,3 @@
-require 'campanify/validators/file_size_validator'
-require 'carrierwave/orm/activerecord'
-
 class Content::Media < ActiveRecord::Base
   attr_accessible :description, :position, :title, :translations_attributes, :file
   translates :title, :description, :fallbacks_for_empty_translations => true

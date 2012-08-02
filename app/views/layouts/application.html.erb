@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><%= t('content.title') %></title>
-	<meta name="description" content="<%= t('content.description') %>">
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+	<title><%= t('html.title') %></title>
+	<meta name="description" content="<%= t('html.description') %>">
+  <%= stylesheet_link_tag    	"application", :media => "all" %>
+	<%= render 									"shared/js_bindings" %>
+  <%= javascript_include_tag 	"application" %>
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= body_class %>">
 
-<%= render "shared/notifications" %>
+	<%= render "shared/fb_js_sdk" %>
 
-<%= render "shared/header" %>
+	<%= render "shared/notifications" %>
+	
+	<div id="main" role="main">
 
-<%= yield %>
+		<%= render "shared/header" %>
+		
+		<section id="content">
+		<%= yield %>
+		</section>
 
-<%= render "shared/footer" %>
-
+		<%= render "shared/footer" %>
+	</div>	
+	
 </body>
 </html>

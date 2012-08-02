@@ -1,6 +1,6 @@
 en:
   user_mailer:
-    post_signup_email:
+    after_signup_email:
       subject: "Hi, this is post signup mail coming from campanify.it"
       body: |
         <h1>Post Signup Email</h1>

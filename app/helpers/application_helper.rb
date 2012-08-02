@@ -1,5 +1,6 @@
 module ApplicationHelper
   
+  include Campanify::Cache
   include HtmlHelper
 
   def resource_name
@@ -9,6 +10,10 @@ module ApplicationHelper
   def resource
     @resource ||= User.new
   end
+  
+  def resource_class
+    User
+  end  
 
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]

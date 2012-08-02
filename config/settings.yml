@@ -66,7 +66,7 @@ development: &development
     # if you gonna choose after_signup, auto generated password will be set. 
     # but not send any email to user!!!
     # so allow user to sign in website, you should add send_reset_password_instructions 
-    # to post_signup_hooks or send it later with custom email with reset password link below
+    # to after_signup_hooks or send it later with custom email with reset password link below
     # <%= link_to 'Change my password', edit_password_url(@user, :reset_password_token => @user.reset_password_token) %>
     # after_signup_with_instructions: same as after_signup but sends 
     # reset password instructions immediately
@@ -84,8 +84,12 @@ development: &development
     # Redirection Urls
     # -------------------------------------------
     redirects:
-      # can be any url or 'user' to redirect user profile page
-      post_signup: /  
+      # can be any url or 'show' to redirect user profile page
+      after_sign_up: show
+      after_post: show
+      after_sign_in: show
+      after_inactive_sign_in: /
+      after_sign_out: /
       
     # Hooks
     # -------------------------------------------
@@ -104,11 +108,11 @@ development: &development
         # resetting password!
         # user: generate_reset_password_token
         
-        # sends post_signup email to user
+        # sends after_signup email to user
         # don't forget change subject and body from translations
-        # user_mailer.post_signup_email.subject
-        # user_mailer.post_signup_email.subject
-        mail: post_signup_email
+        # user_mailer.after_signup_email.subject
+        # user_mailer.after_signup_email.body
+        mail: after_signup_email
         
         # posts user fields to given url
         http_post: http://localhost:5000/users/hooks/http_post
@@ -144,8 +148,6 @@ development: &development
     default_locale: en
     available_locales:
       - en
-      - de
-      - tr
     completed_locales:
       - en  
     # available options are from_browser, from_branch
@@ -165,6 +167,7 @@ development: &development
   branches:
     GB:
       country_code: GB
+      timezone: Europe/London
       locales:
         - en
       user:
@@ -175,7 +178,11 @@ development: &development
         password_required: never
         confirmation_required: never
         redirects:
-          post_signup: user
+          after_sign_up: /pages/thank-you
+          after_post: show
+          after_sign_in: show
+          after_inactive_sign_in: /
+          after_sign_out: /
         hooks:
           after_create: []
                    
@@ -194,6 +201,16 @@ development: &development
       - name: thumb
         process: resize_to_fit
         sizes: [48,48]
+    avatars:
+      default_url:
+        big: "http://placekitten.com/g/450/450"
+        thumb: "http://placekitten.com/g/96/96"  
+      big:
+        process: resize_to_limit
+        sizes: [450,450]
+      thumb:
+        process: resize_to_fill
+        sizes: [96,96]  
          
   # Devise
   # ---------------------------------------------  
@@ -210,12 +227,15 @@ development: &development
     home_page_slug: home
     
     # Comments
-    # available options are false, facebook
     comments: false
   posts:
-    comments: facebook 
+    comments: true 
+  events:
+    comments: true
+  users:
+    comments: false  
   
-  # Facebook
+  # Pagination
   # ---------------------------------------------
   pagination:
     per: 10

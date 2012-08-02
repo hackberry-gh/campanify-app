@@ -1,0 +1,222 @@
+body{
+/*	font-family: 'Letter Gothic Std', Monaco, Helvetica, Arial, Sans-Serif;*/
+	font-family:  Monaco, Helvetica, Arial, Sans-Serif;	
+	font-size: 0.8em;
+	line-height:1.8em;		
+	color:#333;
+}
+a{
+	text-decoration: none;
+	border-bottom:1px solid crimson;
+	color:crimson;
+}
+form{
+	margin:0 0 1em 0;
+	padding:2em;
+	
+	-webkit-box-shadow: 0px 0px 15px 0px #c8c8c8;
+	box-shadow: 0px 0px 15px 0px #c8c8c8;
+
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;	
+}
+form fieldset > div, form fieldset > ol > li, form .actions, form .buttons{
+	margin:1em 0;
+}
+form .actions, form .buttons{
+	border-top:1px solid #f0f0f0;
+	padding-top:1em;
+	margin:2em 0;
+}
+form legend{
+	margin-bottom:1.6em;
+}
+label{
+	display:inline-block;
+	width:20%;
+	min-width:100px;
+	margin-right:1em;
+	vertical-align:middle;
+	font-weight:bold;
+}
+input, textarea, select{
+	font:inherit;	
+	background:transparent;	
+	border:none;
+	border-bottom:1px dashed #333;	
+	outline:none;
+	color:#333;
+	width:75%;
+	min-width:220px;	
+}
+textarea{
+	max-width:75%;		
+	height:92px;
+	min-height:92px;
+	max-height:92px;
+}
+input:focus{
+	border-bottom:1px solid #000;	
+	color: #000;
+}
+input[type=checkbox]{
+	width:auto;
+}
+input[type=submit], button{
+	padding:0 0 0.2em;
+	margin:0;
+	border:none;
+	background:transparent;	
+	border-bottom:1px solid lightSkyBlue;
+	font:inherit;
+	font-size:2.2em;
+	font-weight:bold;
+	color:darkOrange;
+	line-height:1.1em;
+	cursor:pointer;
+	width:100%;
+}
+h1{
+	font-size:2.3em;
+	line-height: 1.4em;	
+	font-weight:900;	
+	margin-bottom:0.6em;
+	text-align:center;
+}
+h2, legend{
+	font-size:1.8em;
+	line-height:1.2;
+	font-weight:bold;	
+	margin-bottom:0.6em;
+	text-align:center;
+}
+h3{
+	font-size:1.2em;
+	font-weight:bold;	
+	margin-bottom:0.4em;	
+}
+h4{
+	font-size:1.0em;
+	font-weight:bold;	
+	margin-bottom:0.4em;	
+}
+h5{
+	font-size:1.0em;
+	font-weight:bold;	
+	margin-bottom:0.2em;
+}
+h6{
+	font-size:0.8em;
+	font-weight:bold;	
+	margin-bottom:0.2em;
+}
+p{
+	margin-bottom:1em;
+}
+p.alert{
+	background: lightblue;
+	padding: 1em;
+	color: crimson;
+	font-weight: bold;
+}
+p.notice{
+	padding: 1em;
+	background: darkSeaGreen;
+	color: darkGreen;
+	font-weight: bold;
+}
+#error_explanation{
+	background: lightblue;
+	padding: 1em;
+	color: crimson;
+	margin-bottom: 1em;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;	
+}
+#error_explanation ul li{
+	list-style: square;
+	margin-left: 2em;
+}
+dl{
+	margin-bottom:1em;
+}
+dt{
+	font-weight:bold;
+	width:20%;
+	min-width:100px;
+	float:left;
+}
+#main{
+	width:75%;
+	max-width:720px;
+	margin:5% auto;
+}
+header{
+	height: 96px;
+	vertical-align: bottom;
+	position: relative;
+	margin-bottom:4em;
+}
+header a.logo{
+	border:none;
+}
+header nav{
+	position: absolute;
+	right: 0;
+	top: 43px;
+}
+nav.links{
+	text-align:center;
+}
+#content{
+	padding:2em;
+}
+#content > section, #content > article, nav.pagination{
+	margin-bottom:4em;
+}
+article.form{
+	margin:0 0 4em -10%;
+	width:120%;
+}
+article.post section.body{
+	margin-bottom:4em;
+}
+section.users .thumbs{
+	text-align:center;
+}
+section.users .thumbs a{
+	border:none;
+	padding:0;
+	margin:0;
+	width:96px;
+	height:96px;	
+	overflow:hidden;
+	display:inline-block;
+}
+article.user .avatar{
+	width:100%;
+}
+/* HELPERS */
+.hidden{
+	display:none;
+}
+/*
+ * Contain floats: h5bp.com/q
+ */
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}

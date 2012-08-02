@@ -1,6 +1,6 @@
 module Content::WidgetsHelper
   include Content::Helper
 	def widget
-	  @widget
+	  @resource
   end  
 end

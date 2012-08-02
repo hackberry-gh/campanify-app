@@ -1,42 +1,55 @@
-<%= render "users/shared/bindings" %>
+<article class="form">
+	<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), 
+		:remote => true,
+		:html => {
+		:"data-collection" => "users",	
+		:"data-member" => "user",
+		:"data-type" => "json",
+		:"data-post-action" => "after_sign_up",
+		:"data-find_by" => "id",		
+		:"data-translated-member" => t('models.user')
+		}) do |f| %>
 
-<article class="user">
-	
-<h2>Sign up</h2>
+		<legend><%== t('html.registration_form.legend') %></legend>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), 
-	:remote => true,
-	:html => {
-	:"data-prefix" => "user",
-	:"data-type" => "json",
-	:"data-post-action" => "post_signup"
-	}) do |f| %>
+		<div id="error_explanation" class="hidden"></div>
+		
+		<fieldset>
+			<% Settings.user_setting("fields", current_branch).map(&:to_sym).each do |field| %>
+		  <div>
+				<%= f.label field %>
+		  	<%= f.text_field field %>
+			</div>
+			<% end %>	
+		</fieldset>
 
-  <%= devise_error_messages! %>
+		<% if Settings.user_setting("password_required",current_branch) == "always" %>
+		<fieldset>			
+		  <div>
+				<%= f.label :password %>
+		  	<%= f.password_field :password %>
+			</div>
 
-	<div id="errors"></div>
+		  <div>
+				<%= f.label :password_confirmation %>
+		  	<%= f.password_field :password_confirmation %>
+			</div>
+		</fieldset>			
+		<% end %>
+		
+		<% unless Settings.user_setting("options",current_branch).empty? %>
+		<fieldset>
+			<% Settings.user_setting("options",current_branch).each do |field, checked| %>
+	  	<div>
+				<%= f.label field.to_sym %>
+	  		<%= f.check_box field.to_sym, :checked => checked %>
+			</div>
+			<% end %>	
+		</fieldset>
+		<% end %>
+	  <div class="actions"><%= f.submit t('html.registration_form.submit') %></div>
 
-	<% Settings.user_setting("fields", current_branch).map(&:to_sym).each do |field| %>
-  <div><%= f.label field %><br />
-  <%= f.text_field field %></div>
-	<% end %>	
-
-	<% if Settings.user_setting("password_required",current_branch) == "always" %>
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
 	<% end %>
-	
-	<% Settings.user_setting("options",current_branch).each do |field, checked| %>
-  <div><%= f.label field.to_sym %><br />
-  <%= f.check_box field.to_sym, :checked => checked %></div>
-	<% end %>	
 
-  <div><%= f.submit "Sign up" %></div>
-
-<% end %>
-
-<%= render "users/shared/links" %>
+	<%= render "users/shared/links" %>
 </article>

@@ -1,0 +1,14 @@
+<section class="events">
+	<h1>Events</h1>
+	<% unless posts.empty? %>
+	<ul>
+		<% events.each do |event| %>
+		<li><%= link_to event.name, event_path(event.slug) %></li>
+		<% end %>
+	</ul>
+	<% else %>
+	<p>There is no event yet</p>
+	<% end %>
+	
+</section>
+<%= paginate events %>

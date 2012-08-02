@@ -4,6 +4,6 @@ module UsersHelper
 	end
 	
 	def user
-		@user
+		@user || current_user
 	end
 end

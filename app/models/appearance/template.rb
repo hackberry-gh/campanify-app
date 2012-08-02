@@ -2,6 +2,7 @@ class Appearance::Template < ActiveRecord::Base
   class Resolver < ActionView::Resolver 
   
     include Singleton
+    include Campanify::Cache
 
     protected
 
@@ -13,8 +14,10 @@ class Appearance::Template < ActiveRecord::Base
         :handler => normalize_array(details[:handlers]), 
         :partial => partial || false
       }
-
-      Appearance::Template.where(conditions).map do |record| 
+      templates = _cache Appearance::Template::Resolver, conditions.values do
+        Appearance::Template.where(conditions).all
+      end
+      templates.map do |record| 
         initialize_template(record)
       end
     end
@@ -67,5 +70,6 @@ class Appearance::Template < ActiveRecord::Base
   
   def clear_cache
     Resolver.instance.clear_cache
+    _expire_cache self.path, self.locale, self.format, self.handler, self.partial
   end
 end

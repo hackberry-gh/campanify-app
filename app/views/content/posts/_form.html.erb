@@ -1,0 +1,24 @@
+<%= semantic_form_for Content::Post.new, 
+		:remote => true,
+		:url => posts_path,
+		:html => {
+		:"data-collection" => "posts",	
+		:"data-member" => "post",
+		:"data-type" => "json",
+		:"data-post-action" => "after_post",
+		:"data-find_by" => "slug",
+		:"data-translated-member" => t('models.post')
+		} do |f| %>
+	<div id="error_explanation" class="hidden"></div>		
+	<%= f.inputs do %>
+	<%= f.globalize_inputs_current_locale :translations do |lf| %>
+    <%= lf.inputs :title, :body, :locale do %>
+      <%= lf.input :title %>
+      <%= lf.input :body, :as => :text %>
+      <%= lf.input :locale, :as => :hidden %>
+    <% end %>
+  <% end %>
+  <%= f.input :user_id, :as => :hidden, :input_html => {:value => current_user.id } %>
+	<% end %>
+  <%= f.buttons %>
+<% end %>

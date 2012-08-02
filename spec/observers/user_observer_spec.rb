@@ -5,7 +5,7 @@ describe UserObserver do
     
     Settings.user["hooks"]["after_create"] = {
       "user" => "generate_reset_password_token",
-      "mail" => "post_signup_email",
+      "mail" => "after_signup_email",
       "http_post" => "http://localhost:5000/users/hooks/http_post"
     }
     

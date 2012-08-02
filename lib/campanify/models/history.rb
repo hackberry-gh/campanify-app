@@ -7,6 +7,7 @@ module Campanify
       module ClassMethods
         def track(*args)
           args.each do |field_name|
+            tracking_fields << field_name unless tracking_fields.include?(field_name)
             class_eval <<-CODE
 
             def inc_#{field_name}(owner = self)
@@ -65,8 +66,10 @@ module Campanify
           end
         end
       end
-
+      
       included do
+        class_variable_set :@@tracking_fields, []
+        cattr_accessor :tracking_fields
         include Campanify::ThreadedAttributes
         threaded :ip
       end

@@ -100,6 +100,8 @@ if Settings.has_table?
 end
 
 # carier wave
+require 'campanify/validators/file_size_validator'
+require 'carrierwave/orm/activerecord'
 CarrierWave.configure do |config|
   config.fog_credentials = {
     :provider               => 'AWS',                   # required
@@ -113,6 +115,7 @@ CarrierWave.configure do |config|
   config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
 end
 
+# Formstastic Globalize 3 Inputs
 module Formtastic
   class FormBuilder
     def globalize_inputs(*args, &proc)
@@ -133,6 +136,19 @@ module Formtastic
       linker = self.template.content_tag(:ul, linker, :class => "language-selection")
 
       self.template.content_tag(:div, linker + fields, :class => "language-tabs-#{index}");
+    end
+    def globalize_inputs_current_locale(*args, &proc)
+      index = options[:child_index] || "#{self.object.class.to_s.parameterize}-#{self.object.object_id}"
+      fields = ActiveSupport::SafeBuffer.new
+      locale = ::I18n.locale
+      
+      fields << self.template.content_tag(:div,
+      self.semantic_fields_for(*(args.dup << self.object.translation_for(locale)), &proc),
+      :id => "lang-#{locale}-#{index}",
+      :class => "language-fields"
+      )
+
+      self.template.content_tag(:div, fields, :class => "language-tabs-#{index}");
     end
   end
 end

@@ -1,4 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
+  include Campanify::Controllers::TemplateController  
+  include Campanify::Controllers::ReferralsController 
+  include Campanify::Controllers::IpCountryBranchController     
   def create
 
     if Settings.user_setting('password_required', current_branch) == "never"

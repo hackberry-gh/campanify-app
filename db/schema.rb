@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120731191036) do
+ActiveRecord::Schema.define(:version => 20120802141924) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -171,6 +171,8 @@ ActiveRecord::Schema.define(:version => 20120731191036) do
     t.integer  "user_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.text     "likes"
+    t.integer  "popularity"
   end
 
   add_index "content_posts", ["slug", "published_at", "user_id"], :name => "index_content_posts_on_slug_and_published_at_and_user_id"
@@ -275,6 +277,8 @@ ActiveRecord::Schema.define(:version => 20120731191036) do
     t.text     "recruits"
     t.string   "provider"
     t.string   "uid"
+    t.string   "avatar"
+    t.integer  "popularity"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

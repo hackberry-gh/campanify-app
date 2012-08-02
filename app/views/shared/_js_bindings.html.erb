@@ -1,0 +1,6 @@
+<script>
+	var errorSentence = '<%=I18n.t("errors.messages.not_saved",
+                      :count => "$count",
+                      :resource => "$resource") %>';
+	var redirects = <%== user ? user.setting("redirects").to_json : {}.to_json%>;
+</script>

@@ -8,7 +8,7 @@ module Content
 
     def render_widgets(parent)
       buffer = ""    
-      unless widgets = parent.widgets.ordered
+      if widgets = parent.widgets.ordered
         widgets.each do |widget|
           buffer << (get_content(widget) || "")
         end

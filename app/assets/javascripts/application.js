@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_directory .
+//= require_directory ./content
 
 (function($, undefined) {
 	var campanify;
@@ -37,9 +38,11 @@
 	};
 
 	$(document).ready( function(){
+		
 		$("#language").change(function(){
 			campanify.changeLocale( $(this).val() );
 		});
+		
 	});
 
 })( jQuery );

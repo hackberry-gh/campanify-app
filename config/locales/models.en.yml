@@ -1,0 +1,4 @@
+en:
+  models:
+    user: User
+    post: Post

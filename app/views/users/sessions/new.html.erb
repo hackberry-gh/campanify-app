@@ -1,20 +1,34 @@
-<h2>Sign in</h2>
+<article class="form">
+	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+	<legend>Log In</legend>
+
+	<fieldset>
+  	<div>
+			<%= f.label :email %>
+  		<%= f.email_field :email %>
+		</div>
+	</fieldset>
 
 	<% if Settings.user_setting('password_required', current_branch) != "never" %>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+	<fieldset>	
+  	<div>
+			<%= f.label :password %>
+  		<%= f.password_field :password %>
+		</div>
+	</fieldset>
 	<% end %>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+  <% if devise_mapping.rememberable? %>
+	<fieldset>	
+    <div>
+			<%= f.check_box :remember_me %> <%= f.label :remember_me, :style => "display:inline" %>
+		</div>
+	</fieldset>	
   <% end -%>
 
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
+  <div class="actions"><%= f.submit "Enter" %></div>
+	<% end %>
 
-<%= render "users/shared/links" %>
+	<%= render "users/shared/links" %>
+</article>

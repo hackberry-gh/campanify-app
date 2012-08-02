@@ -1,0 +1,14 @@
+<article class="post" id="<%= post.slug %>">
+	<h2><%= post.title %></h2>
+	<section class="body">
+	<%= post.body %>
+	</section>
+	<small>
+		<dl>
+			<dt><%= t('attributes.post.published_at') %></dt><dd><%= time_ago_in_words post.published_at.in_time_zone(timezone) %></dd>
+			<dt><%= t('attributes.post.user') %></dt><dd><%= link_to post.user.display_name, post.user %></dd>
+			<dt><%= t('attributes.post.popularity') %></dt><dd><%= post.popularity %></dd>					
+		</dl>	
+	</small>	
+</article>
+<%= render "shared/comments", :href => post_url(post) if Settings.posts['comments'].present? %>

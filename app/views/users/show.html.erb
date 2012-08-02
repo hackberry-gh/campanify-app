@@ -1,15 +1,16 @@
-<% if me? %>
-<nav>
-	<%= link_to "profile", edit_user_registration_path %>
-</nav>
-<% else %>
-<script>
-$.post("<%= visits_user_path(user) %>", {_method:"PUT",action:"visits"}, "json");
-</script>
-<% end %>
 <article class="user">
-	<%= user.first_name %>
-	<br/>
-	visits: <%= user.total_visits %><br/>
-	recruits: <%= user.total_recruits %>	
-</article>	
+	<h1><%= link_to_if me?, user.display_name, edit_user_registration_path %></h1>
+	<%= image_tag user.avatar.url, :class => "avatar" if user.avatar %>
+	<dl>
+		<dt><%= t('attributes.user.visits') %></dt><dd><%= user.total_visits %></dd>
+		<dt><%= t('attributes.user.recruits') %></dt><dd><%= user.total_recruits %></dd>
+		<dt><%= t('attributes.user.posts') %></dt><dd><%= user.posts.count %></dd>		
+		<dt><%= t('attributes.user.popularity') %></dt><dd><%= user.popularity %></dd>		
+	</dl>
+</article>
+	
+<% unless me? %>
+<script>$.post("<%= visits_user_path(user) %>", {_method:"PUT",action:"visits"}, "json");</script>
+<% end %>
+
+<%= render "shared/comments", :href => user_url(user) if Settings.users['comments'].present? %>

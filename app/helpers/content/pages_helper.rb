@@ -1,6 +1,6 @@
 module Content::PagesHelper
   include Content::Helper
 	def page
-	  @page
+	  @resource
   end  
 end

@@ -27,17 +27,18 @@ $(document).ready(function(){
 
 	$(".language-selection li a").click(function(){
 		var id = $(this).attr('href');
-		console.log(id)
 		$(".language-fields").hide();
 		$(id).show();
 		$(".language-selection li a.active").removeClass('active');
 		$(this).addClass('active');
 		var textarea = $(id + " textarea.code");
-		$(".ace_editor").insertAfter(textarea);
-		textarea.hide();
-		current_textarea.val(editor.getSession().getValue());
-		editor.getSession().setValue(textarea.val());
-		current_textarea = textarea;
+		if (textarea.length > 0) {
+			$(".ace_editor").insertAfter(textarea);
+			textarea.hide();
+			current_textarea.val(editor.getSession().getValue());
+			editor.getSession().setValue(textarea.val());
+			current_textarea = textarea;
+		}
 		return false;
 	});
 

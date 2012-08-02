@@ -15,10 +15,13 @@ class Content::Event < ActiveRecord::Base
   before_destroy :destroy_facebook_event
   
   accepts_nested_attributes_for :translations
+  
+  scope :public, where(:privacy => "OPEN")
+  
   private
   
   def set_venue
-    self.venue = {street: "", city: "", state: "", zip: "", country: "", latitude: "", longitude: ""}
+    self.venue = {street: "", city: "", state: "", zip: "", country: "", latitude: "", longitude: ""} if self.venue.empty?
   end
   
   def create_facebook_event
@@ -52,12 +55,14 @@ class Content::Event < ActiveRecord::Base
   end
   
   def destroy_facebook_event
-    id, access_token = token_pair
-    @graph = graph(access_token)
-    @graph.delete_object(id)
+    if token_pair.present?
+      id, access_token = token_pair
+      @graph = graph(access_token)
+      @graph.delete_object(id)
+    end
   end
   
   def token_pair
-    @token_pair ||= self.parent.split("-")
+    @token_pair ||= self.parent.split("-") if self.parent
   end
 end

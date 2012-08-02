@@ -1,8 +1,13 @@
 <section class="users">
-	<ul>
-		<% users.each do |user| %>
-		<li><%= link_to user.display_name, user %></li>
-		<% end %>
-	</ul>
+	<h1>Users</h1>
+	<% unless users.empty? %>
+	<div class="thumbs clearfix">
+	<% users.each do |user| %>
+	<%= link_to image_tag(user.avatar_url(:thumb)), user, :class => "thumb" %>
+	<% end %>
+	</div>
+	<% else %>
+	<p>Nobody has signed up yet, <a href="/users/sign_up">be the first</a></p>
+	<% end %>
 </section>
 <%= paginate users %>

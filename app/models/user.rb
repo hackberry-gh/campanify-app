@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   include Campanify::Models::History
   include Campanify::ThreadedAttributes
   include Campanify::Models::Sanitized
-  
+  include Campanify::Models::Popularity
+    
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -17,7 +18,7 @@ class User < ActiveRecord::Base
                   :birth_year, :birth_date, 
                   :country, :region, :city, :address, :post_code, :phone, :mobile_phone, 
                   :branch, :language, :send_updates, :legal_aggrement, 
-                  :provider, :uid
+                  :provider, :uid, :avatar, :remove_avatar, :remote_avatar_url
 
   serialize :visits, Hash
   serialize :recruits, Hash
@@ -27,6 +28,8 @@ class User < ActiveRecord::Base
   before_validation :set_defaults, :if => "new_record?"
   
   after_create :send_password_instructions
+  
+  has_many :posts, :class_name => "Content::Post", :dependent => :destroy
 
   # before_validation { |user|
   #     if user.new_record? && setting("password_required") == "never"
@@ -36,6 +39,15 @@ class User < ActiveRecord::Base
   
   threaded  :branch
   track     :visits, :recruits
+  
+  mount_uploader :avatar, AvatarUploader
+  validates :avatar, 
+  :integrity => true,
+  :processing => true,
+  :presence => true, 
+  :file_size => { 
+    :maximum => 2.megabytes.to_i
+  }
   
   def self.i18n_scope
   end
@@ -49,7 +61,8 @@ class User < ActiveRecord::Base
       provider: auth.provider,
       uid: auth.uid,
       email: auth.info.email,
-      password: Devise.friendly_token[0,20]
+      password: Devise.friendly_token[0,20],
+      remote_avatar_url: "http://graph.facebook.com/#{auth.uid}/picture?type=normal"
       )
     end
     user
@@ -59,12 +72,20 @@ class User < ActiveRecord::Base
     Settings.user_setting(key, self.branch)
   end
   
+  def timezone
+    begin
+      Settings.branches[user.branch]['timezone']
+    rescue
+      Settings.timezone
+    end
+  end
+  
   def full_name
-    "#{self.first_name} #{self.last_name}" unless self["full_name"]
+    self["full_name"] || (self.first_name || self.last_name ? "#{self.first_name} #{self.last_name}" : "User #{self.id}")
   end
 
   def display_name
-    self.full_name unless self["display_name"]
+    self["display_name"] || self.full_name|| "User #{self.id}"
   end  
 
   def email_address
@@ -76,7 +97,6 @@ class User < ActiveRecord::Base
   end  
   
   def password_required?
-    puts "password_required? #{setting("password_required")}"
     case setting("password_required")
     when "never"
       false

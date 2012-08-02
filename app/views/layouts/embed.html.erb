@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><%= t('content.title') %></title>
-  <%= javascript_include_tag "jquery" %>
-	<%= javascript_include_tag "jquery_ujs" %>
+	<title><%= t('html.title') %></title>
+	<%= render 									"shared/js_bindings" %>	
+  <%= javascript_include_tag 	"jquery" %>
+	<%= javascript_include_tag 	"jquery_ujs" %>
+	<%= javascript_include_tag 	"content/widgets" %>	
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= body_class %>">
