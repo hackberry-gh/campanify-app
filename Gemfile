@@ -26,6 +26,7 @@ gem 'cancan'
 gem 'heroku',												'2.26.3'
 gem 'activeadmin',									'~> 0.4.4'
 gem "omniauth-facebook"
+gem 'redcarpet'
 
 group :assets do
   gem 'sass-rails',   							'~> 3.2.3'

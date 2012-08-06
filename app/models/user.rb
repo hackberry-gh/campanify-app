@@ -30,6 +30,9 @@ class User < ActiveRecord::Base
   after_create :send_password_instructions
   
   has_many :posts, :class_name => "Content::Post", :dependent => :destroy
+  
+  scope :popularity, order('popularity DESC')
+  scope :date, order('created_at DESC')
 
   # before_validation { |user|
   #     if user.new_record? && setting("password_required") == "never"
@@ -47,7 +50,8 @@ class User < ActiveRecord::Base
   :presence => true, 
   :file_size => { 
     :maximum => 2.megabytes.to_i
-  }
+  }, 
+  :if => "persisted?"
   
   def self.i18n_scope
   end

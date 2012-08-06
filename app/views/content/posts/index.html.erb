@@ -1,5 +1,10 @@
 <section class="posts">
 	<h1>Posts</h1>
+	<nav class="sort">
+		Sort by 
+		<%= link_to_if !has_sort("popularity"), "popularity", posts_path(sort: "popularity") %> or 
+		<%= link_to_if has_sort("popularity"), "date", posts_path %>
+	</nav>	
 	<% unless posts.empty? %>
 	<ul>
 		<% posts.each do |post| %>

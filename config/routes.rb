@@ -1,9 +1,22 @@
 Campanify::Application.routes.draw do
 
-  filter :locale, :exclude => /^\/admin|^\/users\/auth/ if respond_to?('filter')
+  filter :locale, :exclude => /^\/admin|^\/users\/auth|^\/templates/ if respond_to?('filter')
   
-  resources :events,  :module => "content", :only => [:index, :show]
-  resources :posts,   :module => "content", :only => [:index, :show, :create]  
+  resources :events,  :module => "content", :only => [:index, :show] do
+    collection do
+      get 'page/:page', :action => :index
+    end
+  end
+  resources :posts,   :module => "content", :only => [:index, :show, :create] do
+    collection do
+      get 'page/:page', :action => :index
+      post 'preview'
+    end
+    member do
+      put 'like'
+      put 'unlike'      
+    end
+  end
   resources :pages,   :module => "content", :only => [:show]
   resources :widgets, :module => "content", :only => [:show]
   
@@ -14,6 +27,9 @@ Campanify::Application.routes.draw do
   }
 
   resources :users, :only => [:index, :show] do
+    collection do
+      get 'page/:page', :action => :index
+    end
     member do
       put :visits
     end

@@ -7,18 +7,24 @@
 
 	<fieldset>
   <% resource.setting("fields").map(&:to_sym).each do |field| %>
-  <div><%= f.label field %>
-  <%= f.text_field field %></div>
+  <div>
+  <%= f.text_field field,
+	:"data-label" => t("attributes.user.#{field}"), 
+	:placeholder => t("attributes.user.#{field}") %></div>
 	<% end %>	
 
 	<% resource.setting("options").each do |field, checked| %>
-  <div><%= f.label field.to_sym %>
-  <%= f.check_box field.to_sym, :checked => checked %></div>
+  <div>
+  <%= f.check_box field.to_sym, :checked => checked,
+	:"data-label" => t("attributes.user.#{field}"), 
+	:placeholder => t("attributes.user.#{field}") %></div>
 	<% end %>
 	
 	<div>
 	<%= f.label :avatar %>
-  <%= f.file_field :avatar %>
+  <%= f.file_field :avatar,
+	:"data-label" => t("attributes.user.avatar"), 
+	:placeholder => t("attributes.user.avatar") %>
 	</div>
 	<% if current_user.avatar? %>
 	<div>
@@ -30,18 +36,23 @@
 	<% end %>
 	</fieldset>
 	
-	
 	<% if resource.setting("password_required") != "never" %>
 	<fieldset>
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
-  <%= f.password_field :password, :autocomplete => "off" %></div>
+  <div><i>(leave blank if you don't want to change it)</i>
+  <%= f.password_field :password, :autocomplete => "off",
+	:"data-label" => t("attributes.user.password"), 
+	:placeholder => t("attributes.user.password") %> %></div>
 
-  <div><%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %></div>
+  <div>
+  <%= f.password_field :password_confirmation,
+	:"data-label" => t("attributes.user.password_confirmation"), 
+	:placeholder => t("attributes.user.password_confirmation") %></div>
 	</fieldset>
 
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
-  <%= f.password_field :current_password %></div>	
+  <div><i>(we need your current password to confirm your changes)</i>
+  <%= f.password_field :current_password,
+	:"data-label" => t("attributes.user.current_password"), 
+	:placeholder => t("attributes.user.current_password") %></div>	
 
 	<% end %>
 		

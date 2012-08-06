@@ -2,3 +2,7 @@ en:
   models:
     user: User
     post: Post
+  attributes:
+    user:
+      email: Email  
+      avatar: Avatar

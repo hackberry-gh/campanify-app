@@ -3,11 +3,9 @@
 /* VERY DIRTY FB COMMENT WIDTH HACK */
 $(document).ready(function(){
 	$.campanify.fbCommentHack = setInterval(function(){
-		console.log($(".fb_iframe_widget iframe"))
 		if( $(".fb_iframe_widget iframe").length > 0 ){
 			$(".fb-comments, .fb-comments .fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget iframe").css({width: '100%'});
-			clearInterval($.campanify.fbCommentHack);
 		}
-	}, 100);
+	}, 1000);
 });
 </script>

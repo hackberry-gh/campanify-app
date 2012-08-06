@@ -4,5 +4,5 @@ module Content::PostsHelper
   end
 	def post
 	  @resource
-  end  
+  end   
 end

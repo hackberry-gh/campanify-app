@@ -30,7 +30,6 @@ module Content
 	  end
 		
 	  def show
-	    puts "#{params[:id]}"
 	  	@resource = scope.send(finder_method, params[:id])
 	  	redirect_to '/404' and return if @resource.nil? 
 	  	render :layout => false if request.xhr?

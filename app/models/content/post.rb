@@ -15,8 +15,33 @@ class Content::Post < ActiveRecord::Base
   serialize :likes, Hash
   track :likes
   
+  has_and_belongs_to_many :likers, :class_name => "User", :join_table => "likers_posts", :association_foreign_key => "liker_id"
+  
+  scope :popularity, order('popularity DESC')
+  scope :date, order('published_at DESC')
+  
   def self.i18n_scope
   end
+  
+  def liked?(user)
+    likers.include?(user)
+  end
+  
+  alias_method :inc_likes_org, :inc_likes
+  alias_method :dec_likes_org, :dec_likes  
+  def inc_likes(owner = self)
+    if owner.is_a?(User)
+      likers << owner
+      inc_likes_org(owner)
+    end
+  end
+  
+  def dec_likes(owner = self)
+    if owner.is_a?(User)
+      likers.delete(owner)
+      dec_likes_org(owner)
+    end
+  end  
   
   private
   

@@ -18,7 +18,9 @@ class UsersController < CampanifyController
   
   # GET, users index
   def index
-    @users = User.page(params[:page]).per(Settings.pagination["per"])    
+    scope = User
+    scope = scope.send(params[:sort] ||= "date")
+    @users = scope.page(params[:page]).per(Settings.pagination["per"])    
   end
 
   # GET, show user page
@@ -42,7 +44,7 @@ class UsersController < CampanifyController
   end
   
   def index_cache_path
-    _cache_key("user", "index", params[:page], I18n.locale, current_branch || "none")
+    _cache_key("user", "index", params[:page], params[:sort] || "none", I18n.locale, current_branch || "none")
   end
   
   def show_cache_path

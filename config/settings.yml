@@ -97,7 +97,7 @@ development: &development
       # hooks for after creation
       # uncomment below line to do nothing
       # after_create: []
-      after_create:
+      after_create: []
         # sends reset password instructions to user
         # you should enable this if you choose after_signup for password_required
         # user: send_reset_password_instructions
@@ -112,10 +112,10 @@ development: &development
         # don't forget change subject and body from translations
         # user_mailer.after_signup_email.subject
         # user_mailer.after_signup_email.body
-        mail: after_signup_email
+        # mail: after_signup_email
         
         # posts user fields to given url
-        http_post: http://localhost:5000/users/hooks/http_post
+        # http_post: http://localhost:5000/users/hooks/http_post
         
         # tweets user display name | first name with given message 
         # to given account's timeline
@@ -203,8 +203,8 @@ development: &development
         sizes: [48,48]
     avatars:
       default_url:
-        big: "http://placekitten.com/g/450/450"
-        thumb: "http://placekitten.com/g/96/96"  
+        big: "http://placedog.com/g/450/450"
+        thumb: "http://placedog.com/g/96/96"  
       big:
         process: resize_to_limit
         sizes: [450,450]

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= t('html.title') %></title>
+	<meta name="description" content="<%= t('html.description') %>">
+  <%= stylesheet_link_tag    	"application", :media => "all" %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= body_class %>">
+	
+	<div id="main" role="main">
+
+		
+		
+		<section id="content">
+		<%= yield %>
+		</section>
+
+		
+	</div>
+	
+</body>
+</html>

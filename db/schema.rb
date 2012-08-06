@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120802141924) do
+ActiveRecord::Schema.define(:version => 20120805085507) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -214,6 +214,13 @@ ActiveRecord::Schema.define(:version => 20120802141924) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "likers_posts", :id => false, :force => true do |t|
+    t.integer "liker_id"
+    t.integer "post_id"
+  end
+
+  add_index "likers_posts", ["liker_id", "post_id"], :name => "index_likers_posts_on_liker_id_and_post_id"
 
   create_table "pages_widgets", :id => false, :force => true do |t|
     t.integer "page_id"

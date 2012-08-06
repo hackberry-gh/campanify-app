@@ -5,16 +5,18 @@
 
 	<fieldset>
   	<div>
-			<%= f.label :email %>
-  		<%= f.email_field :email %>
+  		<%= f.email_field :email,
+			:"data-label" => t("attributes.user.email"), 
+			:placeholder => t("attributes.user.email") %>
 		</div>
 	</fieldset>
 
 	<% if Settings.user_setting('password_required', current_branch) != "never" %>
 	<fieldset>	
   	<div>
-			<%= f.label :password %>
-  		<%= f.password_field :password %>
+  		<%= f.password_field :password,
+			:"data-label" => t("attributes.user.password"), 
+			:placeholder => t("attributes.user.password") %>
 		</div>
 	</fieldset>
 	<% end %>

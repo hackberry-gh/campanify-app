@@ -1,14 +1,28 @@
 <article class="post" id="<%= post.slug %>">
-	<h2><%= post.title %></h2>
+	<h1><%= post.title %></h1>
 	<section class="body">
-	<%= post.body %>
+	<%= Content.markdown.render(post.body).html_safe %>
 	</section>
 	<small>
+		<div id="error_explanation" style="display:none"></div>		
 		<dl>
 			<dt><%= t('attributes.post.published_at') %></dt><dd><%= time_ago_in_words post.published_at.in_time_zone(timezone) %></dd>
 			<dt><%= t('attributes.post.user') %></dt><dd><%= link_to post.user.display_name, post.user %></dd>
-			<dt><%= t('attributes.post.popularity') %></dt><dd><%= post.popularity %></dd>					
+			<dt><%= t('attributes.post.popularity') %></dt>
+			<dd><%= post.popularity %>
+			<% if current_user %>
+				<% unless author? %>
+					<% if post.liked?(current_user) %>
+					<%= link_to "unlike", unlike_post_path(post), :method => :put, :remote => true, :class => "liking" %>					
+					<% else %>
+					<%= link_to "like", like_post_path(post), :method => :put, :remote => true, :class => "liking" %>
+					<% end %>			
+				<% end %>							
+			<% else %>
+				<%= link_to "like", new_user_session_path %>			
+			<% end %>	
+			</dd>					
 		</dl>	
 	</small>	
 </article>
-<%= render "shared/comments", :href => post_url(post) if Settings.posts['comments'].present? %>
+<%= render "shared/comments", :href => post_url(post.slug) if Settings.posts['comments'].present? %>
