@@ -19,7 +19,11 @@ module Campanify
       end
 
       def instance
-        @instance ||= first || create!(data: self.defaults)
+        if self.has_table?
+          @instance ||= first || create!(data: self.defaults)
+        else
+          @instance ||= OpenStruct.new(data: self.defaults)
+        end
       end
       
       # gets branched or default user settings

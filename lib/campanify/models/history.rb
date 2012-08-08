@@ -2,6 +2,11 @@ module Campanify
   module Models
     module History
 
+      class Track < ActiveRecord::Base
+        self.table_name = "history_tracks"
+        attr_accessible :value, :tracker, :ip, :owner_id, :target_id, :target_type
+      end
+
       extend ActiveSupport::Concern
 
       module ClassMethods
@@ -14,52 +19,26 @@ module Campanify
               update_historical_field("#{field_name}", "inc", 1, owner)
             end
             def dec_#{field_name}(owner = self)
-              update_historical_field("#{field_name}", "inc", -1, owner)
+              update_historical_field("#{field_name}", "dec", 1, owner)
             end     
             def set_#{field_name}(value, owner = self)
               update_historical_field("#{field_name}", "set", value, owner)
             end
 
-            def total_#{field_name}(uniq = true, owner = :all)
-              unless self['#{field_name}'].empty?
-                tracks = self['#{field_name}']
-                values = tracks.values.map{|h| h.values}.flatten.map{|h| h.values}.flatten.map{|h| h.values}.flatten if tracks
-                tracks_count values, uniq, owner if tracks
-              else
-                0
-              end
+            def total_#{field_name}(uniq = true, owner = :all, target = self)
+              count("#{field_name}", uniq, owner, target)
             end
-            def yearly_#{field_name}(uniq = true, owner = :all, year = Time.now.year)
-              unless self['#{field_name}'].empty?
-                tracks = self['#{field_name}'][year]
-                tracks_count tracks.values.first.values.first.values, uniq, owner if tracks
-              else
-                0
-              end
+            def yearly_#{field_name}(uniq = true, owner = :all, target = self)
+              count("#{field_name}", uniq, owner, target, 'year')
             end
-            def monthly_#{field_name}(uniq = true, owner = :all, month = Time.now.month, year = Time.now.year)
-              unless self['#{field_name}'].empty?
-                tracks = self['#{field_name}'][year][month]
-                tracks_count  tracks.values.first.values, uniq, owner if tracks
-              else
-                0
-              end
+            def monthly_#{field_name}(uniq = true, owner = :all, target = self)
+              count("#{field_name}", uniq, owner, target, 'month')
             end
-            def daily_#{field_name}(uniq = true, owner = :all, day = Time.now.day, month = Time.now.month, year = Time.now.year)
-              unless self['#{field_name}'].empty?
-                tracks = self['#{field_name}'][year][month][day]
-                tracks_count  tracks.values, uniq, owner if tracks
-              else
-                0
-              end                
+            def daily_#{field_name}(uniq = true, owner = :all, target = self)
+              count("#{field_name}", uniq, owner, target, 'day')
             end
-            def hourly_#{field_name}(uniq = true, owner = :all, hour = Time.now.hour, day = Time.now.day, month = Time.now.month, year = Time.now.year)
-              unless self['#{field_name}'].empty?              
-                tracks = self['#{field_name}'][year][month][day][hour]
-                tracks_count  tracks, uniq, owner if tracks
-              else
-                0
-              end              
+            def hourly_#{field_name}(uniq = true, owner = :all, target = self)
+              count("#{field_name}", uniq, owner, target, 'hour')
             end                
 
             CODE
@@ -79,76 +58,43 @@ module Campanify
       def update_historical_field(field_name, action, value, owner)
         
         if current_ip && owner
-          
-          year, month, day, hour = time_stamp.split(".").map(&:to_i)
-          
-          begin
-            current_value = self.send(field_name.to_sym)[year][month][day][hour][uniq_stamp(owner)] || 0
-          rescue NoMethodError => e
-            current_value = 0
+          start_time = Time.now.utc.beginning_of_hour
+          end_time = Time.now.utc.end_of_hour
+          if current = Track.where('tracker = ? AND ip = ? AND owner_id = ? AND target_id = ? AND target_type = ? AND created_at >= ? AND created_at <= ?', 
+            field_name, current_ip, owner.id, self.id, self.class.name, start_time, end_time).first
+            current.update_column(:value, calculate(current.value, action, value))            
+          else
+            current = Track.create!(:value => calculate(0, action, value), :tracker => field_name, :ip => current_ip, :owner_id => owner.id, 
+            :target_id => self.id, :target_type => self.class.name)
           end
-          
-          case action
-          when "inc"
-            value = current_value + value
-          when "dec"
-            value = current_value - value            
-          when "set"
-            value = value            
-          end
-          self.send(field_name.to_sym)[year] = {} unless self.send(field_name.to_sym)[year]          
-          self.send(field_name.to_sym)[year][month] = {} unless self.send(field_name.to_sym)[year][month]                    
-          self.send(field_name.to_sym)[year][month][day] = {} unless self.send(field_name.to_sym)[year][month][day]
-          self.send(field_name.to_sym)[year][month][day][hour] = {} unless self.send(field_name.to_sym)[year][month][day][hour]
-          self.send(field_name.to_sym)[year][month][day][hour][uniq_stamp(owner)] = value 
-          self.save!(validate: false)
         end
-      end          
-
-      # def generate_key(field_name, owner)
-      #   "#{field_name}.#{owner.id}.#{time_stamp}.#{ip_stamp}"
-      # end    
-
-      def time_stamp
-        t = Time.now
-        "#{t.year}.#{t.month}.#{t.day}.#{t.hour}"
-        # Time.now.to_key
-      end
-
-      def uniq_stamp(owner)
-        "#{owner.id}_#{current_ip}"
-      end
-
-      def tracks_count(tracks, uniq = true, owner = :all)
-        # puts "OWNER #{owner} #{owner.class}"
-        # tracks = tracks.clone
+        
+      end 
+      
+      def count(field_name, uniq, owner, target, period = nil)
+        scope = Track.where(tracker: field_name)
+        scope = scope.where(owner_id: owner.id) unless owner == :all
+        scope = scope.where(target_id: target.id, target_type: target.class.name) unless target == :all
+        scope = scope.where("date_trunc('#{period}', TIMESTAMP '#{Time.now.utc.to_s(:db)}') = ?", 
+        Time.now.utc.send("beginning_of_#{period}").to_s(:db)) unless period.nil?
         if uniq
-          if tracks.is_a?(Array)
-            tracks.delete_if{|h| h.values.first == 0}.
-            map{|h| h.keys}.
-            flatten.uniq.
-            # delete_if{ |s| owner != :all && owner != s.split(".").first.to_i }.
-            size
-          elsif tracks.is_a?(Hash)
-            tracks.delete_if{|k,v| v == 0}.
-            keys.flatten.uniq.
-            # delete_if{ |s| owner != :all && owner != s.split(".").first.to_i }.
-            size
-          end
+          scope.sum(:value, :group => :ip).keys.count
         else
-          if tracks.is_a?(Array)
-            # puts "ARRAY #{tracks}"
-            tracks.sum{|h| 
-              # h.delete_if{ |k,v| owner != :all && owner != k.split(".").first.to_i }.values.sum
-              h.values.sum
-            }
-          elsif tracks.is_a?(Hash)
-            # puts "HASH #{tracks}"            
-            # tracks.delete_if{ |k,v| owner != :all && owner != k.split(".").first.to_i }.sum
-            tracks.values.sum
-          end
-
+          scope.sum(:value)
         end
+        
+      end 
+      
+      def calculate(current, action, value)  
+        case action
+        when "inc"
+          current = current + value
+        when "dec"
+          current = current - value
+        when "set"
+          current = value
+        end
+        current
       end
 
     end

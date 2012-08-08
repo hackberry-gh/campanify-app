@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120805085507) do
+ActiveRecord::Schema.define(:version => 20120806193403) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -169,10 +169,9 @@ ActiveRecord::Schema.define(:version => 20120805085507) do
     t.text     "body"
     t.datetime "published_at"
     t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.text     "likes"
-    t.integer  "popularity"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "popularity",   :default => 0
   end
 
   add_index "content_posts", ["slug", "published_at", "user_id"], :name => "index_content_posts_on_slug_and_published_at_and_user_id"
@@ -214,6 +213,19 @@ ActiveRecord::Schema.define(:version => 20120805085507) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "history_tracks", :force => true do |t|
+    t.integer  "value",       :default => 0
+    t.integer  "target_id"
+    t.string   "target_type"
+    t.string   "tracker"
+    t.string   "ip"
+    t.integer  "owner_id"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  add_index "history_tracks", ["target_id", "target_type", "tracker", "ip", "owner_id", "created_at"], :name => "history_index"
 
   create_table "likers_posts", :id => false, :force => true do |t|
     t.integer "liker_id"
@@ -280,12 +292,10 @@ ActiveRecord::Schema.define(:version => 20120805085507) do
     t.string   "language"
     t.boolean  "send_updates"
     t.boolean  "legal_aggrement"
-    t.text     "visits"
-    t.text     "recruits"
     t.string   "provider"
     t.string   "uid"
     t.string   "avatar"
-    t.integer  "popularity"
+    t.integer  "popularity",             :default => 0
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

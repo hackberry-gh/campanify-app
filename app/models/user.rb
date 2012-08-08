@@ -19,9 +19,6 @@ class User < ActiveRecord::Base
                   :country, :region, :city, :address, :post_code, :phone, :mobile_phone, 
                   :branch, :language, :send_updates, :legal_aggrement, 
                   :provider, :uid, :avatar, :remove_avatar, :remote_avatar_url
-
-  serialize :visits, Hash
-  serialize :recruits, Hash
                     
   validate :validations_from_settings
   

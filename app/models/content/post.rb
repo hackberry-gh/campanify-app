@@ -1,4 +1,5 @@
 class Content::Post < ActiveRecord::Base
+  
   include Campanify::Models::Slug  
   include Campanify::Models::Publishable 
   include Campanify::Models::Sanitized
@@ -12,7 +13,7 @@ class Content::Post < ActiveRecord::Base
   accepts_nested_attributes_for :translations
   before_save :sanitize_inputs
   validates_presence_of :title, :body, :user_id
-  serialize :likes, Hash
+
   track :likes
   
   has_and_belongs_to_many :likers, :class_name => "User", :join_table => "likers_posts", :association_foreign_key => "liker_id"
