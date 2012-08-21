@@ -1,9 +1,88 @@
 en:
+  sharing:
+    user:
+      title: I just created my profile on Campanify.it
+      description: This is very important campaign you should join
+      tweet: "Hey check out my campanify profile %{url} via: @campanify"
+    default:
+      title: Campanify is a web platform to create online campaigns with a single click
+      description: We proudly backed many global campaigns already.
+      tweet: "Something important happening now, act now! %{url} via: @campanify"
+      image: campanify-logo-96.png      
   html:
     title: Campanify
     description: Best Service Ever!  
+    links:
+      back: Back
+      are_you_sure: Are you sure?
+      login: Login
+      join: Join
+      forgot_your_password: Forgot your password?
+      confirmation_instructions: Didn't receive confirmation instructions?
+      unlock_instructions: Didn't receive unlock instructions?
+      login_with: "Login with %{provider}"
+      delete: Delete
+      edit: Edit
     header:
       logo: campanify-logo-96.png
+      users: Users
+      posts: Posts
+      events: Events
+      login: Log in
+      me: Me
+      logout: Log out
     registration_form:
-      legend: 'This cause needs your help, <a href="/pages/facts">because</a> happening now!'
+      legend: 'This cause needs your help, <a href="/pages/about">because</a> happening now!'
       submit: "Count me in ↩"  
+    events:
+      title: Events
+      empty: No upcoming events
+    posts:
+      title: Posts
+      empty: Nothings here, would you like to write?  
+      preview_title: Title Goes Here
+      published_at: Published At
+      author: Author
+      popularity: Popularity
+      unlike: Unlike
+      like: Like  
+    users:
+      title: Users
+      confirmations:
+        title: Resend confirmation instructions
+        submit: Resend confirmation instructions      
+      passwords:
+        edit:
+          title: Change your password
+          new_password: New password
+          confirm_new_password: Confirm new password
+          submit: Change my password
+        new:
+          title: Forgot your password?
+          submit: Send me reset password instructions  
+      registrations:  
+        edit:
+          title: Edit Profile
+          remove_avatar: Remove Avatar
+          password_hint_blank: (leave blank if you don't want to change it)
+          password_hint_blank: (we need your current password to confirm your changes)
+          submit: Submit
+          cancel_title: Cancel my account
+          cancel_link_title: Cancel my account          
+          unhappy: Unhappy?
+      sessions:
+        title: Log In
+        submit: Enter 
+      visitors: Visitors
+      recruitments: Recruitments
+      last_hour: Last Hour
+      today: Today
+      this_month: This Month
+      this_year: This Year
+      total: Total
+      posts: Posts
+      popularity: Popularity       
+    sorting:
+      sort_by: Sort by
+      popularity: popularity
+      date: date    

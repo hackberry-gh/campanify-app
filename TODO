@@ -1,0 +1,11 @@
+TODO: add a server restart button
+TODO: add plan upgrade/downgrade option into admin/campaign
+TODO: add functionality to clone translations into specific language 
+TODO: write installer script which loads translations, templates, assets and default content
+TODO: add image upload to blog post
+TODO: create statistics page which contains map, ranking, graphs
+TODO: write documentation
+TODO: add admin roles/ability
+TODO: add country select gem
+TODO: make users, posts, events optional by settings
+TODO: make facebook connect(omniauth) optional by settings (already in settings)

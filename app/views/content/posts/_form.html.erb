@@ -1,23 +1,19 @@
-<%= semantic_form_for Content::Post.new, 
+<%= semantic_form_for post, 
 		:remote => true,
-		:url => posts_path,
+		:url => post.new_record? ? posts_path : post_path(post.id),
+		:method => post.new_record? ? :post : :put,
 		:html => {
 		:"data-collection" => "posts",	
 		:"data-member" => "post",
 		:"data-type" => "json",
 		:"data-post-action" => "after_post",
 		:"data-find_by" => "slug",
-		:"data-translated-member" => t('models.post')
+		:"data-translated-member" => t('activerecord.models.content/post')
 		} do |f| %>
 	<div id="error_explanation" class="hidden"></div>		
 	<%= f.inputs do %>
-	<%= f.globalize_inputs_current_locale :translations do |lf| %>
-    <%= lf.inputs :title, :body, :locale do %>
-      <%= lf.input :title %>
-      <%= lf.input :body, :as => :text %>
-      <%= lf.input :locale, :as => :hidden %>
-    <% end %>
-  <% end %>
+  <%= f.input :title %>
+  <%= f.input :body, :as => :text %>
   <%= f.input :user_id, :as => :hidden, :input_html => {:value => current_user.id } %>
 	<% end %>
   <%= f.buttons %>

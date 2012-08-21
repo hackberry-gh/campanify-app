@@ -32,14 +32,14 @@ module Campanify
         unless request.fullpath.match(/^\/admin/)
           locale = override_by_url || self.send(Settings.i18n['preferred_source'].to_sym)
           # skip if not listed as completed
-          I18n.locale = I18n.completed_locales.include?(locale) ? locale.to_sym : I18n.default_locale
+          I18n.locale = I18n.completed_locales.include?(locale) ? locale : I18n.default_locale
         end
       end
       
       private
       
       def override_by_url
-        params[:locale]
+        params[:locale].try(:to_sym)
       end
       
       # extract_locale_from_accept_language_header      

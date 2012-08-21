@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
                   :country, :region, :city, :address, :post_code, :phone, :mobile_phone, 
                   :branch, :language, :send_updates, :legal_aggrement, 
                   :provider, :uid, :avatar, :remove_avatar, :remote_avatar_url
+  
+  attr_accessor   :created_by_facebook_connect
                     
   validate :validations_from_settings
   
@@ -50,9 +52,6 @@ class User < ActiveRecord::Base
   }, 
   :if => "persisted?"
   
-  def self.i18n_scope
-  end
-  
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     # user = User.where(:provider => auth.provider, :uid => auth.uid).first
     user = User.find_by_email(auth.info.email)
@@ -65,6 +64,7 @@ class User < ActiveRecord::Base
       password: Devise.friendly_token[0,20],
       remote_avatar_url: "http://graph.facebook.com/#{auth.uid}/picture?type=normal"
       )
+      user.created_by_facebook_connect = true
     end
     user
   end

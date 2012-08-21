@@ -1,5 +1,9 @@
-<p>Welcome <%= @resource.unconfirmed_email_address %>!</p>
-
-<p>You can confirm your account email through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<%= I18n.with_locale(@resource.language) { 
+	I18n.t('devise.mailer.confirmation_instructions.body', 
+	unconfirmed_email_address: @resource.unconfirmed_email_address, 
+	link: link_to(
+				t('devise.mailer.confirmation_instructions.link_title'), 
+				confirmation_url(@resource, :confirmation_token => @resource.confirmation_token)
+				) 
+	) 
+} %>

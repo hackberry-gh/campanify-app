@@ -1,12 +1,57 @@
 <article class="user">
 	<h1><%= link_to_if me?, user.display_name, edit_user_registration_path %></h1>
 	<%= image_tag user.avatar.url, :class => "avatar" if user.avatar %>
-	<dl>
-		<dt><%= t('attributes.user.visits') %></dt><dd><%= user.total_visits %></dd>
-		<dt><%= t('attributes.user.recruits') %></dt><dd><%= user.total_recruits %></dd>
-		<dt><%= t('attributes.user.posts') %></dt><dd><%= user.posts.count %></dd>		
-		<dt><%= t('attributes.user.popularity') %></dt><dd><%= user.popularity %></dd>		
-	</dl>
+	<table>
+		<thead>
+			<tr>
+				<td></td>
+				<td><%= t('html.users.visitors') %></td>
+				<td><%= t('html.users.recruitments') %></td>
+			</tr>	
+		</thead>
+		<tbody>
+			<tr>
+				<td><%= t('html.users.last_hour') %></td>
+				<td><%= user.hourly_visits %></td>
+				<td><%= user.hourly_recruits %></td>
+			</tr>	
+			<tr>
+				<td><%= t('html.users.today') %></td>
+				<td><%= user.daily_visits %></td>
+				<td><%= user.daily_recruits %></td>
+			</tr>
+			<tr>
+				<td><%= t('html.users.this_month') %></td>
+				<td><%= user.monthly_visits %></td>
+				<td><%= user.monthly_recruits %></td>
+			</tr>						
+			<tr>
+				<td><%= t('html.users.this_year') %></td>
+				<td><%= user.yearly_visits %></td>
+				<td><%= user.yearly_recruits %></td>
+			</tr>			
+			<tr>
+				<td><%= t('html.users.total') %></td>
+				<td><%= user.total_visits %></td>
+				<td><%= user.total_recruits %></td>
+			</tr>			
+		</tbody>	
+		<tfooter>
+			<tr>
+				<td></td>
+				<td><%= t('html.users.posts') %></td>
+				<td><%= t('html.users.popularity') %></td>				
+			</tr>	
+			<tr>
+				<td><%= t('html.users.total') %></td>
+				<td><%= user.posts.count %></td>
+				<td><%= user.popularity %></td>				
+			</tr>			
+		</tfooter>	
+	</table>	
+
+	<% include_widget "social-sharing" %>
+
 </article>
 	
 <% unless me? %>

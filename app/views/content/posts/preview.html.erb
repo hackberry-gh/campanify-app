@@ -1,1 +1,6 @@
-<%= Content.markdown.render(params[:data]).html_safe %>
+<article class="post">
+	<h1><%= t('html.posts.preview_title')%></h1>
+	<section class="body">
+	<%= Content.markdown.render(params[:data]).html_safe %>
+	</section>
+</article>

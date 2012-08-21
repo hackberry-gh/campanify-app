@@ -1,9 +1,9 @@
 <section class="users">
-	<h1>Users</h1>
+	<h1><%= t('html.users.title') %></h1>
 	<nav class="sort">
-		Sort by 
-		<%= link_to_if !has_sort("popularity"), "popularity", users_path(sort: "popularity") %> or 
-		<%= link_to_if has_sort("popularity"), "date", users_path %>		
+		<%= t('html.sorting.sort_by') %> 
+		<%= link_to_if !has_sort("popularity"), t('html.sorting.popularity'), users_path(sort: "popularity") %> or 
+		<%= link_to_if has_sort("popularity"), t('html.sorting.date'), users_path %>		
 	</nav>
 	<% unless users.empty? %>
 	<div class="thumbs clearfix">

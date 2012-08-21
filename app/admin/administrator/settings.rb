@@ -36,7 +36,20 @@ ActiveAdmin.register Settings, :as => "Settings" do
   end
   form do |f|
     f.inputs do
-      f.input :data, :as => :settings
+      f.input :data, :as => :settings, 
+      :hint => (<<-HTML
+      Below settings need restart
+      <br/>
+      - mailer.host<br/>
+      - timezone<br/>
+      - all changes under i18n<br/>
+      - adding a new branch<br/>
+      - assets.host_type<br/>
+      - media.storage<br/>
+      - all changes under devise_settings<br/>
+      - page.home_page_slug
+      HTML
+      ).html_safe
     end
     f.buttons
   end

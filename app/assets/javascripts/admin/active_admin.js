@@ -10,11 +10,6 @@ $(document).ready(function(){
 		var div = $('<div id=\"' + id + '"></div>').insertAfter(textarea);
 		var editor = ace.edit(id);
 		editor.getSession().setValue(textarea.val());
-		if ( $("textarea.code").length == 1 ) {
-			editor.getSession().on('change', function(){
-			  textarea.val(editor.getSession().getValue());
-			});
-		}
 		editor.setTheme("ace/theme/monokai");
 		editor.session.setUseWorker(false);
     editor.getSession().setMode("ace/mode/" + textarea.data('mode'));
@@ -22,7 +17,10 @@ $(document).ready(function(){
 		editor.setHighlightActiveLine(false);
 		editor.setFadeFoldWidgets(false);
 		textarea.hide();
-		current_textarea = textarea;		
+		current_textarea = textarea;	
+		editor.getSession().on('change', function(){
+		  current_textarea.val(editor.getSession().getValue());
+		});	
 	}
 
 	$(".language-selection li a").click(function(){
@@ -35,9 +33,9 @@ $(document).ready(function(){
 		if (textarea.length > 0) {
 			$(".ace_editor").insertAfter(textarea);
 			textarea.hide();
-			current_textarea.val(editor.getSession().getValue());
-			editor.getSession().setValue(textarea.val());
+			// current_textarea.val(editor.getSession().getValue());
 			current_textarea = textarea;
+			editor.getSession().setValue(textarea.val());
 		}
 		return false;
 	});

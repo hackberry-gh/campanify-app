@@ -7,7 +7,7 @@
 		:"data-type" => "json",
 		:"data-post-action" => "after_sign_up",
 		:"data-find_by" => "id",		
-		:"data-translated-member" => t('models.user')
+		:"data-translated-member" => t('activerecord.models.user')
 		}) do |f| %>
 
 		<legend><%== t('html.registration_form.legend') %></legend>
@@ -18,8 +18,8 @@
 			<% Settings.user_setting("fields", current_branch).map(&:to_sym).each do |field| %>
 		  <div>
 		  	<%= f.text_field field, 
-						:"data-label" => t("attributes.user.#{field}"), 
-						:placeholder => t("attributes.user.#{field}") 
+						:"data-label" => t("activerecord.attributes.user.#{field}"), 
+						:placeholder => t("activerecord.attributes.user.#{field}") 
 				%>
 			</div>
 			<% end %>	
@@ -29,14 +29,14 @@
 		<fieldset>			
 		  <div>
 		  	<%= f.password_field :password,
-				:"data-label" => t("attributes.user.password"), 
-				:placeholder => t("attributes.user.password") %>
+				:"data-label" => t("activerecord.attributes.user.password"), 
+				:placeholder => t("activerecord.attributes.user.password") %>
 			</div>
 
 		  <div>
 		  	<%= f.password_field :password_confirmation,
-				:"data-label" => t("attributes.user.password_confirmation"), 
-				:placeholder => t("attributes.user.password_confirmation") %>		
+				:"data-label" => t("activerecord.attributes.user.password_confirmation"), 
+				:placeholder => t("activerecord.attributes.user.password_confirmation") %>		
 		
 			</div>
 		</fieldset>			
@@ -48,7 +48,7 @@
 	  	<div>
 				<%= f.label field.to_sym %>
 	  		<%= f.check_box field.to_sym, :checked => checked,
-						:"data-label" => t("attributes.user.#{field}") %>
+						:"data-label" => t("activerecord.attributes.user.#{field}") %>
 			</div>
 			<% end %>	
 		</fieldset>

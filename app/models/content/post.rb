@@ -6,11 +6,11 @@ class Content::Post < ActiveRecord::Base
   include Campanify::Models::History
   include Campanify::Models::Popularity  
    
-  attr_accessible :body, :published_at, :title, :user_id, :locale, :translations_attributes
-  translates :title, :body, :fallbacks_for_empty_translations => true
+  attr_accessible :body, :published_at, :title, :user_id
+
   slug :title
   belongs_to :user
-  accepts_nested_attributes_for :translations
+
   before_save :sanitize_inputs
   validates_presence_of :title, :body, :user_id
 
@@ -20,9 +20,6 @@ class Content::Post < ActiveRecord::Base
   
   scope :popularity, order('popularity DESC')
   scope :date, order('published_at DESC')
-  
-  def self.i18n_scope
-  end
   
   def liked?(user)
     likers.include?(user)
@@ -48,7 +45,7 @@ class Content::Post < ActiveRecord::Base
   
   def sanitize_inputs 
     self.attributes.each do |k,v|
-      self[k] = strip_tags(sanitize(v)) if v.is_a?(String)
+      self[k] = sanitize(v, :tags => "iframe") if v.is_a?(String)
     end
   end  
 end

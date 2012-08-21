@@ -4,15 +4,16 @@
 	<title><%= t('html.title') %></title>
 	<meta name="description" content="<%= t('html.description') %>">
   <%= stylesheet_link_tag    	"application", :media => "all" %>
-	<%= render 									"shared/js_bindings" %>
+  <%= javascript_include_tag 	"modernizr" %>
+	<%= render 									"shared/js_bindings" %>	
   <%= javascript_include_tag 	"application" %>
+	<%= render "shared/ograph" %>
   <%= csrf_meta_tags %>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 </head>
 <body class="<%= body_class %>">
 
 	<%= render "shared/spinner" %>
-
-	<%= render "shared/fb_js_sdk" %>
 
 	<%= render "shared/notifications" %>
 	
@@ -27,5 +28,8 @@
 		<%= render "shared/footer" %>
 	</div>	
 	
+	<!-- 3rd Party Java Scripts -->
+	<%= render "shared/fb_js_sdk" %>
+	<%= render "shared/add_this" %>
 </body>
 </html>

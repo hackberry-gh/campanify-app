@@ -1,7 +1,53 @@
-/*
-*= require reset
-*= require spinner
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
 */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* DEMO STYLES */
 body{
 /*	font-family: 'Letter Gothic Std', Monaco, Helvetica, Arial, Sans-Serif;*/
 	font-family:  Monaco, Helvetica, Arial, Sans-Serif;	
@@ -130,7 +176,7 @@ h6{
 	margin-bottom:0.2em;
 }
 p{
-	margin-bottom:1em;
+	margin-bottom:3em;
 }
 p.alert{
 	background: lightblue;
@@ -143,6 +189,25 @@ p.notice{
 	background: darkSeaGreen;
 	color: darkGreen;
 	font-weight: bold;
+}
+blockquote{
+	font-style: italic;
+}
+strong{
+	font-weight:bold;
+}
+em{
+	font-style: italic;
+}
+pre{
+	background:#333;
+	color:#f0f0f0;
+	padding:0.2em;
+	border:1px solid white;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
 }
 #error_explanation{
 	background: lightblue;
@@ -180,11 +245,63 @@ header{
 }
 header a.logo{
 	border:none;
+	position:relative;
+	left:10px;
 }
 header nav{
 	position: absolute;
 	right: 0;
 	top: 43px;
+}
+header .addthis_toolbox{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 242px;
+}
+.addthis_toolbox a, #at20mc a{
+	border:none;	
+}
+header .addthis_toolbox a{
+	padding: 0 !important;
+	margin: 0 1em 0 0 !important;
+	overflow:hidden;	
+}
+header .addthis_toolbox .addthis_button_facebook_like{
+	width:46px;
+}
+header .addthis_toolbox .addthis_button_tweet{
+	width:56px;
+}
+header .addthis_toolbox .addthis_button_pinterest_pinit{
+	width:49px;
+}
+header .addthis_toolbox .addthis_counter{
+	width:50px;
+	margin:0 !important;
+}
+header select.language{
+	width: 90px;
+	border: 1px solid crimson;
+	position: absolute;
+	font-size: 0.6em;
+	bottom: 0px;
+	right: 0;
+	text-align:right;
+}
+footer{
+	text-align:left;
+	position:relative;
+}
+footer a.campanify{
+	position:absolute;
+	right:0;
+	display: inline-block;
+	border:none;
+	color:#333;
+}
+footer .addthis_toolbox{
+	vertical-align: top;
 }
 nav.links{
 	text-align:center;
@@ -204,6 +321,9 @@ article.form{
 }
 article.post section.body{
 	margin-bottom:4em;
+}
+#post_edit_form_container{
+	display:none;
 }
 section.users .thumbs{
 	text-align:center;
@@ -226,6 +346,51 @@ section.users .thumbs a{
 }
 article.user .avatar{
 	width:100%;
+	margin:0 0 3em 0;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+}
+table{
+	width: 100%;
+	margin:0 0 3em 0;
+}
+td{
+	padding:0.2em;
+	border:1px solid #f0f0f0;
+}
+td:nth-child(2), td:nth-child(3){
+	text-align:center;
+}
+tr:nth-child(2n) td{
+	background:#fff;
+}
+/* WIDGETS */
+.flexslider a{
+	border:none;
+}
+#social-sharing{
+	margin:0 0 3em 0;
+}
+#social-sharing > div{
+	text-align:center;
+}
+#social-sharing label{
+	width:auto;
+	font-size: 2em;
+	margin:0 1em 1em 0;
+	padding:0;	
+}
+#social-sharing a{
+	border:none;
+	margin:0 1em 1em 0;
+	float:none;
+	display:inline-block;
+}
+#social-sharing a button{
+	width:auto;
+	background-image: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,0));
+	box-shadow: 0 0 2px rgba(0,0,0,.2),  0 2px 5px rgba(0,0,0,.2), 0 1px rgba(255,255,255,.2);
 }
 /* HELPERS */
 .hidden{
@@ -244,4 +409,35 @@ article.user .avatar{
 }
 .clearfix {
     *zoom: 1;
+}
+
+iframe.video{
+	width:100%;
+}
+
+@media only screen and (max-width: 720px) {	
+	body{
+		font-size:0.7em;
+	}
+	header{
+		margin-bottom:6em;
+	}
+	header nav{
+		top:28px;
+	}
+	header .logo img{
+		width:160px;
+		top:20px;
+		position:relative;
+	}
+	footer .addthis_toolbox{
+		display:inline-block;
+		width:160px;
+	}
+	header .addthis_toolbox{
+		top:120px;
+	}
+	#social-sharing label{
+		width:100%;
+	}
 }

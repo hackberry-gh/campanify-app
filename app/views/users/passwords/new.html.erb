@@ -1,7 +1,7 @@
 <article class="form">
 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
 
-	<legend>Forgot your password?</legend>
+	<legend><%= t('html.users.passwords.new.title')%></legend>
 
   <%= devise_error_messages! %>
 
@@ -12,7 +12,7 @@
 
 	</fieldset>
 
-  <div class="actions"><%= f.submit "Send me reset password instructions" %></div>
+  <div class="actions"><%= f.submit t('html.users.passwords.new.submit') %></div>
 <% end %>
 
 <%= render "users/shared/links" %>

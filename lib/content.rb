@@ -3,8 +3,9 @@ module Content
     'content_'
   end
   def self.markdown
-    @@markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(
-    :filter_html => true),
-    {:autolink => true, :space_after_headers => true})
+    @@markdown ||= Redcarpet::Markdown.new(
+    Redcarpet::Render::VHTML.new({
+    :filter_html => true, :hard_wrap => true}),
+    {:autolink => false, :no_intra_emphasis => true})
   end
 end

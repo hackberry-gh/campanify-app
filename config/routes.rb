@@ -7,7 +7,7 @@ Campanify::Application.routes.draw do
       get 'page/:page', :action => :index
     end
   end
-  resources :posts,   :module => "content", :only => [:index, :show, :create] do
+  resources :posts,   :module => "content", :only => [:index, :show, :create, :update, :destroy] do
     collection do
       get 'page/:page', :action => :index
       post 'preview'

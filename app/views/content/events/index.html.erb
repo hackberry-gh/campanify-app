@@ -1,5 +1,5 @@
 <section class="events">
-	<h1>Events</h1>
+	<h1><%= t('html.events.title') %></h1>
 	<% unless posts.empty? %>
 	<ul>
 		<% events.each do |event| %>
@@ -7,7 +7,7 @@
 		<% end %>
 	</ul>
 	<% else %>
-	<p>There is no event yet</p>
+	<p><%= t('html.events.empty') %></p>
 	<% end %>
 	
 </section>

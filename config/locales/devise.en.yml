@@ -52,7 +52,25 @@ en:
     mailer:
       confirmation_instructions:
         subject: 'Confirmation instructions'
+        link_title: 'Confirm my account'
+        body: |
+          <p>Welcome %{unconfirmed_email_address}!</p>
+          <p>You can confirm your account email through the link below:</p>
+          <p>%{link}</p>
       reset_password_instructions:
         subject: 'Reset password instructions'
+        link_title: 'Change my password'
+        body: |
+          <p>Hello %{email}!</p>
+          <p>Someone has requested a link to change your password, and you can do this through the link below.</p>
+          <p>%{link}</p>
+          <p>If you didn't request this, please ignore this email.</p>
+          <p>Your password won't change until you access the link above and create a new one.</p>
       unlock_instructions:
         subject: 'Unlock Instructions'
+        link_title: 'Unlock my account'
+        body: |
+          <p>Hello %{email}!</p>
+          <p>Your account has been locked due to an excessive amount of unsuccessful sign in attempts.</p>
+          <p>Click the link below to unlock your account:</p>
+          <p>%{link}</p>

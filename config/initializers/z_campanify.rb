@@ -94,6 +94,9 @@ Devise.setup do |config|
 end
 
 # controllers
+::Devise::PasswordsController.send :include, Campanify::Controllers::IpCountryBranchController     
+::Devise::ConfirmationsController.send :include, Campanify::Controllers::IpCountryBranchController     
+::Devise::UnlocksController.send :include, Campanify::Controllers::IpCountryBranchController     
 ::ActionMailer::Base.send :include, Campanify::Controllers::TemplateController
 ::ActionMailer::Base.send :include, Campanify::Cache
 
@@ -132,22 +135,9 @@ module Formtastic
         )
       end
 
-      linker = self.template.content_tag(:ul, linker, :class => "language-selection")
+      linker = self.template.content_tag(:ul, linker, :class => "language-selection clearfix")
 
       self.template.content_tag(:div, linker + fields, :class => "language-tabs-#{index}");
-    end
-    def globalize_inputs_current_locale(*args, &proc)
-      index = options[:child_index] || "#{self.object.class.to_s.parameterize}-#{self.object.object_id}"
-      fields = ActiveSupport::SafeBuffer.new
-      locale = ::I18n.locale
-      
-      fields << self.template.content_tag(:div,
-      self.semantic_fields_for(*(args.dup << self.object.translation_for(locale)), &proc),
-      :id => "lang-#{locale}-#{index}",
-      :class => "language-fields"
-      )
-
-      self.template.content_tag(:div, fields, :class => "language-tabs-#{index}");
     end
   end
 end

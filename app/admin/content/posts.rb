@@ -30,18 +30,17 @@ ActiveAdmin.register Content::Post do
   end
 
   form do |f|
-    f.globalize_inputs :translations do |lf|
-      lf.inputs :title, :body, :locale do
-        lf.input :title
-        lf.input :body, :as => :code, :mode => "html"
 
-        lf.input :locale, :as => :hidden
-      end
+    f.inputs  do
+      lf.input :title
+      lf.input :body, :as => :code, :mode => "html"
     end
+      
     f.inputs do
       f.input :published_at, :as => :datetime
       f.input :user, :as => :string, :input_html => {:disabled => true, :value => f.object.user.email}
     end
+    
     f.buttons
   end
   

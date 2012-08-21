@@ -1,8 +1,47 @@
 en:
-  models:
-    user: User
-    post: Post
-  attributes:
-    user:
-      email: Email  
-      avatar: Avatar
+  activerecord:  
+    models:
+      content/media: Media
+      content/post: Post
+      user: User
+    attributes:
+      media:
+        title: Title 
+        description: Description 
+        file: File        
+        position: Position         
+        translations_attributes: Translation Attributes
+      post:
+        title: Title
+        body: Body
+        published_at: Published At 
+        user_id: User
+        locale: Language
+        translations_attributes: Translation Attributes
+      user:
+        email: Email
+        password: Password
+        password_confirmation: Password Confirmation
+        remember_me: Remember Me
+        first_name: First Name
+        last_name: Last Name
+        full_name: Full Name 
+        display_name: Display Name 
+        birth_year: Birth Year 
+        birth_date: Birth Date 
+        country: Country 
+        region: Region 
+        city: City 
+        address: Address 
+        post_code: Post Code 
+        phone: Phone 
+        mobile_phone: Mobile Phone 
+        branch: Branch 
+        language: Language 
+        send_updates: Send Updates 
+        legal_aggrement: Legal Aggrement 
+        provider: Provider 
+        uid: UID 
+        avatar: Avatar 
+        remove_avatar: Remove Avatar 
+        remote_avatar_url: Remove Avatar URL

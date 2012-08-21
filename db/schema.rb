@@ -151,18 +151,6 @@ ActiveRecord::Schema.define(:version => 20120806193403) do
 
   add_index "content_pages", ["slug", "published_at"], :name => "index_content_pages_on_slug_and_published_at"
 
-  create_table "content_post_translations", :force => true do |t|
-    t.integer  "content_post_id"
-    t.string   "locale"
-    t.string   "title"
-    t.text     "body"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "content_post_translations", ["content_post_id"], :name => "index_content_post_translations_on_content_post_id"
-  add_index "content_post_translations", ["locale"], :name => "index_content_post_translations_on_locale"
-
   create_table "content_posts", :force => true do |t|
     t.string   "title"
     t.string   "slug"
@@ -190,6 +178,7 @@ ActiveRecord::Schema.define(:version => 20120806193403) do
 
   create_table "content_widgets", :force => true do |t|
     t.string   "title"
+    t.string   "slug"
     t.text     "body"
     t.integer  "position",   :default => 1
     t.datetime "created_at",                :null => false

@@ -2,6 +2,7 @@ class CreateContentWidgets < ActiveRecord::Migration
   def change
     create_table :content_widgets do |t|
       t.string  :title
+      t.string  :slug      
       t.text    :body
       t.integer :position, :default => 1
 

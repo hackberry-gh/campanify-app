@@ -3,7 +3,7 @@ $(document).ready( function(){
 	
 	// language dropdown
 	$("#language").change(function(){
-		campanify.changeLocale( $(this).val() );
+		$.campanify.changeLocale( $(this).val() );
 	});
 	
 	// remote forms
@@ -22,6 +22,16 @@ $(document).ready( function(){
 										redirects[form.data('post-action')];
 	});
 	
+	//delete buttons
+	$("a[data-method=delete]").
+	on('ajax:beforeSend', function(event, data, status){
+		$.campanify.showLoading();
+	}).
+	on("ajax:success", function(event, data, status){
+		$.campanify.hideLoading();
+		location.href = data['redirect_to'] || "/";
+	});
+	
 	// like button
 	$("a.liking[data-remote=true]").
 	on('ajax:beforeSend', function(event, data, status){
@@ -35,6 +45,11 @@ $(document).ready( function(){
 	});
 	
 	// post form
-	$("textarea").markItUp(mySettings);
+	$("form.content_post textarea").markItUp(mySettings);
+	
+	// youtube responsive
+	$(window).resize(function(){
+		$.campanify.resizeVideos();
+	});
 	
 });

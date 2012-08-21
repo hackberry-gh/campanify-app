@@ -1,25 +1,38 @@
+<% if Settings.user_setting("abilities")['can_post'] && author? %>
+<section id="post_edit">
+	<a href="javascript:void(0);" onclick="$('#post_edit_form_container').toggle();"><%= t('html.links.edit') %></a>
+	<%= link_to t('html.links.delete'), post_path(post.id), :method => :delete, :confirm => t('html.links.are_you_sure'), :remote => true %>
+	<div id="post_edit_form_container">
+	<%= render "form", post: post  %>
+	</div>
+</section>
+<% end %>
 <article class="post" id="<%= post.slug %>">
 	<h1><%= post.title %></h1>
 	<section class="body">
-	<%= Content.markdown.render(post.body).html_safe %>
+	<%= Content.markdown.render(post.body || "").html_safe %>
 	</section>
 	<small>
 		<div id="error_explanation" style="display:none"></div>		
 		<dl>
-			<dt><%= t('attributes.post.published_at') %></dt><dd><%= time_ago_in_words post.published_at.in_time_zone(timezone) %></dd>
-			<dt><%= t('attributes.post.user') %></dt><dd><%= link_to post.user.display_name, post.user %></dd>
-			<dt><%= t('attributes.post.popularity') %></dt>
+			<dt><%= t('html.posts.published_at') %></dt>
+			<dd><%= time_ago_in_words post.published_at.in_time_zone(timezone) %></dd>
+			<dt><%= t('html.posts.author') %></dt>
+			<dd><%= link_to post.user.display_name, post.user %></dd>
+			<dt><%= t('html.posts.popularity') %></dt>
 			<dd><%= post.popularity %>
 			<% if current_user %>
 				<% unless author? %>
 					<% if post.liked?(current_user) %>
-					<%= link_to "unlike", unlike_post_path(post), :method => :put, :remote => true, :class => "liking" %>					
+					<%= link_to t('html.posts.unlike'), unlike_post_path(post), 
+					:method => :put, :remote => true, :class => "liking" %>					
 					<% else %>
-					<%= link_to "like", like_post_path(post), :method => :put, :remote => true, :class => "liking" %>
+					<%= link_to t('html.posts.like'), like_post_path(post), 
+					:method => :put, :remote => true, :class => "liking" %>
 					<% end %>			
 				<% end %>							
 			<% else %>
-				<%= link_to "like", new_user_session_path %>			
+				<%= link_to t('html.posts.like'), new_user_session_path %>			
 			<% end %>	
 			</dd>					
 		</dl>	

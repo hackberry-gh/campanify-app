@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require ./markitup/jquery.markitup.js
 //= require ./markitup/sets/markdown/set.js
+//= require ./widgets/jquery.flexslider-min.js
 //= require demo
 
 (function($, undefined) {
@@ -76,6 +77,9 @@
 		    map: map
 		  });
 
+		},
+		resizeVideos: function() {
+			$("iframe.video").css({height: $("iframe.video").width()*9/16});
 		}
 	};
 })( jQuery );

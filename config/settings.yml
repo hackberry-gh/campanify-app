@@ -10,6 +10,7 @@ development: &development
     # mails will appear on from field on sent mail
     sender: no-reply@campanify.it  
     # mails will send from this domain
+    # needs restart
     host: 'localhost:3000'
   
   # User
@@ -139,11 +140,13 @@ development: &development
       
   # Time Zone
   # ---------------------------------------------  
+  # needs restart
   timezone: 'Europe/London'
   
   # Completed Locales
   # ---------------------------------------------
   # enter language code to make available on site
+  # needs restart
   i18n:
     default_locale: en
     available_locales:
@@ -164,6 +167,8 @@ development: &development
   # unlisted branches will use default user settings set above
   # branch id must valid ISO 3166-1 alpha-2 country code
   # country code must valid ISO 3166-1 alpha-2 country code  
+  # adding new branches needs restart
+  # changing timezone needs restart
   branches:
     GB:
       country_code: GB
@@ -190,12 +195,14 @@ development: &development
   # ---------------------------------------------  
   assets:
     # valid options are s3, filesystem
+    # needs restart    
     host_type: filesystem  
     
   # Media
   # ---------------------------------------------  
   media:
     # valid options are fog, file
+    # needs restart
     storage: file   
     thumbs:
       - name: thumb
@@ -214,6 +221,7 @@ development: &development
          
   # Devise
   # ---------------------------------------------  
+  # needs restart
   devise_settings:
     # value in days
     allow_unconfirmed_access_for: 365    
@@ -224,6 +232,7 @@ development: &development
   # ---------------------------------------------  
   pages:
     # Home Page Slug
+    # needs restart    
     home_page_slug: home
     
     # Comments
@@ -246,7 +255,7 @@ development: &development
     app_id: "165494140246687"
     app_secret: "177ff317289b4d7ddb237f7f2945b28b"
     scope: "email"
-    connect: false
+    connect: true
     
   # Development Settings
   # ---------------------------------------------  
