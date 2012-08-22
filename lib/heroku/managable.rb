@@ -41,10 +41,22 @@ module Heroku
     end
     
     def setup
-      # install basic addons
-      client.post_addon(slug,'pgbackups:auto-week')
-      client.post_addon(slug,'heroku-postgresql:dev')      
-      change_plan(ENV["PLAN"], true)
+      require 'rake'
+      config = Campanify::Plans.configuration(ENV['PLAN'].to_sym)          
+      # scale
+      config[:ps].each do |type, quantity|
+        ps_scale(type, quantity)
+      end
+      # add db
+      client.post_addon(slug, config[:db])
+      # updgrade/downgrade addons
+      config[:addons].each do |addon, plan|
+        post_addon("#{addon}:#{plan}")
+      end
+      # migrate/seed db
+      load File.join(RAILS_ROOT, 'lib', 'tasks', 'custom_task.rake')
+      Rake::Task["db:migrate"].invoke
+      Rake::Task["db:seed"].invoke
     end
     
     private

@@ -165,10 +165,11 @@ module Campanify
             worker: 0
           },
           addons: {
+            "pgbackups" => "auto-week",
             "sendgrid" => "starter",
             "memcachier" => "dev"
           },
-          db: 'heroku-postgresql:basic',          
+          db: 'heroku-postgresql:dev',          
           price: 1900
         },
         city: {
@@ -177,6 +178,7 @@ module Campanify
             worker: 1
           },
           addons: {
+            "pgbackups" => "auto-week",            
             "sendgrid" => "bronze",
             "memcachier" => "100"
           },
