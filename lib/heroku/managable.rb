@@ -56,11 +56,6 @@ module Heroku
       config[:addons].each do |addon, plan|
         post_addon("#{addon}:#{plan}")
       end
-      puts "MIGRATING/SEEDING DB"                  
-      # migrate/seed db
-      Campanify::Application.load_tasks      
-      Rake::Task["db:migrate"].invoke
-      Rake::Task["db:seed"].invoke
     end
     
     private
