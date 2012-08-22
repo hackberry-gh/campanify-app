@@ -73,9 +73,6 @@ module Heroku
 
     def change_plan(target_plan)
       if target_plan != self.plan
-        # put app on maintenance mode
-        client.post_app_maintenance(slug, 1)
-      
         # get config of plan
         current_config = Campanify::Plans.configuration(ENV['PLAN'].to_sym)
         config = Campanify::Plans.configuration(target_plan.to_sym)
@@ -93,10 +90,7 @@ module Heroku
         migrate_db(current_config,config)
 
         # change plan environment var
-        client.put_config_vars(slug, 'PLAN' => plan)
-      
-        # remove app from maintenance mode
-        client.post_app_maintenance(slug, 0)      
+        client.put_config_vars(slug, 'PLAN' => plan)     
       end
     end
     
@@ -113,6 +107,9 @@ module Heroku
     end
     
     def migrate_db(current_config,config)
+      # put app on maintenance mode
+      client.post_app_maintenance(slug, 1)
+      
       # db migration
       # ============
 
@@ -137,6 +134,9 @@ module Heroku
   
       # remove old db addon
       client.delete_addon(slug, current_config[:db])
+      
+      # remove app from maintenance mode
+      client.post_app_maintenance(slug, 0)
     end
 
     def client
