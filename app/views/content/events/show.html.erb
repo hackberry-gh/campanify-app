@@ -10,4 +10,4 @@
 		</dl>	
 	</section>
 </article>
-<%= render "shared/comments", :href => event_url(event.slug) if Settings.events['comments'].present? %>
+<%= render "shared/comments", :href => event_url(event.slug) if comments_available?(:events) %>

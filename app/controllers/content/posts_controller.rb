@@ -1,5 +1,6 @@
-class Content::PostsController < Content::BaseController
+class Content::PostsController < ::CampanifyController
 
+  include Campanify::Controllers::ContentController
   include Campanify::Controllers::ParanoidController    
     
   before_filter :authenticate_user!, :only => [:create, :delete, :edit, :update]
@@ -7,7 +8,6 @@ class Content::PostsController < Content::BaseController
   scopes :published
   finder_method :find_by_slug
   
-
   respond_to :html, :json
   
   helper_method :author?
@@ -25,7 +25,6 @@ class Content::PostsController < Content::BaseController
     @resource = Content::Post.find(params[:id])
 
     if author? && @resource.update_attributes(params[:content_post])
-      puts "UPDATED? #{@resource}"
       render :json => @resource, :location => post_path(@resource.slug)
     else
       render :json => @resource, :location => posts_path, :status => 422

@@ -30,6 +30,8 @@ mySettings = {
 		}},
 		{separator:'---------------' },
 		{name:'Picture', key:'P', replaceWith:'![[![Alternative text]!]]([![Url:!:http://]!] "[![Title]!]")'},
+		{name:'Picture Upload', key:'U', replaceWith:'', 
+		afterInsert: function(h) { $("#upload_media_form").show();$("body").css({'overflow':'hidden'});return false; }},		
 		{name:'Link', key:'L', openWith:'[', closeWith:']([![Url:!:http://]!] "[![Title]!]")', placeHolder:'Your text to link here...' },
 		{name:'Youtube', key:'Y', openWith:'{', closeWith:'}([![Url:!:http://]!])', placeHolder:'youtube' },
 		{name:'Vimeo', key:'M', openWith:'{', closeWith:'}([![Url:!:http://]!])', placeHolder:'vimeo' },		

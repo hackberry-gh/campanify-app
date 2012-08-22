@@ -46,6 +46,12 @@ en:
       popularity: Popularity
       unlike: Unlike
       like: Like  
+    media:
+      new:
+        title: Media Gallery  
+        submit: Upload
+        description_choose: Choose an image from your uplaods
+        description_upload: Or upload a new one
     users:
       title: Users
       confirmations:

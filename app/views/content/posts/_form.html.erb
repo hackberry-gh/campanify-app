@@ -18,3 +18,7 @@
 	<% end %>
   <%= f.buttons %>
 <% end %>
+<div id="upload_media_form">
+	<a href="javascript:$('#upload_media_form').hide();$('body').css({'overflow':'auto'});">x</a>
+	<iframe src="<%= new_medium_path %>"></iframe>
+</div>

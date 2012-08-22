@@ -41,7 +41,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   process :set_content_type
 
   # Create different versions of your uploaded files:
-  Settings.media["thumbs"].each do |thumb|
+  Settings.media["versions"].each do |thumb|
     version thumb["name"].to_sym, :if => :is_image? do
       process thumb["process"].to_sym => thumb["sizes"]
     end

@@ -5,7 +5,7 @@
 <% render_widgets page %>
 </aside>
 
-<%= render "shared/comments", :href => user_url(user) if Settings.pages['comments'].present? %>
+<%= render "shared/comments", :href => page_url(page) if comments_available?(:pages) %>
 
 <!-- DEMO THEME USER FORM WIDGET HACK FOR HOME PAGE -->
 <script>$(document).ready(function(){$(".widgets #user-form").insertAfter($(".page#home h1"));});</script>

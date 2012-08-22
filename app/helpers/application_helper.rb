@@ -24,7 +24,7 @@ module ApplicationHelper
   end
   
   def sharing_user
-    user || current_user
+     user || current_user if users_enabled?
   end
   
   def social_sharing_url
@@ -45,6 +45,26 @@ module ApplicationHelper
   
   def social_sharing_image
      sharing_user ? user.avatar_url(:thumb) : image_path(t('sharing.default.image'))
+  end
+  
+  def comments_available?(for_what)
+    Settings.send(for_what)['comments'].present? && Settings.modules.include?(for_what.to_s)
+  end
+  
+  def posting_available?
+    Settings.user_setting("abilities")['can_post'] && current_user
+  end
+  
+  def users_enabled?
+    Settings.modules.include?("users")
+  end
+  
+  def events_enabled?
+    Settings.modules.include?("events")
+  end
+  
+  def posts_enabled?
+    Settings.modules.include?("posts")
   end
   
 end

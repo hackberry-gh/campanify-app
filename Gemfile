@@ -23,10 +23,12 @@ gem "delayed_job", 									"~> 3.0.3"
 gem "delayed_job_active_record"
 gem 'geoip'
 gem 'cancan'
-gem 'heroku',												'2.26.3'
+gem 'heroku-api'
 gem 'activeadmin',									'~> 0.4.4'
 gem "omniauth-facebook"
 gem 'redcarpet'
+gem 'i18n_country_select', 
+			:git => 'git://github.com/lemmycaution/i18n_country_select.git'
 
 group :assets do
   gem 'sass-rails',   							'~> 3.2.3'

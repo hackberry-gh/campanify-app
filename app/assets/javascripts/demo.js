@@ -52,4 +52,6 @@ $(document).ready( function(){
 		$.campanify.resizeVideos();
 	});
 	
+	$("#user_country option[value=" + country + "]").attr('selected',true);
+	
 });

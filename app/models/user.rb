@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   after_create :send_password_instructions
   
   has_many :posts, :class_name => "Content::Post", :dependent => :destroy
+  has_many :media, :class_name => "Content::Media", :dependent => :destroy
   
   scope :popularity, order('popularity DESC')
   scope :date, order('created_at DESC')

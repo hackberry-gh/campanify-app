@@ -16,4 +16,4 @@
 	<% end %>
 </section>
 <%= paginate posts %>
-<%= render "form", post: Content::Post.new if Settings.user_setting("abilities")['can_post'] && current_user %>
+<%= render "form", post: Content::Post.new if posting_available? %>

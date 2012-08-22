@@ -1,5 +1,6 @@
 class Content::Media < ActiveRecord::Base
-  attr_accessible :description, :position, :title, :translations_attributes, :file
+  attr_accessible :description, :position, :title, :translations_attributes, :file, :user_id
+  belongs_to :user
   translates :title, :description, :fallbacks_for_empty_translations => true
   mount_uploader :file, MediaUploader
   accepts_nested_attributes_for :translations

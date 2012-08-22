@@ -3,6 +3,16 @@ development: &development
   # ---------------------------------------------  
   application: Campanify
   
+  # Modules
+  # ---------------------------------------------  
+  # To enable/disable modules simple add remove them
+  # Available options users, posts, events
+  # needs restart
+  modules:    
+    - users
+    - posts
+    - events    
+  
   # Mailer
   # ---------------------------------------------
   # application wide mailer settings    
@@ -204,7 +214,7 @@ development: &development
     # valid options are fog, file
     # needs restart
     storage: file   
-    thumbs:
+    versions:
       - name: thumb
         process: resize_to_fill
         sizes: [48,48]

@@ -151,3 +151,39 @@ module ActiveAdmin
   end
 end
 
+# Plans
+module Campanify
+  module Plans
+    def self.all
+      %w(town city country earth universal)
+    end
+    def self.configuration(plan)
+      {
+        town: {
+          ps: {
+            web: 1,
+            worker: 0
+          },
+          addons: {
+            "sendgrid" => "starter",
+            "memcachier" => "dev"
+          },
+          db: 'heroku-postgresql:basic',          
+          price: 1900
+        },
+        city: {
+          ps: {
+            dyno: 2,
+            worker: 1
+          },
+          addons: {
+            "sendgrid" => "bronze",
+            "memcachier" => "100"
+          },
+          db: 'heroku-postgresql:crane',
+          price: 17100          
+        },
+      }[plan]
+    end
+  end
+end

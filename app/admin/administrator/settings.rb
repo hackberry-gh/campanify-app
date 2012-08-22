@@ -40,6 +40,7 @@ ActiveAdmin.register Settings, :as => "Settings" do
       :hint => (<<-HTML
       Below settings need restart
       <br/>
+      - modules<br/>
       - mailer.host<br/>
       - timezone<br/>
       - all changes under i18n<br/>

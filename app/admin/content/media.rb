@@ -11,7 +11,7 @@ ActiveAdmin.register Content::Media do
       end
     end
     column :versions do |content_medium|
-      Settings.media["thumbs"].map{|t| t["name"]}.join(",")
+      Settings.media["versions"].map{|t| t["name"]}.join(",")
     end
     default_actions
   end
@@ -30,4 +30,25 @@ ActiveAdmin.register Content::Media do
     end
     f.buttons
   end
+  
+  
+  show do |content_medium|
+    attributes_table do
+      row :title
+      row :description        
+      row :media do
+        if %w(jpg jpeg gif png).include?(content_medium.file.url.split(".").last)
+          image_tag content_medium.file, :style => "width:100%"
+        else
+          content_medium.file
+        end
+      end
+      row :urls do
+        span{"<strong>original</strong>: #{content_medium.file}<br/>".html_safe}
+        Settings.media["versions"].map{|t| span{"<strong>#{t["name"]}</strong>: #{content_medium.file.send(t["name"].to_sym)}".html_safe}}.join("<br/>").html_safe
+      end
+    end
+    active_admin_comments
+  end
+
 end

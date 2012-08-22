@@ -32,8 +32,8 @@ ActiveAdmin.register Content::Post do
   form do |f|
 
     f.inputs  do
-      lf.input :title
-      lf.input :body, :as => :code, :mode => "html"
+      f.input :title
+      f.input :body, :as => :code, :mode => "markdown"
     end
       
     f.inputs do

@@ -58,4 +58,4 @@
 <script>$.post("<%= visits_user_path(user) %>", {_method:"PUT",action:"visits"}, "json");</script>
 <% end %>
 
-<%= render "shared/comments", :href => user_url(user) if Settings.users['comments'].present? %>
+<%= render "shared/comments", :href => user_url(user) if comments_available?(:users) %>

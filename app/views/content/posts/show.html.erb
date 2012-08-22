@@ -38,4 +38,4 @@
 		</dl>	
 	</small>	
 </article>
-<%= render "shared/comments", :href => post_url(post.slug) if Settings.posts['comments'].present? %>
+<%= render "shared/comments", :href => post_url(post.slug) if comments_available?(:posts) %>
