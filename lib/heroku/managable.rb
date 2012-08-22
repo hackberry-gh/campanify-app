@@ -48,14 +48,14 @@ module Heroku
       config[:ps].each do |type, quantity|
         ps_scale(type, quantity)
       end
-      # add db
-      puts "CREATING DB"      
-      client.post_addon(slug, config[:db])
       # updgrade/downgrade addons
       puts "INSTALLING ADDONS"            
       config[:addons].each do |addon, plan|
         post_addon("#{addon}:#{plan}")
       end
+      # add db
+      # puts "CREATING DB"      
+      # client.post_addon(slug, config[:db])      
     end
     
     private

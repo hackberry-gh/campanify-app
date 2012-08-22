@@ -1,4 +1,6 @@
-campaign = Campaign.create(name: "Campanify Base", slug:"campanify-base")
+campaign = Campaign.create(name: "Campanify Base")
+campaign.slug = "campanify-base"
+campaign.save!
 campaign.setup
 
 admin = Administrator.create!(email: 'admin@campanify.it', full_name: "Admin", role: "root")
