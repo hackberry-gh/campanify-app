@@ -53,6 +53,15 @@ module Heroku
       config[:addons].each do |addon, plan|
         post_addon("#{addon}:#{plan}")
       end
+      
+      # wait until sendgrid setup done
+      until client.get_config_vars(slug).body["SENDGRID_USERNAME"].present?
+        sleep(1)
+      end
+      
+      puts "CONFIG"
+      puts client.get_config_vars(slug)
+      
       # migrate db if PLAN is not town
       if ENV['PLAN'] != 'town'
         migrate_db(Campanify::Plans.configuration(:town),config)  
