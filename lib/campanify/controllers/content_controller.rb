@@ -40,6 +40,14 @@ module Campanify
   	  	render :layout => false if request.xhr?
   	  end
   	  
+  	  def index_cache_path
+        _cache_key(content_class_name, "index", params[:page], I18n.locale, current_branch || "none")
+      end
+
+      def show_cache_path
+        _cache_key(content_class_name, "show", params[:id], I18n.locale, current_branch || "none")    
+      end
+  	  
   	  private
       
       def finder_method
@@ -65,14 +73,6 @@ module Campanify
         end
         scoped
       end  
-
-      def index_cache_path
-        _cache_key(content_class_name, "index", params[:page], I18n.locale, current_branch || "none")
-      end
-
-      def show_cache_path
-        _cache_key(content_class_name, "show", params[:id], I18n.locale, current_branch || "none")    
-      end
       
     end  
   end

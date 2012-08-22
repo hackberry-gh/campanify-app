@@ -19,4 +19,6 @@ social_sharing = Content::Widget.create!(title: "Social Sharing", body: File.rea
 home.widgets << user_form
 thank_you.widgets << social_sharing
 
-sample_post = Content::Post.create!(title: "Sample Post", body: File.read("#{Rails.root}/db/seeds/posts/sample.md", user_id: user.id))
+sample_post = Content::Post.new(title: "Sample Post", body: File.read("#{Rails.root}/db/seeds/posts/sample.md"))
+sample_post.user = user
+sample_post.save!
