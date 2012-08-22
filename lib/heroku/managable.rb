@@ -54,7 +54,7 @@ module Heroku
         post_addon("#{addon}:#{plan}")
       end
       # migrate db if PLAN is not town
-      if ENV['PLAN'] !='town'
+      if ENV['PLAN'] != 'town'
         migrate_db(Campanify::Plans.configuration(:town),config)  
       end
     end
