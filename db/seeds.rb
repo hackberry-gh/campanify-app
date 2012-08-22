@@ -1,3 +1,6 @@
+campaign = Campaign.create(name: "Campanify Base", slug:"campanify-base")
+campaign.setup
+
 admin = Administrator.create!(email: 'admin@campanify.it', full_name: "Admin", role: "root")
 admin.password = "passw0rd"
 admin.password_confirmation = "passw0rd"
@@ -15,6 +18,3 @@ home.widgets << user_form
 thank_you.widgets << social_sharing
 
 sample_post = Content::Post.create!(title: "Sample Post", body: File.read("#{Rails.root}/db/seeds/posts/sample.md", user_id: user.id))
-
-campaign = Campaign.create(name: "Campanify Base", slug:"campanify-base")
-campaign.setup

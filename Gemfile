@@ -24,6 +24,7 @@ gem "delayed_job_active_record"
 gem 'geoip'
 gem 'cancan'
 gem 'heroku-api'
+gem 'heroku',												'~> 2.26.3'
 gem 'activeadmin',									'~> 0.4.4'
 gem "omniauth-facebook"
 gem 'redcarpet'

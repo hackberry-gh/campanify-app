@@ -104,7 +104,6 @@ module Heroku
         # remove old db addon
         client.delete_addon(slug, current_config[:db])
 
-        
         # change plan environment var
         client.put_config_vars(slug, 'PLAN' => plan)
       
