@@ -78,14 +78,10 @@ module Heroku
         config = Campanify::Plans.configuration(target_plan.to_sym)
       
         # scale
-        config[:ps].each do |type, quantity|
-          ps_scale(type, quantity)
-        end
+        config[:ps].each { |type, quantity| ps_scale(type, quantity) }
       
         # updgrade/downgrade addons
-        config[:addons].each do |addon, plan|
-          put_addon("#{addon}:#{plan}")
-        end
+        config[:addons].each { |addon, plan| put_addon("#{addon}:#{plan}") }
       
         migrate_db(current_config,config)
 
@@ -99,11 +95,19 @@ module Heroku
     end
     
     def put_addon(addon)
-      client.put_addon(slug, addon)
+      begin
+        client.put_addon(slug, addon)
+      rescue Exception => e
+        puts e
+      end
     end
     
     def post_addon(addon)
-      client.post_addon(slug, addon)
+      begin      
+        client.post_addon(slug, addon)
+      rescue Exception => e
+        puts e
+      end      
     end
     
     def migrate_db(current_config,config)
