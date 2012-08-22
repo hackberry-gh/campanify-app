@@ -44,25 +44,29 @@ module Heroku
       require 'rake'
       config = Campanify::Plans.configuration(ENV['PLAN'].to_sym)          
       # scale
+      puts "SCALING"
       config[:ps].each do |type, quantity|
         ps_scale(type, quantity)
       end
       # add db
+      puts "CREATING DB"      
       client.post_addon(slug, config[:db])
       # updgrade/downgrade addons
+      puts "INSTALLING ADDONS"            
       config[:addons].each do |addon, plan|
         post_addon("#{addon}:#{plan}")
       end
+      puts "MIGRATING/SEEDING DB"                  
       # migrate/seed db
-      load File.join(RAILS_ROOT, 'lib', 'tasks', 'custom_task.rake')
+      Campanify::Application.load_tasks      
       Rake::Task["db:migrate"].invoke
       Rake::Task["db:seed"].invoke
     end
     
     private
 
-    def change_plan(target_plan, force = false)
-      if target_plan != self.plan || force
+    def change_plan(target_plan)
+      if target_plan != self.plan
         # put app on maintenance mode
         client.post_app_maintenance(slug, 1)
       
@@ -82,29 +86,29 @@ module Heroku
       
         # db migration
         # ============
-        if !force || current_config[:db]!=config[:db]
-          # add new db addon
-          client.post_addon(slug, config[:db])
-      
-          # capture backup of current db
-          system('heroku pgbackups:capture --expire')
-      
-          # get new db url
-          config_vars = client.get_config_vars(slug)
-          target_db = config_vars.
-                      delete_if{|key,value| !key.include?('POSTGRESQL')}.
-                      delete_if{|key,value| value == config_vars['DATABASE_URL']}.
-                      keys.first
-      
-          # restore new db from backup
-          system("heroku pgbackups:restore #{target_db}")
-      
-          # promote new db
-          system("heroku pg:promote #{target_db}")
-      
-          # remove old db addon
-          client.delete_addon(slug, current_config[:db])
-        end
+
+        # add new db addon
+        client.post_addon(slug, config[:db])
+    
+        # capture backup of current db
+        system('heroku pgbackups:capture --expire')
+    
+        # get new db url
+        config_vars = client.get_config_vars(slug)
+        target_db = config_vars.
+                    delete_if{|key,value| !key.include?('POSTGRESQL')}.
+                    delete_if{|key,value| value == config_vars['DATABASE_URL']}.
+                    keys.first
+    
+        # restore new db from backup
+        system("heroku pgbackups:restore #{target_db}")
+    
+        # promote new db
+        system("heroku pg:promote #{target_db}")
+    
+        # remove old db addon
+        client.delete_addon(slug, current_config[:db])
+
         
         # change plan environment var
         client.put_config_vars(slug, 'PLAN' => plan)
@@ -120,6 +124,10 @@ module Heroku
     
     def put_addon(addon)
       client.put_addon(slug, addon)
+    end
+    
+    def post_addon(addon)
+      client.post_addon(slug, addon)
     end
 
     def client
