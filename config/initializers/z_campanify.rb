@@ -187,7 +187,7 @@ module Campanify
         },
         city: {
           ps: {
-            dyno: 2,
+            web: 2,
             worker: 1
           },
           addons: {

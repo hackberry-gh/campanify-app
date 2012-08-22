@@ -43,13 +43,13 @@ ActiveAdmin.register Campaign do
     f.buttons
   end
   
-  collection_action :restart do
+  collection_action :restart, :method => :put do
     Campaign.first.restart!
     redirect_to :action => :show, :notice => "Server successfuly restarted!"
   end
   
   action_item do
-    link_to "Restart!", restart_admin_campaigns_path
+    link_to "Restart!", restart_admin_campaigns_path, :method => :put
   end
   
 end
