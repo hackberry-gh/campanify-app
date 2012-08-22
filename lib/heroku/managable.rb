@@ -55,12 +55,13 @@ module Heroku
       end
       
       # wait until sendgrid setup done
-      until client.get_config_vars(slug).body["SENDGRID_USERNAME"].present?
+      until client.get_config_vars(slug).body["SENDGRID_USERNAME"].present? &&
+            client.get_config_vars(slug).body["SENDGRID_PASSWORD"].present?
         sleep(1)
       end
       
       puts "CONFIG"
-      puts client.get_config_vars(slug)
+      puts client.get_config_vars(slug).body
       
       # migrate db if PLAN is not town
       if ENV['PLAN'] != 'town'

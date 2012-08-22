@@ -3,8 +3,6 @@ campaign.slug = "campanify-base"
 campaign.save!
 campaign.setup
 
-sleep(5)
-
 admin = Administrator.create!(email: 'admin@campanify.it', full_name: "Admin", role: "root")
 admin.password = "passw0rd"
 admin.password_confirmation = "passw0rd"

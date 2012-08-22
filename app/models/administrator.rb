@@ -19,7 +19,13 @@ class Administrator < ActiveRecord::Base
     end
   }
   
-  after_create { |admin| admin.send_reset_password_instructions }
+  after_create { |admin| 
+    begin
+      admin.send_reset_password_instructions 
+    rescue Exception => e
+      puts e
+    end
+  }
   
   validates_presence_of :full_name, :role
   
