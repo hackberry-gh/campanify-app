@@ -33,6 +33,14 @@ class UsersController < CampanifyController
     render nothing: true
   end
 	
+	def index_cache_path
+    _cache_key("user", "index", params[:page], params[:sort] || "none", I18n.locale, current_branch || "none")
+  end
+  
+  def show_cache_path
+    _cache_key("user", "show", params[:id], I18n.locale, current_branch || "none")    
+  end
+  
   private
 	
   def ensure_user!
@@ -41,14 +49,6 @@ class UsersController < CampanifyController
 	
 	def me?
 	  current_user == @user
-  end
-  
-  def index_cache_path
-    _cache_key("user", "index", params[:page], params[:sort] || "none", I18n.locale, current_branch || "none")
-  end
-  
-  def show_cache_path
-    _cache_key("user", "show", params[:id], I18n.locale, current_branch || "none")    
   end
   
 end

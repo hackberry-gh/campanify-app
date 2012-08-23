@@ -121,20 +121,20 @@ module Heroku
       client.post_addon(slug, config[:db])
   
       # capture backup of current db
-      system('heroku pgbackups:capture --expire')
+      system("heroku pgbackups:capture --expire --app #{slug}")
   
       # get new db url
-      config_vars = client.get_config_vars(slug)
+      config_vars = client.get_config_vars(slug).body
       target_db = config_vars.
                   delete_if{|key,value| !key.include?('POSTGRESQL')}.
                   delete_if{|key,value| value == config_vars['DATABASE_URL']}.
                   keys.first
   
       # restore new db from backup
-      system("heroku pgbackups:restore #{target_db}")
+      system("heroku pgbackups:restore #{target_db} --app #{slug}")
   
       # promote new db
-      system("heroku pg:promote #{target_db}")
+      system("heroku pg:promote #{target_db} --app #{slug}")
   
       # remove old db addon
       client.delete_addon(slug, current_config[:db])

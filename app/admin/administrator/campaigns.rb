@@ -45,7 +45,7 @@ ActiveAdmin.register Campaign do
   
   collection_action :restart, :method => :put do
     Campaign.first.restart!
-    redirect_to :action => :show, :notice => "Server successfuly restarted!"
+    redirect_to admin_campaigns_path, :notice => "Server successfuly restarted!"
   end
   
   action_item do
