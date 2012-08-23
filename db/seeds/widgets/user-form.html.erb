@@ -62,7 +62,7 @@
   <%= link_to t('html.links.login'), new_session_path(resource_name) %>
 <% end %>
 
-<% if devise_mapping.omniauthable? %>
+<% if devise_mapping.omniauthable? && Settings.facebook["connect"] %>
   <% User.omniauth_providers.each do |provider| %>
     <%= link_to t("html.links.login_with",:provider => provider.to_s.titleize), omniauth_authorize_path(resource_name, provider) %>
   <% end %>
