@@ -83,7 +83,7 @@ module Heroku
         # updgrade/downgrade addons
         config[:addons].each { |addon, plan| put_addon("#{addon}:#{plan}") }
       
-        migrate_db(current_config,config)
+        migrate_db(ENV['PLAN'],target_plan)
 
         # change plan environment var
         client.put_config_vars(slug, 'PLAN' => plan)     
@@ -110,37 +110,10 @@ module Heroku
       end      
     end
     
-    def migrate_db(current_config,config)
-      # put app on maintenance mode
-      client.post_app_maintenance(slug, 1)
-      
-      # db migration
-      # ============
-
-      # add new db addon
-      client.post_addon(slug, config[:db])
-  
-      # capture backup of current db
-      system("heroku pgbackups:capture --expire --app #{slug}")
-  
-      # get new db url
-      config_vars = client.get_config_vars(slug).body
-      target_db = config_vars.
-                  delete_if{|key,value| !key.include?('POSTGRESQL')}.
-                  delete_if{|key,value| value == config_vars['DATABASE_URL']}.
-                  keys.first
-  
-      # restore new db from backup
-      system("heroku pgbackups:restore #{target_db} --app #{slug}")
-  
-      # promote new db
-      system("heroku pg:promote #{target_db} --app #{slug}")
-  
-      # remove old db addon
-      client.delete_addon(slug, current_config[:db])
-      
-      # remove app from maintenance mode
-      client.post_app_maintenance(slug, 0)
+    def migrate_db(current_plan,target_plan)
+      # TODO: make an api with authentication
+      # url = "http://campanify.it/api/migrate_db"
+      # HTTParty.put url, body: { slug: slug, current_plan: current_plan, target_plan: target_plan}
     end
 
     def client

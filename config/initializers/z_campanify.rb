@@ -78,7 +78,6 @@ Campanify::Application.configure do
   # when u r a gem below is working
   # ::ActionMailer::Base.default_url_options = { :host => Settings.mailer["host"] }          
   config.action_mailer.default_url_options = { :host => Settings.mailer["host"] }
-  config.assets.initialize_on_precompile = false    
   config.i18n.default_locale = Settings.i18n['default_locale']
   config.time_zone = Settings.timezone
 end
