@@ -15,7 +15,7 @@ about = Content::Page.create!(title: "About", body: File.read("#{Rails.root}/db/
 thank_you = Content::Page.create!(title: "Thank You", body: File.read("#{Rails.root}/db/seeds/pages/thank-you.html"))
 user_form = Content::Widget.create!(title: "User Form", body: File.read("#{Rails.root}/db/seeds/widgets/user-form.html.erb"))
 social_sharing = Content::Widget.create!(title: "Social Sharing", body: File.read("#{Rails.root}/db/seeds/widgets/social-sharing.html.erb"))
-flexi_slider = Content::Widget.create!(title: "Flexi Slider", body: File.read("#{Rails.root}/db/seeds/widgets/flexi-slider.html.erb"))
+flexi_slider = Content::Widget.create!(title: "Flex Slider", body: File.read("#{Rails.root}/db/seeds/widgets/flex-slider.html.erb"))
 
 home.widgets << user_form
 thank_you.widgets << social_sharing

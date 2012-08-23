@@ -4,7 +4,7 @@ namespace :campanify do
     Hash[File.open(".env").read.split("\n").map{|v| v.split("=")}].each do |k,v|
       system("heroku config:add #{k}=#{v}")
     end
-    system('bundle exec heroku run rake db:migrate')
-    system('bundle exec heroku run rake db:seed')        
+    system('bundle exec heroku run rake db:migrate --account campanify_tech')
+    system('bundle exec heroku run rake db:seed --account campanify_tech')        
   end
 end
