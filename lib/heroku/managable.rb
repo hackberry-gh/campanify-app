@@ -86,7 +86,7 @@ module Heroku
         migrate_db(ENV['PLAN'],target_plan)
 
         # change plan environment var
-        client.put_config_vars(slug, 'PLAN' => plan)     
+        client.put_config_vars(slug, 'PLAN' => target_plan)     
       end
     end
     
