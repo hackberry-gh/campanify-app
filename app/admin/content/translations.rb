@@ -9,7 +9,8 @@ ActiveAdmin.register Translation, :as => "Translation" do
     #   params[:translation][:interpolations] = params[:translation][:interpolations].split(",").map(&:parameterize)
     # end
     def index
-      @translations = params[:filter_by_locale] ? Translation.locale(params[:filter_by_locale]).page(params[:page]) : Translation.page(params[:page])
+      scope = params[:filter_by_locale] ? Translation.locale(params[:filter_by_locale]) : Translation
+      @translations =  scope.page(1).per(scope.count)
     end
     def create
       if params[:translation][:locale].present?
@@ -30,14 +31,17 @@ ActiveAdmin.register Translation, :as => "Translation" do
   index do
     column :locale
     column :key    
+    column :value        
     default_actions        
   end
   
   form do |f|
     f.inputs do
-      f.input :locale, :as => :select, :collection => I18n.available_locales, :hint => "leave blank to create in all languages"
+      f.input :locale, {:as => :select, :collection => I18n.available_locales, 
+                        :hint => "leave blank to create in all languages"}.
+                        merge!(f.object.new_record? ? {} : {:input_html => {:disabled => true}})
       f.input :key
-      f.input :value, :as => :code, :mode => "text"
+      f.input :value, :as => :code, :mode => "html"
       # f.input :interpolations, :as => :array, :hint => "Comma seperated list"
       # f.input :is_proc, :as => :boolean, :default => false
     end

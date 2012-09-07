@@ -2,6 +2,7 @@ ActiveAdmin.register Appearance::Asset do
   menu :parent => "Appearance"
   index do
     column :filename
+    column :content_type    
     default_actions
   end  
   form do |f|

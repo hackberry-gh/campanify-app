@@ -7,7 +7,7 @@ module HtmlHelper
   end
   def language_dropdown
     select_tag "language", options_for_select(
-    I18n.completed_locales.collect{|l| [I18n.with_locale(l){ t(l) },l]}, 
+    I18n.completed_locales.collect{|l| [I18n.with_locale(l){ t('language') },l]}, 
     I18n.locale), :class => "language" if I18n.completed_locales.size > 1
   end
 end

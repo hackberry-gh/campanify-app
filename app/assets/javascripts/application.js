@@ -15,7 +15,6 @@
 //= require ./markitup/jquery.markitup.js
 //= require ./markitup/sets/markdown/set.js
 //= require ./widgets/jquery.flexslider-min.js
-//= require demo
 
 (function($, undefined) {
 	var campanify;

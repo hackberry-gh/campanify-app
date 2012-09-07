@@ -4,9 +4,15 @@
 	<title><%= t('html.title') %></title>
 	<meta name="description" content="<%= t('html.description') %>">
   <%= stylesheet_link_tag    	"application", :media => "all" %>
+ 	<% Appearance::Asset.css.each do |css| %>
+	<link href="<%= css.url %>?body=1" media="all" rel="stylesheet" type="text/css" />
+	<% end %>
   <%= javascript_include_tag 	"modernizr" %>
 	<%= render 									"shared/js_bindings" %>	
   <%= javascript_include_tag 	"application" %>
+ 	<% Appearance::Asset.js.each do |js| %>
+	<script src="<%= js.url %>"></script>
+	<% end %>
 	<%= render "shared/ograph" %>
   <%= csrf_meta_tags %>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">

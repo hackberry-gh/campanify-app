@@ -15,6 +15,9 @@ class Appearance::Asset < ActiveRecord::Base
   after_save :compile
   before_destroy :unlink
   
+  scope :js, where(content_type: VALID_TYPES[:js])
+  scope :css, where(content_type: VALID_TYPES[:css])  
+  
   @@host_type   = Settings.assets["host_type"]
   cattr_reader :host_type
   

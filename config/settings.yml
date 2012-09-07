@@ -18,7 +18,7 @@ development: &development
   # application wide mailer settings    
   mailer:
     # mails will appear on from field on sent mail
-    sender: no-reply@campanify.it  
+    sender: noreply@campanify.it  
     # mails will send from this domain
     # needs restart
     host: 'localhost:3000'

@@ -1,7 +1,7 @@
 # Campanify defaults
 
 en:
-  en: English
+  language: English
   # Do not touch this if you your language latin based
   i18n:
     transliterate:

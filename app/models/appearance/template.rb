@@ -1,4 +1,5 @@
 class Appearance::Template < ActiveRecord::Base
+  include Campanify::Cache  
   class Resolver < ActionView::Resolver 
   
     include Singleton

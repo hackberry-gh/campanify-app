@@ -1,8 +1,6 @@
-TODO: add a server restart button
-TODO: add plan upgrade/downgrade option into admin/campaign
-TODO: write installer script which loads settings, translations, templates, assets and default content
 TODO: create statistics page which contains map, ranking, graphs
 TODO: write documentation
 TODO: add admin roles/ability
 TODO: Facebook Localization
 TODO: add functionality to clone translations into specific language 
+TODO: add soft truncate option for users table, keep count but download & delete records
