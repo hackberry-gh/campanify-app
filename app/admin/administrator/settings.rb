@@ -1,5 +1,6 @@
 ActiveAdmin.register Settings, :as => "Settings" do
-  controller.authorize_resource
+  
+  controller.authorize_resource :class => Settings
   
   menu :parent => "Admin", :priority => 3, :if => proc{ can?(:read, Settings) }
   

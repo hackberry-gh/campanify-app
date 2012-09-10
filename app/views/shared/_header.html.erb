@@ -6,6 +6,7 @@
 		<%= link_to t('html.header.users'), users_path if users_enabled? %>
 		<%= link_to t('html.header.posts'), posts_path  if posts_enabled? %>				
 		<%= link_to t('html.header.events'), events_path if events_enabled? %>		
+		<%= link_to t('html.header.analytics'), analytics_path if analytics_enabled? %>				
 		<% if users_enabled? %>
 			<% unless current_user %>
 				<%= link_to t('html.header.login'), new_user_session_path %>

@@ -1,6 +1,6 @@
 ActiveAdmin.register Appearance::Template do
   
-  controller.authorize_resource
+  controller.authorize_resource :class => Appearance::Template
     
   menu :parent => "Appearance", :priority => 2, :if => proc{ can?(:read, Appearance::Template) }
   

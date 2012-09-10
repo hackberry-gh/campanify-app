@@ -54,4 +54,34 @@ $(document).ready( function(){
 	
 	$("#user_country option[value=" + country + "]").attr('selected',true);
 	
+	// analytics
+	if( $(".page#analytics").length > 0 ) {
+		
+		$("#graphs nav > a").click(function(){
+			var period = $(this).attr('href').replace("#","");
+			$("#graphs nav > a").removeClass("active");
+			$(this).addClass("active");			
+			$(".linechart").hide();
+			$(".linechart." + period).show();
+			$.campanify.drawSparklines();
+			return false;
+		});
+		
+		$("#graphs nav span > a").click(function(){
+			var type = $(this).attr('href').replace("#","");
+			$("#graphs nav span > a").removeClass("active");
+			$(this).addClass("active");
+			$("#graphs > article").hide();
+			$("#graphs > article#" + type).show();
+			$.campanify.drawSparklines();
+			return false;
+		});
+		
+	
+		$.campanify.loadAnalytics();
+		
+		$("#graphs nav > a:first").click();
+		$("#graphs nav span > a:first").click();		
+	}
+	
 });

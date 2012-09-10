@@ -31,6 +31,7 @@ en:
       login: Log in
       me: Me
       logout: Log out
+      analytics: Analytics
     registration_form:
       legend: 'This cause needs your help, <a href="/pages/about">because</a> happening now!'
       submit: "Count me in ↩"  
@@ -88,6 +89,15 @@ en:
       total: Total
       posts: Posts
       popularity: Popularity       
+    analytics:
+      hourly: Hourly
+      daily: Daily
+      weekly: Weekly   
+      monthly: Monthly
+      yearly: Yearly
+      map_title: Signups By Countries
+      ranking_title: Most Populars
+      graphs_title: Time Based Line Charts
     sorting:
       sort_by: Sort by
       popularity: popularity

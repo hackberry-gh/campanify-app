@@ -1,4 +1,6 @@
 ActiveAdmin.register User do
+  controller.authorize_resource  
+  menu :if => proc{ can?(:read, User) }
   actions :index, :show, :edit, :update, :destroy
   index do
     column :full_name

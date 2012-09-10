@@ -1,7 +1,7 @@
 ActiveAdmin.register Content::Event do
 
-  controller.authorize_resource  
-  menu :parent => "Content", :priority => 4, :if => proc{ can?(:read, Appearance::Event) }
+  controller.authorize_resource :class => Content::Event
+  menu :parent => "Content", :priority => 4, :if => proc{ can?(:read, Content::Event) }
   
   index do
     column :name

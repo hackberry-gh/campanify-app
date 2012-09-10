@@ -1,6 +1,6 @@
 ActiveAdmin.register Content::Media do
-  controller.authorize_resource  
-  menu :parent => "Content", :priority => 5, :if => proc{ can?(:read, Appearance::Media) }
+  controller.authorize_resource :class => Content::Media
+  menu :parent => "Content", :priority => 5, :if => proc{ can?(:read, Content::Media) }
 
   index do
     column :title

@@ -1,5 +1,5 @@
 ActiveAdmin.register Translation, :as => "Translation" do
-  controller.authorize_resource  
+  controller.authorize_resource :class => Translation 
   menu :parent => "Content", :priority => 6, :if => proc{ can?(:read, Translation) }
   actions :index, :new, :create, :edit, :update, :destroy
   config.clear_sidebar_sections!

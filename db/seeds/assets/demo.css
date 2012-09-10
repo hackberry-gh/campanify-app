@@ -427,9 +427,18 @@ tr:nth-child(2n) td{
 	width:100%;
 	height:100%;
 }
+.linechart{display:none;}
+#graphs nav a.active{
+	border:none;
+	color:#333;
+}
 /* HELPERS */
 .hidden{
 	display:none;
+}
+.on-right{
+	float:right;
+	clear:right;
 }
 /*
  * Contain floats: h5bp.com/q
@@ -454,16 +463,30 @@ iframe.video{
 	body{
 		font-size:0.7em;
 	}
+	#main{
+		width:90%;
+	}
 	header{
 		margin-bottom:6em;
 	}
 	header nav{
-		top:28px;
+		top:0;
+		top: 0;
+		width: 100%;
+		text-align: center;
 	}
-	header .logo img{
-		width:160px;
-		top:20px;
-		position:relative;
+	header .logo img {
+		width: 140px;
+		top: 35px;
+		position: relative;
+	}
+	header a.logo {
+		border: none;
+		position: relative;
+		left: 10px;
+		margin: 0 auto;
+		display: block;
+		width: 140px;
 	}
 	footer .addthis_toolbox{
 		display:inline-block;
@@ -474,5 +497,9 @@ iframe.video{
 	}
 	#social-sharing label{
 		width:100%;
+	}
+	#graphs nav .on-right{
+		float:left;
+		clear:left;
 	}
 }

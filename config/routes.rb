@@ -25,7 +25,7 @@ Campanify::Application.routes.draw do
   end
   
   if Settings.modules.include?("analytics") 
-    match "analytics" => "analytics#index"
+    match "analytics" => "analytics#index", :as => :analytics
     match "analytics/map" => "analytics#map"
     match "analytics/ranking" => "analytics#ranking"        
     match "analytics/graphs" => "analytics#graphs"            

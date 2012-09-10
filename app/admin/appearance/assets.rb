@@ -1,6 +1,6 @@
 ActiveAdmin.register Appearance::Asset do
   
-  controller.authorize_resource
+  controller.authorize_resource :class => Appearance::Asset
     
   menu :parent => "Appearance", :priority => 1, :if => proc{ can?(:read, Appearance::Asset) }
   

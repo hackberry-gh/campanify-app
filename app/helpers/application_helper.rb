@@ -67,4 +67,8 @@ module ApplicationHelper
     Settings.modules.include?("posts")
   end
   
+  def analytics_enabled?
+    Settings.modules.include?("analytics")
+  end
+  
 end
