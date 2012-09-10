@@ -61,20 +61,29 @@
 
 			form.find('#error_explanation').html(errorList).show();
 		},
-		initializeMap: function (latitude, longitude) {
-
-		  var latLng = new google.maps.LatLng(latitude, longitude);	
+		initializeMap: function (map, markers) {
 
 		  var map = new google.maps.Map(document.getElementById('map_canvas'), {
-		    zoom: 8,
-		    center: latLng,
+		    zoom: map.zoom,
+		    center: new google.maps.LatLng(map.latitude, map.longitude),
 		    mapTypeId: google.maps.MapTypeId.ROADMAP
 		  });
-		  var marker = new google.maps.Marker({
-		    position: latLng,
-		    title: 'Venue',
-		    map: map
-		  });
+			
+			for (var i in markers) {
+				var markerData = markers[i];
+				markerData.map = map;
+				markerData.position = new google.maps.LatLng( markerData.position.latitude, 
+																											markerData.position.longitude);
+		  	var marker = new google.maps.Marker(markerData);
+		
+			  google.maps.event.addListener(marker, 'click', function() {
+					if ( $.campanify.infowindow !== undefined){
+						$.campanify.infowindow.close();
+					}
+					$.campanify.infowindow = new google.maps.InfoWindow({content: this.title});
+			    $.campanify.infowindow.open(this.map, this);
+			  });
+			}
 
 		},
 		resizeVideos: function() {

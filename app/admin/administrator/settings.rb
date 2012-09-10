@@ -1,6 +1,10 @@
 ActiveAdmin.register Settings, :as => "Settings" do
-  menu :parent => "Admin"
+  controller.authorize_resource
+  
+  menu :parent => "Admin", :priority => 3, :if => proc{ can?(:read, Settings) }
+  
   actions :index, :edit, :show, :update
+  
   controller do
     def index
       redirect_to admin_setting_path(Settings.instance.id)
@@ -22,18 +26,22 @@ ActiveAdmin.register Settings, :as => "Settings" do
       end
     end
   end
+  
   member_action :reset do
     Settings.reset!
     redirect_to admin_setting_path(Settings.instance.id)
   end
+  
   action_item do
     link_to('Reset!', reset_admin_setting_path(Settings.instance.id))
   end
+  
   show do
     pre do
        settings.data.to_yaml
     end
   end
+  
   form do |f|
     f.inputs do
       f.input :data, :as => :settings, 

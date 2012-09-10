@@ -1,7 +1,6 @@
 class UsersController < CampanifyController
   
   include Campanify::Controllers::ParanoidController    
-  include Campanify::Cache
     
   before_filter  :safe_request!, :only => [:visits, :recruited]
   before_filter  :ensure_user!, :only => [:show, :visits, :recruited]

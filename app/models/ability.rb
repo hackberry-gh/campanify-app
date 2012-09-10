@@ -10,16 +10,14 @@ class Ability
         can :manage, :all        
       when "developer"
         can :manage, :all
-        cannot :manage, [Campaign, Admin, Settings]
+        cannot :manage, [Administrator, Campaign, Settings]
       when "editor"  
         cannot :manage, :all
-        can :manage, [Content::Event, Content::Medium, Content::Page, 
-                      Content::Post, Content::Widget, 
-                      I18n::Backend::Mongoid::Translation  ]
+        can :manage, [Content::Event, Content::Media, Content::Page, 
+                      Content::Post, Content::Widget ]
       end
     else
-      can :read, :all
-      can :manage, Content::Post, {:user_id => user.id} if Settings.user['abilities']['can_post']
+      # cancan not implemented for front end user model
     end
     
   end

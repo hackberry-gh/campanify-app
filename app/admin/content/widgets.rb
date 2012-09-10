@@ -1,5 +1,6 @@
 ActiveAdmin.register Content::Widget do
-  menu :parent => "Content"
+  controller.authorize_resource  
+  menu :parent => "Content", :priority => 2, :if => proc{ can?(:read, Appearance::Widget) }
 
   index do
     column :title

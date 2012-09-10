@@ -37,6 +37,9 @@ module Campanify
             def daily_#{field_name}(uniq = true, owner = :all, target = self)
               count("#{field_name}", uniq, owner, target, 'day')
             end
+            def weekly_#{field_name}(uniq = true, owner = :all, target = self)
+              count("#{field_name}", uniq, owner, target, 'week')
+            end            
             def hourly_#{field_name}(uniq = true, owner = :all, target = self)
               count("#{field_name}", uniq, owner, target, 'hour')
             end                

@@ -30,6 +30,7 @@ gem "omniauth-facebook"
 gem 'redcarpet'
 gem 'i18n_country_select', 
 			:git => 'git://github.com/lemmycaution/i18n_country_select.git'
+gem 'ox'
 
 group :assets do
   gem 'sass-rails',   							'~> 3.2.3'

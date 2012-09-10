@@ -9,6 +9,7 @@ development: &development
   # Available options users, posts, events
   # needs restart
   modules:    
+    - analytics
     - users
     - posts
     - events    

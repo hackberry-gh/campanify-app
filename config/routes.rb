@@ -24,6 +24,13 @@ Campanify::Application.routes.draw do
     resources :media,   :module => 'content', :only => [:show, :create, :new]
   end
   
+  if Settings.modules.include?("analytics") 
+    match "analytics" => "analytics#index"
+    match "analytics/map" => "analytics#map"
+    match "analytics/ranking" => "analytics#ranking"        
+    match "analytics/graphs" => "analytics#graphs"            
+  end
+  
   resources :pages,   :module => "content", :only => [:show]
   resources :widgets, :module => "content", :only => [:show]
   

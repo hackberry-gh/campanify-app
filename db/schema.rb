@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120822134304) do
+ActiveRecord::Schema.define(:version => 20120909113408) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -117,6 +117,8 @@ ActiveRecord::Schema.define(:version => 20120822134304) do
     t.string   "file"
     t.integer  "user_id"
   end
+
+  add_index "content_media", ["user_id"], :name => "index_content_media_on_user_id"
 
   create_table "content_medium_translations", :force => true do |t|
     t.integer  "content_medium_id"
@@ -287,6 +289,7 @@ ActiveRecord::Schema.define(:version => 20120822134304) do
     t.string   "uid"
     t.string   "avatar"
     t.integer  "popularity",             :default => 0
+    t.text     "meta"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

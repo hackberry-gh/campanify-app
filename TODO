@@ -1,6 +1,4 @@
 TODO: create statistics page which contains map, ranking, graphs
 TODO: write documentation
-TODO: add admin roles/ability
-TODO: Facebook Localization
 TODO: add functionality to clone translations into specific language 
 TODO: add soft truncate option for users table, keep count but download & delete records

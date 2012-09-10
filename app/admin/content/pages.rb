@@ -1,5 +1,6 @@
 ActiveAdmin.register Content::Page do
-  menu :parent => "Content"
+  controller.authorize_resource
+  menu :parent => "Content", :priority => 1, :if => proc{ can?(:read, Appearance::Page) }  
   scope :published
   scope :unpublished
   member_action :unpublish do

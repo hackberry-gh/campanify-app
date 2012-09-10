@@ -2,6 +2,10 @@ include FacebookHelper
 
 ActiveAdmin.register Administrator do
   
+  controller.authorize_resource
+  
+  menu :parent => "Admin", :priority => 1, :if => proc{ can?(:read, Administrator) }  
+  
   member_action :facebook_callback, :method => :get do
     # if params[:state] == current_administrator.id.to_s    
 
@@ -35,9 +39,7 @@ ActiveAdmin.register Administrator do
   action_item :only => :edit do
     link_to('Link with facebook', link_with_facebook_admin_administrator_path(current_administrator))
   end
-  
-  menu :parent => "Admin"
-  
+    
   show do |administrator|
     attributes_table do
       row :email

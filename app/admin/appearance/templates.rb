@@ -1,5 +1,9 @@
 ActiveAdmin.register Appearance::Template do
-  menu :parent => "Appearance"
+  
+  controller.authorize_resource
+    
+  menu :parent => "Appearance", :priority => 2, :if => proc{ can?(:read, Appearance::Template) }
+  
   index do
     column :path
     column :format
@@ -8,6 +12,7 @@ ActiveAdmin.register Appearance::Template do
     column :partial            
     default_actions
   end
+  
   form do |f|
     f.inputs do
       f.input :body, :as => :code, :mode => "html"

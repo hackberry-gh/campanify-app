@@ -58,6 +58,11 @@ namespace :load do
     puts "Generation finished for #{k1} users with #{k2} visits data at #{Time.now}"    
   end
 
+  desc "loads 100 of users with 10 visit data"
+  task :micro => :environment do
+    generate(100,10)
+  end
+  
   desc "loads 1k of users with 1k visit data"
   task :small => :environment do
     generate(1000,1000)

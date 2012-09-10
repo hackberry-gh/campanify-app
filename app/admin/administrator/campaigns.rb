@@ -1,5 +1,8 @@
 ActiveAdmin.register Campaign do
-  menu :parent => "Admin"  
+  
+  controller.authorize_resource
+  
+  menu :parent => "Admin", :priority => 2, :if => proc{ can?(:read, Campaign) }
 
   actions :index, :edit, :show, :update
 

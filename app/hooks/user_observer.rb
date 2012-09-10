@@ -1,7 +1,9 @@
 class UserObserver < ActiveRecord::Observer
   observe User
+  
   def after_create(user)
     do_hook("after_create",user)
+    locate user
   end
 
   def after_update(user)
@@ -50,11 +52,36 @@ class UserObserver < ActiveRecord::Observer
   def facebook
     #TODO: implement facebook
   end
+  
+  def locate(user)
+    begin
+      url="http://maps.googleapis.com/maps/api/geocode/json?address=country:#{user.country.to_s}&sensor=false"
+      response = HTTParty.get url
+      if response["status"] = "OK"
+        country_name = I18n.t(user.country.to_s, :scope => :countries)        
+        location = nil
+        response["results"].each do |loc|
+          loc["address_components"].each do |add|
+            location = loc["geometry"]["location"] if add["long_name"].include?(country_name)
+          end
+        end
+        if location
+          user.meta[:location] = location
+          user.save(validate: false)
+        end
+      else
+        user.meta[:location] = false                          
+        user.save(validate: false)
+      end
+    rescue Exception => e
+      user.meta[:location] = false
+      user.save(validate: false)          
+    end
+  end
 
   if ENV['PLAN'] != "town"
-    handle_asynchronously :mail
-    handle_asynchronously :http_post
-    handle_asynchronously :tweet
-    handle_asynchronously :facebook
+    handle_asynchronously :after_create
+    handle_asynchronously :after_update
+    handle_asynchronously :after_delete  
   end
 end

@@ -18,7 +18,8 @@ class User < ActiveRecord::Base
                   :birth_year, :birth_date, 
                   :country, :region, :city, :address, :post_code, :phone, :mobile_phone, 
                   :branch, :language, :send_updates, :legal_aggrement, 
-                  :provider, :uid, :avatar, :remove_avatar, :remote_avatar_url
+                  :provider, :uid, :avatar, :remove_avatar, :remote_avatar_url,
+                  :meta
   
   attr_accessor   :created_by_facebook_connect
                     
@@ -30,6 +31,8 @@ class User < ActiveRecord::Base
   
   has_many :posts, :class_name => "Content::Post", :dependent => :destroy
   has_many :media, :class_name => "Content::Media", :dependent => :destroy
+  
+  serialize :meta, Hash
   
   scope :popularity, order('popularity DESC')
   scope :date, order('created_at DESC')

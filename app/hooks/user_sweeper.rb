@@ -43,4 +43,10 @@ class UserSweeper < ActionController::Caching::Sweeper
     expire_fragment _cache_key("users", "show", user.id, locale, branch)
   end
   
+  if ENV['PLAN'] != "town"
+    handle_asynchronously :after_create
+    handle_asynchronously :after_update
+    handle_asynchronously :after_delete  
+  end
+  
 end
