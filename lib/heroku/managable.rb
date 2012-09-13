@@ -111,9 +111,8 @@ module Heroku
     end
     
     def migrate_db(current_plan,target_plan)
-      # TODO: make an api with authentication
-      # url = "http://campanify.it/api/migrate_db"
-      # HTTParty.put url, body: { slug: slug, current_plan: current_plan, target_plan: target_plan}
+      url = "http://campanify.it/api/campaigns/#{self.campanify_id}"
+      HTTParty.put url, body: { slug: slug, current_plan: current_plan, target_plan: target_plan, :auth_token => ENV['CAMPANIFY_TOKEN']}
     end
 
     def client
@@ -123,6 +122,7 @@ module Heroku
     if ENV['PLAN'] != "town"
       handle_asynchronously :restart!
       handle_asynchronously :change_plan
+      handle_asynchronously :migrate_db      
     end
     
   end
