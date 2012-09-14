@@ -64,9 +64,9 @@ module Heroku
       puts client.get_config_vars(slug).body
       
       # migrate db if PLAN is not town
-      if ENV['PLAN'] != 'town'
-        migrate_db(Campanify::Plans.configuration(:town),config)  
-      end
+      # if ENV['PLAN'] != 'town'
+      #   migrate_db(Campanify::Plans.configuration(:town),config)  
+      # end
     end
     
     private
