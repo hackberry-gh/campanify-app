@@ -111,8 +111,12 @@ module Heroku
     end
     
     def migrate_db(current_plan,target_plan)
-      url = "http://campanify.it/api/campaigns/#{self.campanify_id}"
-      HTTParty.put url, body: { slug: slug, current_plan: current_plan, target_plan: target_plan, :auth_token => ENV['CAMPANIFY_TOKEN']}
+      begin
+        url = "http://campanify.it/api/campaigns/#{self.campanify_id}"
+        HTTParty.put url, body: { slug: slug, current_plan: current_plan, target_plan: target_plan, :auth_token => ENV['CAMPANIFY_TOKEN']}
+      rescue Exception => e
+        puts e
+      end
     end
 
     def client
