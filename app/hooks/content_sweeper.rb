@@ -46,7 +46,7 @@ class ContentSweeper < ActionController::Caching::Sweeper
   if ENV['PLAN'] != "town"
     handle_asynchronously :after_create
     handle_asynchronously :after_update
-    handle_asynchronously :after_delete  
+    handle_asynchronously :after_destroy
   end
   
 end
