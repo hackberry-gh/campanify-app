@@ -166,10 +166,11 @@ end
 # Plans
 module Campanify
   module Plans
-    def self.all
-      %w(town city country earth universal)
-    end
-    def self.configuration(plan)
+    class << self
+      def all
+        %w(town city country earth universal)
+      end
+      def configuration(plan)
       {
         town: {
           ps: {
@@ -197,7 +198,47 @@ module Campanify
           db: 'heroku-postgresql:crane',
           price: 17100          
         },
+        country: {
+          ps: {
+            web: 4,
+            worker: 2
+          },
+          addons: {
+            "pgbackups" => "auto-week",            
+            "sendgrid" => "silver",
+            "memcachier" => "500"
+          },
+          db: 'heroku-postgresql:ronin',
+          price: 62400          
+        },
+        earth: {
+          ps: {
+            web: 8,
+            worker: 2
+          },
+          addons: {
+            "pgbackups" => "auto-week",            
+            "sendgrid" => "gold",
+            "memcachier" => "1000"
+          },
+          db: 'heroku-postgresql:fugu',
+          price: 141800          
+        },
+        universal: {
+          ps: {
+            web: 12,
+            worker: 4
+          },
+          addons: {
+            "pgbackups" => "auto-week",            
+            "sendgrid" => "platinum",
+            "memcachier" => "2500"
+          },
+          db: 'heroku-postgresql:ika',
+          price: 242900          
+        }
       }[plan]
+      end
     end
   end
 end

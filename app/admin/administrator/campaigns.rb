@@ -40,8 +40,6 @@ ActiveAdmin.register Campaign do
     f.inputs do
       f.input :name
       f.input :domains, :as => :array, :hint => "Comma seperated"
-      f.input :plan, :as => :select, :collection => Campanify::Plans.all, 
-              :input_html => { :value => f.object.plan }, :include_blank => false
     end
     f.buttons
   end
