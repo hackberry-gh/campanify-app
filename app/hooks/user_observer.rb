@@ -79,7 +79,7 @@ class UserObserver < ActiveRecord::Observer
     end
   end
 
-  if ENV['PLAN'] != "town"
+  if ENV['PLAN'] != "free"
     handle_asynchronously :after_create
     handle_asynchronously :after_update
     handle_asynchronously :after_delete  

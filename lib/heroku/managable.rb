@@ -123,7 +123,7 @@ module Heroku
       @client ||= ::Heroku::API.new
     end
     
-    if ENV['PLAN'] != "town"
+    if ENV['PLAN'] != "free"
       handle_asynchronously :restart!
       # handle_asynchronously :change_plan
       # handle_asynchronously :migrate_db      
