@@ -13,13 +13,17 @@ module Campanify
         helpers = %w(current_ip current_country current_branch current_browser_language)
         helper_method *helpers
         hide_action *helpers       
-        prepend_before_filter :set_language, :set_current_country_and_branch, :set_current_remote_ip
+        prepend_before_filter :set_language, :set_current_country_and_branch, :set_current_remote_ip, :alter_host
       end
     
       private
     
+      def alter_host
+        request["SERVER_NAME"] = request["HTTP_HOST"] = request["HTTP_HOST"].gsub("herokuapp.com", "campanify.it") if request["HTTP_HOST"].include?("herokuapp.com")
+      end
+    
       def set_current_remote_ip
-        self.class.current_ip = Rails.env.production? ? request.remote_ip : Settings.development['ip']
+        self.class.current_ip = Rails.env.production? ? client_ip : Settings.development['ip']
       end
     
       def set_current_country_and_branch
@@ -37,6 +41,10 @@ module Campanify
       end
       
       private
+      
+      def client_ip
+        request["HTTP_X_REAL_IP"] || request["HTTP_X_FORWARDED_FOR"].split(",").first || request.remote_ip || request.ip
+      end
       
       def override_by_url
         params[:locale].try(:to_sym)
