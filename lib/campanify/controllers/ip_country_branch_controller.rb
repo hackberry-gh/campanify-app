@@ -43,7 +43,7 @@ module Campanify
       private
       
       def client_ip
-        request["HTTP_X_REAL_IP"] || request["HTTP_X_FORWARDED_FOR"].split(",").first || request.remote_ip || request.ip
+        request.headers["HTTP_X_REAL_IP"] || (request.headers["HTTP_X_FORWARDED_FOR"] ? request.headers["HTTP_X_FORWARDED_FOR"].split(",").first : nil) || request.remote_ip || request.ip
       end
       
       def override_by_url
