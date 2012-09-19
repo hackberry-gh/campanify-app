@@ -19,7 +19,7 @@ module Campanify
       private
     
       def alter_host
-        request["SERVER_NAME"] = request["HTTP_HOST"] = request["HTTP_HOST"].gsub("herokuapp.com", "campanify.it") if request["HTTP_HOST"].include?("herokuapp.com")
+        request.headers["SERVER_NAME"] = request.headers["HTTP_HOST"] = request.headers["HTTP_HOST"].gsub("herokuapp.com", "campanify.it") if request.headers["HTTP_HOST"].include?("herokuapp.com")
       end
     
       def set_current_remote_ip
