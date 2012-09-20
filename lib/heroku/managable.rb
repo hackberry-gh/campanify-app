@@ -32,7 +32,7 @@ module Heroku
     def price
       addon_price = client.get_addons(slug).body.sum{|addon| addon["price"]["cents"]}
       ps_price = (client.get_ps(Campaign.first.slug).body.count - 1) * 3500
-      campanify_price = Campanify::Plans.configuration(plan.to_sym)[:price]
+      campanify_price = Campanify::Plans.configuration(plan.to_sym)[:campanify_fee]
       addon_price + ps_price + campanify_price
     end
     
