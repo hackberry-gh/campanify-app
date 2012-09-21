@@ -78,7 +78,7 @@ module Campanify
         scope = Track.where(tracker: field_name)
         scope = scope.where(owner_id: owner.id) unless owner == :all
         scope = scope.where(target_id: target.id, target_type: target.class.name) unless target == :all
-        scope = scope.where("date_trunc('#{period}', TIMESTAMP '#{Time.now.utc.to_s(:db)}') = ?", 
+        scope = scope.where("date_trunc('#{period}', created_at) = ?", 
         Time.now.utc.send("beginning_of_#{period}").to_s(:db)) unless period.nil?
         if uniq
           scope.sum(:value, :group => :ip).keys.count
