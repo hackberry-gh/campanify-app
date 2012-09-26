@@ -62,18 +62,21 @@ class User < ActiveRecord::Base
     user = User.find_by_email(auth.info.email)
     puts "2 #{user}"
     unless user
+      pass = Devise.friendly_token
+      puts "3 #{pass}"      
       user = User.create(first_name: auth.extra.raw_info.first_name,
       last_name: auth.extra.raw_info.last_name,
       provider: auth.provider,
       uid: auth.uid,
       email: auth.info.email,
-      password: Devise.friendly_token[0,20],
+      password: pass,
+      password_confirmation: pass,
       remote_avatar_url: "http://graph.facebook.com/#{auth.uid}/picture?type=normal"
       )
-      puts "3 #{user}"
+      puts "4 #{user}"
       user.created_by_facebook_connect = true
     end
-    puts "4 #{user}"
+    puts "5 #{user}"
     user
   end
   
