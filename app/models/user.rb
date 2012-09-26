@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   validates :avatar, 
   :integrity => true,
   :processing => true,
-  :presence => true, 
+  # :presence => true, 
   :file_size => { 
     :maximum => 2.megabytes.to_i
   }, 
