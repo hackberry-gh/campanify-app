@@ -64,6 +64,21 @@ class User < ActiveRecord::Base
     unless user
       pass = Devise.friendly_token
       puts "3 #{pass}"      
+      puts auth.extra.raw_info.first_name
+      puts "4"       
+      puts auth.extra.raw_info.last_name
+      puts "5"      
+      puts auth.provider
+      puts "6"      
+      puts auth.uid
+      puts "7"      
+      puts auth.info.email
+      puts "8"      
+      puts pass
+      puts "9"      
+      puts "http://graph.facebook.com/#{auth.uid}/picture?type=normal"
+      puts "10"      
+      begin
       user = User.create(first_name: auth.extra.raw_info.first_name,
       last_name: auth.extra.raw_info.last_name,
       provider: auth.provider,
@@ -73,10 +88,14 @@ class User < ActiveRecord::Base
       password_confirmation: pass,
       remote_avatar_url: "http://graph.facebook.com/#{auth.uid}/picture?type=normal"
       )
-      puts "4 #{user}"
+      rescue Exception => e
+        puts "11 EXP"
+        raise e
+      end
+      puts "12 #{user}"
       user.created_by_facebook_connect = true
     end
-    puts "5 #{user}"
+    puts "13 #{user}"
     user
   end
   
