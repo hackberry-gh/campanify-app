@@ -28,9 +28,6 @@ ActiveAdmin.register Campaign do
         campaign.domains.join(",")
       end
       row :plan
-      row :price do
-        "#{campaign.price / 100}$"
-      end
       row :created_at
       row :updated_at      
     end
