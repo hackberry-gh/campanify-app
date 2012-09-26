@@ -39,8 +39,13 @@ class ContentSweeper < ActionController::Caching::Sweeper
     end
   end
   def expire_show(content,locale,branch)
-    expire_action _cache_key(content.class.name, "show", content.id, locale, branch)
-    expire_fragment _cache_key(content.class.name, "show", content.id, locale, branch)
+    if content.respond_to(:slug)
+      expire_action _cache_key(content.class.name, "show", content.slug, locale, branch)
+      expire_fragment _cache_key(content.class.name, "show", content.slug, locale, branch)    
+    else
+      expire_action _cache_key(content.class.name, "show", content.id, locale, branch)
+      expire_fragment _cache_key(content.class.name, "show", content.id, locale, branch)
+    end
   end
   
   if ENV['PLAN'] != "free"

@@ -7,7 +7,7 @@ module Heroku
     module ClassMethods
       def manage_with(slug)
         # validates_presence_of slug    
-        attr_accessible :plan, :price, :domains, :ps_web, :ps_worker
+        attr_accessible :plan, :domains
       end
     end
 
@@ -29,12 +29,12 @@ module Heroku
     #       change_plan(plan)
     #     end
     
-    def price
-      addon_price = client.get_addons(slug).body.sum{|addon| addon["price"]["cents"]}
-      ps_price = (client.get_ps(Campaign.first.slug).body.count - 1) * 3500
-      campanify_price = Campanify::Plans.configuration(plan.to_sym)[:campanify_fee]
-      addon_price + ps_price + campanify_price
-    end
+    # def price
+    #   addon_price = client.get_addons(slug).body.sum{|addon| addon["price"]["cents"]}
+    #   ps_price = (client.get_ps(Campaign.first.slug).body.count - 1) * 3500
+    #   campanify_price = Campanify::Plans.configuration(plan.to_sym)[:campanify_fee]
+    #   addon_price + ps_price + campanify_price
+    # end
     
     def restart!
       client.post_ps_restart(slug)
