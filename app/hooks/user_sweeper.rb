@@ -32,15 +32,19 @@ class UserSweeper < ActionController::Caching::Sweeper
     end
   end
   def expire_index(locale,branch)
+    @controller ||= ActionController::Base.new 
     total_pages = (User.count.to_f / Settings.pagination["per"]).ceil
     (1..total_pages).each do |page|
-      expire_action _cache_key("users", "index", page, locale, branch)
-      expire_fragment _cache_key("users", "index", page, locale, branch)    
+      cache_key = _cache_key("users", "index", page, locale, branch)
+      expire_action cache_key
+      expire_fragment "views/#{cache_key}"
     end
   end
   def expire_show(user,locale,branch)
-    expire_action _cache_key("users", "show", user.id, locale, branch)
-    expire_fragment _cache_key("users", "show", user.id, locale, branch)
+    @controller ||= ActionController::Base.new 
+    cache_key = _cache_key("users", "show", user.id, locale, branch)
+    expire_action cache_key 
+    expire_fragment "views/#{cache_key}"
   end
   
   if ENV['PLAN'] != "free"

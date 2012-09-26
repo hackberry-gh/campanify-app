@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', 												'3.2.7'
 gem 'pg'
 gem 'unicorn'
+gem 'thin'
 gem 'acts_as_singleton'
 gem 'i18n-active_record',
       :git => 'git://github.com/svenfuchs/i18n-active_record.git',

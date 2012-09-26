@@ -32,19 +32,24 @@ class ContentSweeper < ActionController::Caching::Sweeper
     end
   end
   def expire_index(content,locale,branch)
+    @controller ||= ActionController::Base.new 
     total_pages = (content.class.count.to_f / Settings.pagination["per"]).ceil
     (1..total_pages).each do |page|
-      expire_action _cache_key(content.class.name, "index", page, locale, branch)
-      expire_fragment _cache_key(content.class.name, "index", page, locale, branch)    
+      cache_key = _cache_key(content.class.name, "index", page, locale, branch)
+      expire_action cache_key
+      expire_fragment "views/#{cache_key}"
     end
   end
   def expire_show(content,locale,branch)
-    if content.respond_to(:slug)
-      expire_action _cache_key(content.class.name, "show", content.slug, locale, branch)
-      expire_fragment _cache_key(content.class.name, "show", content.slug, locale, branch)    
+    @controller ||= ActionController::Base.new 
+    if content.respond_to?(:slug)
+      cache_key = _cache_key(content.class.name, "show", content.slug, locale, branch)
+      expire_action cache_key
+      expire_fragment "views/#{cache_key}"
     else
-      expire_action _cache_key(content.class.name, "show", content.id, locale, branch)
-      expire_fragment _cache_key(content.class.name, "show", content.id, locale, branch)
+      puts cache_key = _cache_key(content.class.name, "show", content.id, locale, branch)
+      expire_action cache_key
+      expire_fragment "views/#{cache_key}"
     end
   end
   
