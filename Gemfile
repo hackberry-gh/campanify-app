@@ -32,6 +32,8 @@ gem 'i18n_country_select',
 			:git => 'git://github.com/lemmycaution/i18n_country_select.git'
 gem 'ox'
 gem 'newrelic_rpm'
+gem 'memcachier'
+gem 'dalli'
 
 group :assets do
   gem 'sass-rails',   							'~> 3.2.3'

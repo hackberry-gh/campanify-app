@@ -20,13 +20,6 @@ $stdout.sync = true if Rails.env.development?
 module Campanify
   class Application < Rails::Application
     
-    # .env loading for development
-    if Rails.env.development?
-      Hash[File.open(".env").read.split("\n").map{|v| v.split("=")}].each do |k,v|
-        ENV[k] = v
-      end
-    end
-    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

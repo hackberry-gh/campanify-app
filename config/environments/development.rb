@@ -1,3 +1,8 @@
+# .env loading for development
+Hash[File.open(".env").read.split("\n").map{|v| v.split("=")}].each do |k,v|
+  ENV[k] = v
+end
+
 Campanify::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
