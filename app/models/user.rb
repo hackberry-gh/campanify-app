@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
   :if => "persisted?"
   
   def self.find_for_facebook_oauth(auth)
+    puts auth
     # user = User.where(:provider => auth.provider, :uid => auth.uid).first
     user = User.find_by_email(auth.info.email)
     unless user
