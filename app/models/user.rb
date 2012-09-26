@@ -57,9 +57,10 @@ class User < ActiveRecord::Base
   :if => "persisted?"
   
   def self.find_for_facebook_oauth(auth)
-    puts auth
+    puts "1 #{auth}"
     # user = User.where(:provider => auth.provider, :uid => auth.uid).first
     user = User.find_by_email(auth.info.email)
+    puts "2 #{user}"
     unless user
       user = User.create(first_name: auth.extra.raw_info.first_name,
       last_name: auth.extra.raw_info.last_name,
@@ -69,8 +70,10 @@ class User < ActiveRecord::Base
       password: Devise.friendly_token[0,20],
       remote_avatar_url: "http://graph.facebook.com/#{auth.uid}/picture?type=normal"
       )
+      puts "3 #{user}"
       user.created_by_facebook_connect = true
     end
+    puts "4 #{user}"
     user
   end
   
