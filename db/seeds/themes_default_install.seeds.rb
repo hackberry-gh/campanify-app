@@ -1,1 +1,0 @@
-require "#{Rails.root}/db/seeds/themes/default/install.seeds.rb"

@@ -1,9 +1,0 @@
-<%= I18n.with_locale(@resource.language) { 
-	I18n.t('devise.mailer.unlock_instructions.body', 
-	email: @resource.email, 
-	link: link_to(
-				t('devise.mailer.unlock_instructions.link_title'), 
-				unlock_url(@resource, :unlock_token => @resource.unlock_token)
-				)
-	) 
-} %>
