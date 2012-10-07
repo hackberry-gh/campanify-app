@@ -52,6 +52,7 @@ Campanify::Application.configure do
   vendor/markitup/sets/markdown/set.js
   vendor/flexslider/jquery.flexslider-min.js
   widgets/flexslider.js
+  widgets/user-form.js
   )
 
   # Disable delivery errors, bad email addresses will be ignored
