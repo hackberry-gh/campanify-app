@@ -34,5 +34,7 @@
 		</article>		
 	</section>
 </article>
+<% content_for :scripts do %>
 <%= javascript_include_tag "jquery.sparkline" %>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?sensor=false" %>
+<% end %>

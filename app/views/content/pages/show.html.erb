@@ -8,4 +8,6 @@
 <%= render "shared/comments", :href => page_url(page) if comments_available?(:pages) %>
 
 <!-- DEMO THEME USER FORM WIDGET HACK FOR HOME PAGE -->
+<% content_for :scripts do %>
 <script>$(document).ready(function(){$(".widgets #user-form").insertAfter($(".page#home h1"));});</script>
+<% end %>

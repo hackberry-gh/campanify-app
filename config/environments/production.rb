@@ -46,7 +46,13 @@ Campanify::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( jquery.sparkline.js modernizr.js jquery.fitvid.js jquery.flexslider-min.js admin/active_admin.js admin/active_admin.css)
+  config.assets.precompile += %w(
+  jquery.sparkline.js modernizr.js admin/active_admin.js admin/active_admin.css
+  vendor/markitup/jquery.markitup.js
+  vendor/markitup/sets/markdown/set.js
+  vendor/flexslider/jquery.flexslider-min.js
+  widgets/flexslider.js
+  )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

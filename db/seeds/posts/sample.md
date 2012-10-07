@@ -27,7 +27,7 @@ Ordered List
 3. Item
 
 Image
-![Image](http://campanify.it/campanify-logo-96.png "Image")
+![Image](http://static.campanify.it/images/campanify-logo-96.png "Image")
 
 #### Youtube
 

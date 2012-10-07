@@ -355,7 +355,9 @@ section.users .thumbs a{
   position: relative;
   box-shadow: 0 5px 7px -5px rgba(0,0,0,.6), 0 0 1px 1px rgba(0,0,0,.1);
 }
-article.user .avatar{
+article.user .avatar,
+article.post section.body img,
+article.page section.body img{
 	width:100%;
 	margin:0 0 3em 0;
 	-webkit-border-radius: 4px;
@@ -490,10 +492,12 @@ iframe.video{
 	}
 	footer .addthis_toolbox{
 		display:inline-block;
-		width:160px;
+		width:190px;
 	}
 	header .addthis_toolbox{
-		top:120px;
+		top:140px;
+		right: 50%;
+		margin-right: -121px;
 	}
 	#social-sharing label{
 		width:100%;
@@ -501,5 +505,13 @@ iframe.video{
 	#graphs nav .on-right{
 		float:left;
 		clear:left;
+		margin-right: 8px;
+	}
+}
+
+@media only screen and (max-width: 240px) {	
+	footer .addthis_toolbox{
+		display:inline-block;
+		width:160px;
 	}
 }

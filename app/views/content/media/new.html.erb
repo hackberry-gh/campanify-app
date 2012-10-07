@@ -1,4 +1,7 @@
 <%= stylesheet_link_tag    	"application", :media => "all" %>
+<% Appearance::Asset.css.each do |css| %>
+<%= stylesheet_link_tag    	css.url, :media => "all" %>	
+<% end %>
 <style>
 body{
 	background:#FFF;
@@ -38,8 +41,10 @@ div.images{
 <%= f.submit t('html.media.new.submit') %>
 </div>
 <% end %>
+<% content_for :scripts do %>
 <script>
 $(".thumb").click(function(){
 	window.top.$.markItUp({ replaceWith:'![Image](' + $(this).attr('ref') + ' "Image")' } );
 });
 </script>
+<% end %>

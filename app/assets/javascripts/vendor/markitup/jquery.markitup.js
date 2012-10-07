@@ -483,7 +483,8 @@
 						dataType: 'text',
 						global: false,
 						url: options.previewParserPath,
-						data: options.previewParserVar+'='+encodeURIComponent($$.val()),
+						// little title hack bu campanify
+						data: options.previewParserVar+'='+encodeURIComponent($$.val()) + "&title=" + $("#content_post_title").val(),
 						success: function(data) {
 							writeInPreview( localize(data, 1) ); 
 						}

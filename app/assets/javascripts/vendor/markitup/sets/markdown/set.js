@@ -10,7 +10,7 @@
 // -------------------------------------------------------------------
 // Feel free to add more tags
 // -------------------------------------------------------------------
-mySettings = {
+var markitupSettings = {
 	previewParserPath:	'/posts/preview',
 	onShiftEnter:		{keepDefault:false, openWith:'\n\n'},
 	markupSet: [
@@ -41,8 +41,7 @@ mySettings = {
 		{separator:'---------------'},
 		{name:'Preview', call:'preview', className:"preview"}
 	]
-}
-
+},
 // mIu nameSpace to avoid conflict.
 miu = {
 	markdownTitle: function(markItUp, char) {
@@ -53,4 +52,4 @@ miu = {
 		}
 		return '\n'+heading;
 	}
-}
+};

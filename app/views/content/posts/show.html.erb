@@ -1,4 +1,4 @@
-<% if Settings.user_setting("abilities")['can_post'] && author? %>
+<% if can_post? && author? %>
 <section id="post_edit">
 	<a href="javascript:void(0);" onclick="$('#post_edit_form_container').toggle();"><%= t('html.links.edit') %></a>
 	<%= link_to t('html.links.delete'), post_path(post.id), :method => :delete, :confirm => t('html.links.are_you_sure'), :remote => true %>

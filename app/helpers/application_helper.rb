@@ -50,11 +50,7 @@ module ApplicationHelper
   def comments_available?(for_what)
     Settings.send(for_what)['comments'].present? && Settings.modules.include?(for_what.to_s)
   end
-  
-  def posting_available?
-    Settings.user_setting("abilities")['can_post'] && current_user
-  end
-  
+
   def users_enabled?
     Settings.modules.include?("users")
   end
@@ -70,5 +66,9 @@ module ApplicationHelper
   def analytics_enabled?
     Settings.modules.include?("analytics")
   end
+  
+  def can_post?
+    posts_enabled? && Settings.user_setting("abilities")['can_post'] && current_user.present?
+  end  
   
 end

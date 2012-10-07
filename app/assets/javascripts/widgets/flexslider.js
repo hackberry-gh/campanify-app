@@ -1,9 +1,7 @@
-<script>
-// Can also be used with $(document).ready()
+//= require ./flexslider/jquery.flexslider-min.js
+
 $(window).load(function() {
  
-  
-
 	$(".flexslider iframe.vimeo").each(function(){
 		// Vimeo API nonsense
 		function addEvent(element, eventName, callback) {
@@ -41,7 +39,4 @@ $(window).load(function() {
 	  });
 	});
  
-   
-  
 });
-</script>

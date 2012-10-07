@@ -3,8 +3,11 @@
 <head>
 	<title><%= t('html.title') %></title>
 	<meta name="description" content="<%= t('html.description') %>">
-  <%= stylesheet_link_tag    	"application", :media => "all" %>
-  <%= csrf_meta_tags %>
+	<%= stylesheet_link_tag    	"application", :media => "all" %>
+	<% Appearance::Asset.css.each do |css| %>
+	<%= stylesheet_link_tag    	css.url, :media => "all" %>	
+	<% end %>
+	<%= csrf_meta_tags %>
 </head>
 <body class="<%= body_class %>">
 	

@@ -45,7 +45,8 @@ $(document).ready( function(){
 	});
 	
 	// post form
-	$("form.content_post textarea").markItUp(mySettings);
+	if( $("form.content_post textarea").length > 0 )
+		$("form.content_post textarea").markItUp(markitupSettings);
 	
 	// youtube responsive
 	$(window).resize(function(){

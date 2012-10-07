@@ -1,7 +1,7 @@
 <section class="posts">
 	<h1><%= t('html.posts.title') %></h1>
 	<nav class="sort">
-		Sort by 
+		<%= t('html.sorting.sort_by') %>
 		<%= link_to_if !has_sort("popularity"), "popularity", posts_path(sort: "popularity") %> or 
 		<%= link_to_if has_sort("popularity"), "date", posts_path %>
 	</nav>	
@@ -16,4 +16,4 @@
 	<% end %>
 </section>
 <%= paginate posts %>
-<%= render "form", post: Content::Post.new if posting_available? %>
+<%= render "form", post: Content::Post.new if can_post? %>

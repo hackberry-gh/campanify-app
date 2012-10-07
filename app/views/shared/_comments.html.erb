@@ -1,4 +1,5 @@
 <div class="fb-comments" data-href="<%= href %>" data-num-posts="4"></div>
+<% content_for :scripts do %>
 <script>
 /* VERY DIRTY FB COMMENT WIDTH HACK */
 $(document).ready(function(){
@@ -9,3 +10,4 @@ $(document).ready(function(){
 	}, 1000);
 });
 </script>
+<% end %>

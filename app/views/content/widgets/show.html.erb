@@ -1,1 +1,4 @@
 <% render_content widget %>
+<% content_for :scripts do %>
+<%= javascript_inlude_tag "widgets/#{widget.title.parameterize}.js" if File.exists?("#{Rails.root}/app/assets/widgets/#{widget.title.parameterize}.js") %>
+<% end %>
