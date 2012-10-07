@@ -19,7 +19,7 @@ module Campanify
       private
     
       def set_current_remote_ip
-        self.class.current_ip = client_ip # Rails.env.production? ? client_ip : Settings.development['ip']
+        self.class.current_ip = Rails.env.production? ? client_ip : Settings.development['ip']
       end
     
       def set_current_country_and_branch

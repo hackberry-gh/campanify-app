@@ -1,0 +1,6 @@
+<article class="post">
+	<h1><%= params[:title] %></h1>
+	<section class="body">
+	<%= Content.markdown.render(params[:data]).html_safe %>
+	</section>
+</article>

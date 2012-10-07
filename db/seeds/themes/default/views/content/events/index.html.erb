@@ -1,0 +1,14 @@
+<section class="events">
+	<h1><%= t('html.events.title') %></h1>
+	<% unless events.empty? %>
+	<ul>
+		<% events.each do |event| %>
+		<li><%= link_to event.name, event_path(event.slug) %></li>
+		<% end %>
+	</ul>
+	<% else %>
+	<p><%= t('html.events.empty') %></p>
+	<% end %>
+	
+</section>
+<%= paginate events if events.many? %>

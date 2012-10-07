@@ -1,0 +1,71 @@
+<article class="form">
+	<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:method => :put}) do |f| %>
+	
+	<legend><%= t('html.users.registrations.edit.title')%></legend>
+	
+  <%= devise_error_messages! %>
+
+	<fieldset>
+  <% resource.setting("fields").map(&:to_sym).each do |field| %>
+  <div>
+  <%= f.text_field field,
+	:"data-label" => t("activerecord.attributes.user.#{field}"), 
+	:placeholder => t("activerecord.attributes.user.#{field}") %></div>
+	<% end %>	
+
+	<% resource.setting("options").each do |field, checked| %>
+  <div>
+  <%= f.check_box field.to_sym, :checked => checked,
+	:"data-label" => t("activerecord.attributes.user.#{field}"), 
+	:placeholder => t("activerecord.attributes.user.#{field}") %></div>
+	<% end %>
+	
+	<div>
+	<%= f.label :avatar %>
+  <%= f.file_field :avatar,
+	:"data-label" => t("activerecord.attributes.user.avatar"), 
+	:placeholder => t("activerecord.attributes.user.avatar") %>
+	</div>
+	<% if current_user.avatar? %>
+	<div>
+		<label></label>
+		<%= image_tag(current_user.avatar_url) %>
+		<br/>
+		<label for="user_remove_avatar"><%= t('html.users.registrations.edit.remove_avatar')%></label> <%= f.check_box :remove_avatar %>	
+	</div>
+	<% end %>
+	</fieldset>
+	
+	<% if resource.setting("password_required") != "never" %>
+	<fieldset>
+  <div><i><%= t('html.users.registrations.edit.password_hint_blank')%></i>
+  <%= f.password_field :password, :autocomplete => "off",
+	:"data-label" => t("activerecord.attributes.user.password"), 
+	:placeholder => t("activerecord.attributes.user.password") %> %></div>
+
+  <div>
+  <%= f.password_field :password_confirmation,
+	:"data-label" => t("activerecord.attributes.user.password_confirmation"), 
+	:placeholder => t("activerecord.attributes.user.password_confirmation") %></div>
+	</fieldset>
+
+  <div><i><%= t('html.users.registrations.edit.password_hint_confirm')%></i>
+  <%= f.password_field :current_password,
+	:"data-label" => t("attributes.user.current_password"), 
+	:placeholder => t("attributes.user.current_password") %></div>	
+
+	<% end %>
+		
+  <div class="actions"><%= f.submit t('html.users.registrations.edit.submit') %></div>
+
+	<fieldset>
+		<h3><%= t('html.users.registrations.edit.cancel_title')%></h3>
+
+		<p><%= t('html.users.registrations.edit.unhappy')%> <%= link_to t('html.users.registrations.edit.cancel_link_title'), registration_path(resource_name), :data => { :confirm => t('html.links.are_you_sure') }, :method => :delete %>.</p>
+	</fieldset>	
+
+<% end %>
+	<nav>
+		<%= link_to t('html.links.back'), :back %>
+	</nav>
+</article>

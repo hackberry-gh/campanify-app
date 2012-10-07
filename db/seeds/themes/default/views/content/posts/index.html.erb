@@ -1,0 +1,19 @@
+<section class="posts">
+	<h1><%= t('html.posts.title') %></h1>
+	<nav class="sort">
+		<%= t('html.sorting.sort_by') %>
+		<%= link_to_if !has_sort("popularity"), "popularity", posts_path(sort: "popularity") %> or 
+		<%= link_to_if has_sort("popularity"), "date", posts_path %>
+	</nav>	
+	<% unless posts.empty? %>
+	<ul>
+		<% posts.each do |post| %>
+		<li><%= link_to post.title, post_path(post.slug) %></li>
+		<% end %>
+	</ul>
+	<% else %>
+	<p><%= link_to_if !current_user, t('html.posts.empty'), new_user_session_path %></p>
+	<% end %>
+</section>
+<%= paginate posts %>
+<%= render "form", post: Content::Post.new if can_post? %>

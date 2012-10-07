@@ -47,8 +47,8 @@ module ApplicationHelper
      sharing_user ? user.avatar_url(:thumb) : image_path(t('sharing.default.image'))
   end
   
-  def comments_available?(for_what)
-    Settings.send(for_what)['comments'].present? && Settings.modules.include?(for_what.to_s)
+  def comments_available?(object)
+    Settings.send(object)['comments'].present? && Settings.modules.include?(object.to_s)
   end
 
   def users_enabled?
@@ -70,5 +70,9 @@ module ApplicationHelper
   def can_post?
     posts_enabled? && Settings.user_setting("abilities")['can_post'] && current_user.present?
   end  
+  
+  def can_comment?(object)
+    comments_available?(object) && Settings.user_setting("abilities")['can_comment'] && current_user.present?
+  end
   
 end

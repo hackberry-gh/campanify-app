@@ -1,0 +1,27 @@
+<nav class="links">
+<% if controller_name != 'sessions' && !defined?(skip_login)  %>
+  <%= link_to t('html.links.login'), new_session_path(resource_name) %>
+<% end %>
+
+<% if devise_mapping.registerable? && controller_name != 'registrations' && !defined?(skip_join) %>
+  <%= link_to t('html.links.join'), new_registration_path(resource_name) %>
+<% end %>
+
+<% if devise_mapping.recoverable? && controller_name != 'passwords' && Settings.user_setting('password_required', current_branch) != "never" && !defined?(skip_password) %>
+  <%= link_to t('html.links.forgot_your_password'), new_password_path(resource_name) %>
+<% end %>
+
+<% if devise_mapping.confirmable? && controller_name != 'confirmations' && !%(never loose).include?(Settings.user_setting('confirmation_required', current_branch)) && !defined?(skip_confirmation)  %>
+  <%= link_to t('html.links.confirmation_instructions'), new_confirmation_path(resource_name) %>
+<% end %>
+
+<% if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+  <%= link_to t('html.links.unlock_instructions'), new_unlock_path(resource_name) %>
+<% end %>
+
+<% if devise_mapping.omniauthable? && Settings.facebook["connect"] %>
+  <% resource_class.omniauth_providers.each do |provider| %>
+    <%= link_to t('html.links.login_with', :provider => provider.to_s.titleize), omniauth_authorize_path(resource_name, provider) %>
+  <% end %>
+<% end %>
+</nav>

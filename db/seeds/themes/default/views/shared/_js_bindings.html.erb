@@ -1,0 +1,8 @@
+<script>
+	var country = '<%= current_country %>'
+	var locale = '<%= I18n.locale %>';
+	var errorSentence = '<%=I18n.t("errors.messages.not_saved",
+                      :count => "$count",
+                      :resource => "$resource") %>';
+	var redirects = <%== Settings.user_setting("redirects", current_branch).to_json %>;
+</script>
