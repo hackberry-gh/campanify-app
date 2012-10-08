@@ -48,6 +48,7 @@ class Appearance::Asset < ActiveRecord::Base
 
   def value
     if @@host_type=="s3"
+      s3_establish_connection!
       AWS::S3::S3Object.find(filename, @@s3_bucket).value
     else
       File.open("#{Rails.root}/public/assets/#{self.filename}", "r").read
@@ -56,6 +57,7 @@ class Appearance::Asset < ActiveRecord::Base
 
   def exists?
     if @@host_type=="s3"
+      s3_establish_connection!
       AWS::S3::S3Object.exists? filename, @@s3_bucket
     else
       File.exists?(file_path)
@@ -76,10 +78,7 @@ class Appearance::Asset < ActiveRecord::Base
 
   def upload
     if @@host_type=="s3"
-      AWS::S3::Base.establish_connection!(
-      :access_key_id     => @@s3_key, 
-      :secret_access_key => @@s3_secret
-      )
+      s3_establish_connection!
       AWS::S3::S3Object.store(filename, self.compressed_body, @@s3_bucket, 
       content_type: content_type, access: :public_read)
     else
@@ -90,6 +89,7 @@ class Appearance::Asset < ActiveRecord::Base
 
   def unlink
     if @@host_type=="s3"
+      s3_establish_connection!
       AWS::S3::S3Object.delete(filename, @@s3_bucket)
     else
       File.unlink(file_path)
@@ -98,5 +98,12 @@ class Appearance::Asset < ActiveRecord::Base
 
   def file_path
     "#{self.class.asset_path}/#{filename}"
+  end
+  
+  def s3_establish_connection!
+    AWS::S3::Base.establish_connection!(
+    :access_key_id     => @@s3_key, 
+    :secret_access_key => @@s3_secret
+    )
   end
 end
