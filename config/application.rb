@@ -70,6 +70,6 @@ module Campanify
     config.assets.version = '1.0'
     
     # Skip database connection on asset compile
-    config.assets.initialize_on_precompile = true        
+    config.assets.initialize_on_precompile = false        
   end
 end
