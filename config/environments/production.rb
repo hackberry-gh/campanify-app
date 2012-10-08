@@ -72,8 +72,9 @@ Campanify::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-  config.asset_sync.aws_access_key = ENV['AWS_ACCESS_KEY_ID']
-  config.asset_sync.aws_access_secret = ENV['AWS_SECRET_ACCESS_KEY']
-  config.asset_sync.aws_bucket = ENV['FOG_DIRECTORY']
-  config.asset_sync.fog_provider = ENV['FOG_PROVIDER']
+  
+  config.fog_provider = 'AWS'
+  config.aws_access_key_id = ENV['AWS_ACCESS_KEY_ID']
+  config.aws_secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
+  config.fog_directory = ENV['FOG_DIRECTORY']
 end
