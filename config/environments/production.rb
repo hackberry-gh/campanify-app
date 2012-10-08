@@ -50,9 +50,10 @@ Campanify::Application.configure do
   jquery.sparkline.js modernizr.js admin/active_admin.js admin/active_admin.css
   vendor/markitup/jquery.markitup.js
   vendor/markitup/sets/markdown/set.js
-  vendor/flexslider/jquery.flexslider-min.js
-  widgets/flexslider.js
-  widgets/user-form.js
+  vendor/markitup/sets/markdown/style.css
+  vendor/markitup/skins/campanify/style.css  
+  widgets/flex-slider.js
+  widgets/flex-slider.css  
   )
 
   # Disable delivery errors, bad email addresses will be ignored

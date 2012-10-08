@@ -5,6 +5,6 @@ namespace :db do
     system "rake db:create"
     system "rake db:migrate"
     system "rake db:seed:original"
-    system "rake db:seed:themes_naked_install"
+    system "rake db:seed:themes_default_install"
   end
 end
