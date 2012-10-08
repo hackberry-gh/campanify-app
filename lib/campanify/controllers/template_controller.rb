@@ -3,7 +3,7 @@ module Campanify
     module TemplateController
       extend ActiveSupport::Concern
       included do
-        prepend_view_path Appearance::Template::Resolver.instance unless Rails.env.development?
+        prepend_view_path Appearance::Template::Resolver.instance
       end
     end
   end
