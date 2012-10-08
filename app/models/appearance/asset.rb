@@ -24,9 +24,9 @@ class Appearance::Asset < ActiveRecord::Base
   @@asset_path  = "#{Rails.root}/public/assets"
   cattr_reader :asset_path
   
-  @@s3_bucket   = ENV["AWS_S3_BUCKET"]
-  @@s3_key      = ENV["AWS_S3_KEY"]
-  @@s3_secret   = ENV["AWS_S3_SECRET"]
+  @@s3_bucket   = ENV["FOG_DIRECTORY"]
+  @@s3_key      = ENV["AWS_ACCESS_KEY_ID"]
+  @@s3_secret   = ENV["AWS_SECRET_ACCESS_KEY"]
   
   def compile
     case content_type
