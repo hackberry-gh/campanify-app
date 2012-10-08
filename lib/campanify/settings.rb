@@ -15,8 +15,7 @@ module Campanify
       end
 
       def defaults
-        settings_file = File.expand_path("../../../config/settings.yml",__FILE__)
-        @@defaults ||= YAML::load(File.read(settings_file))[Rails.env]  	    
+        @@defaults ||= YAML::load(File.read("#{Rails.root}/config/settings.yml"))[Rails.env]  	    
       end
 
       def instance
