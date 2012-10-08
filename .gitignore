@@ -18,3 +18,9 @@
 /db/seeds
 /db/seeds.rb
 /config/settings.yml
+/app/views/analytics
+/app/views/content
+/app/views/layouts
+/app/views/shared
+/app/views/user_mailer
+/app/views/users

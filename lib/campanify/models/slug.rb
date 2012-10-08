@@ -3,8 +3,8 @@ module Campanify
     module Slug
       extend ActiveSupport::Concern
       included do
-        before_create :set_slug
         cattr_accessor :slug_field    
+        before_validation :set_slug        
         validates_uniqueness_of :slug                    
       end
       module ClassMethods

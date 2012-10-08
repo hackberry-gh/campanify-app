@@ -1,9 +1,0 @@
-<% if notice %>
-<p class="notice"><%= notice %></p>
-<% end %>
-<% if alert %>
-<p class="alert"><%= alert %></p>
-<% end %>
-<% if current_user && !current_user.confirmed? %>
-<p class="unconfirmed"><%= t('errors.messages.unconfirmed') %></p>
-<% end %>

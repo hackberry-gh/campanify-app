@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  helper_method :rendering_widgets  
   def after_sign_up_path_for(resource)
     set_path_for_user('after_sign_up')
   end
@@ -23,4 +24,8 @@ class ApplicationController < ActionController::Base
       root_path
     end
   end
+  
+  def rendering_widgets
+    @rendering_widgets ||= []
+  end  
 end

@@ -190,21 +190,71 @@
 	};
 
 	$(document).ready(function(){
+		
+		// remote forms
+		$("form[data-remote=true]").
+		on('ajax:beforeSend', function(event, data, status){
+			$.campanify.showLoading();
+		}).
+		on('ajax:error', function(event, xhr, status){
+			$.campanify.processErrors($(this), event, xhr, status);
+		}).
+		on("ajax:success", function(event, data, status){
+			$.campanify.hideLoading();
+			var form = $(this);
+			location.href = redirects[form.data('post-action')] == "show" ? 
+											"/" + locale + "/" + form.data('collection') + "/" + data[form.data('find_by')] : 
+											redirects[form.data('post-action')];
+		});
+
+		// language dropdown
+		$("#language").change(function(){
+			$.campanify.changeLocale( $(this).val() );
+		});
+
+		//delete buttons
+		$("a[data-method=delete]").
+		on('ajax:beforeSend', function(event, data, status){
+			$.campanify.showLoading();
+		}).
+		on("ajax:success", function(event, data, status){
+			$.campanify.hideLoading();
+			location.href = data['redirect_to'] || "/";
+		});
+
+		// like button
+		$("a.liking[data-remote=true]").
+		on('ajax:beforeSend', function(event, data, status){
+			$.campanify.showLoading();
+		}).
+		on('ajax:error', function(event, xhr, status){
+			$.campanify.processErrors(event, xhr, status);
+		}).
+		on("ajax:success", function(event, data, status){
+			location.reload();
+		});
+
+		// post form
+		if( $("form.content_post textarea").length > 0 )
+			$("form.content_post textarea").markItUp(markitupSettings);
+		
+		// auto select fields
 		$('.auto_select').focus(function() {
-		    var $this = $(this);
+			var $this = $(this);
 
-		    $this.select();
+			$this.select();
 
-		    window.setTimeout(function() {
-		        $this.select();
-		    }, 1);
+			window.setTimeout(function() {
+				$this.select();
+				}, 1);
 
-		    // Work around WebKit's little problem
-		    $this.mouseup(function() {
-		        // Prevent further mouseup intervention
-		        $this.unbind("mouseup");
-		        return false;
-		    });
-		})
-	})
+				// Work around WebKit's little problem
+				$this.mouseup(function() {
+					// Prevent further mouseup intervention
+					$this.unbind("mouseup");
+					return false;
+				});
+			})
+		});
+		
 })( jQuery );

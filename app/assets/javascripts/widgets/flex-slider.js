@@ -1,4 +1,4 @@
-//= require ./flexslider/jquery.flexslider-min.js
+//= require ./flex-slider/jquery.flexslider-min.js
 
 $(window).load(function() {
  
@@ -12,8 +12,9 @@ $(window).load(function() {
 	    }
 	  }
 
-	  function ready(player_id) {
+	  function ready(player_id) {		
 	    var froogaloop = $f(player_id);
+
 	    froogaloop.addEvent('play', function(data) {
 	      $('.flexslider').flexslider("pause");
 	    });
@@ -23,7 +24,7 @@ $(window).load(function() {
 	  }
 	
   	var player = this;
-	  $f(player).addEvent('ready', ready);	  
+  	$f(player).addEvent('ready', ready);	  
 	
 		// Call fitVid before FlexSlider initializes, so the proper initial height can be retrieved.
 	  $(".flexslider")
@@ -31,7 +32,7 @@ $(window).load(function() {
 	    .flexslider({
 	      animation: "slide",
 	      useCSS: false,
-	      animationLoop: false,
+	      animationLoop: true,
 	      smoothHeight: true,
 	      before: function(slider){
 	        $f(player).api('pause');

@@ -5,7 +5,6 @@ class CampanifyController < ApplicationController
   include Campanify::Cache
   
   helper_method :timezone
-  hide_action :timezone
   
   def timezone
     begin
@@ -14,5 +13,6 @@ class CampanifyController < ApplicationController
       Settings.timezone
     end
   end
-  
+
+
 end

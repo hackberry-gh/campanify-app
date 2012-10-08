@@ -3,6 +3,7 @@ module Content
     include ActionView::Template::Handlers
 
     def include_widget(slug)
+      rendering_widgets << slug
       render_content Content::Widget.find_by_slug(slug)
     end
 

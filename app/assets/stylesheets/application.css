@@ -10,7 +10,4 @@
 *
 *= require_self
 *= require spinner
-*= require ./markitup/skins/campanify/style.css
-*= require ./markitup/sets/markdown/style.css
-*= require ./widgets/flexslider.css
 */
