@@ -55,7 +55,7 @@ en:
         link_title: 'Confirm my account'
         body: |
           <p>Welcome %{unconfirmed_email_address}!</p>
-          <p>You can confirm your account email through the link below:</p>
+          <p>You can confirm your account through the link below:</p>
           <p>%{link}</p>
       reset_password_instructions:
         subject: 'Reset password instructions'

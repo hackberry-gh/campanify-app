@@ -16,15 +16,15 @@ gem 'globalize3',
 gem 'routing-filter'			
 gem 'rmagick',											'~> 2.13.1'			
 gem 'carrierwave'
-gem "fog", 													"~> 1.3.1"
-gem 'koala',												'~> 1.4.1'
+gem "fog" 													
+gem 'koala'												
 gem "httparty", 										"~> 0.8.3"
 gem "delayed_job", 									"~> 3.0.3"  
 gem "delayed_job_active_record"
 gem 'geoip'
 gem 'cancan'
 gem 'heroku-api'
-gem 'heroku',												'~> 2.26.3'
+gem 'heroku',												'~> 2.32.8'
 gem 'activeadmin',									'~> 0.4.4'
 gem "omniauth-facebook"
 gem 'redcarpet'

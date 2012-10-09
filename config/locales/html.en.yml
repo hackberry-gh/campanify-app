@@ -1,46 +1,46 @@
 en:
   sharing:
     user:
-      title: I just created my profile on Campanify.it
-      description: This is very important campaign you should join
-      tweet: "Hey check out my campanify profile %{url} via: @campanify"
+      title: I just join a cause on Campanify.it to make world more peaceful place
+      description: "Out home, earth needs your help, because there is still war, famine, poverty, racism and so on. Give us a hand."
+      tweet: "I just join a cause on @campanify to make world more peaceful place"
     default:
-      title: Campanify is a web platform to create online campaigns with a single click
-      description: We proudly backed many global campaigns already.
-      tweet: "Something important happening now, act now! %{url} via: @campanify"
+      title: Campanify.it trying to make world more peaceful place
+      description: "Out home, earth needs your help, because there is still war, famine, poverty, racism and so on. Give us a hand."
+      tweet: "@campanify trying to make world more peaceful place"
       image: campanify-logo-96.png      
   html:
     title: Campanify
-    description: Best Service Ever!  
+    description: Oneclick Online Campaigns  
     links:
       back: Back
       are_you_sure: Are you sure?
-      login: Login
+      login: Sign In
       join: Join
       forgot_your_password: Forgot your password?
       confirmation_instructions: Didn't receive confirmation instructions?
       unlock_instructions: Didn't receive unlock instructions?
-      login_with: "Login with %{provider}"
+      login_with: "Sign in with %{provider}"
       delete: Delete
       edit: Edit
     header:
       logo: campanify-logo-96.png
-      users: Users
-      posts: Posts
+      users: Supporters
+      posts: Articles
       events: Events
-      login: Log in
+      login: Sign in
       me: Me
-      logout: Log out
-      analytics: Analytics
+      logout: Sign out
+      analytics: Statistics
     registration_form:
-      legend: 'This cause needs your help, <a href="/pages/about">because</a> happening now!'
+      legend: 'Wake up! <a href="/pages/about">Because</a> out home earth needs your help!'
       submit: "Count me in ↩"  
     events:
       title: Events
       empty: No upcoming events
     posts:
-      title: Posts
-      empty: Nothings here, would you like to write?  
+      title: Articles
+      empty: "Nothings here, would you like to write?"
       preview_title: Title Goes Here
       published_at: Published At
       author: Author
@@ -54,7 +54,7 @@ en:
         description_choose: Choose an image from your uplaods
         description_upload: Or upload a new one
     users:
-      title: Users
+      title: Supporters
       confirmations:
         title: Resend confirmation instructions
         submit: Resend confirmation instructions      
@@ -78,7 +78,7 @@ en:
           cancel_link_title: Cancel my account          
           unhappy: Unhappy?
       sessions:
-        title: Log In
+        title: Sign in
         submit: Enter 
       visitors: Visitors
       recruitments: Recruitments
@@ -95,8 +95,8 @@ en:
       weekly: Weekly   
       monthly: Monthly
       yearly: Yearly
-      map_title: Signups By Countries
-      ranking_title: Most Populars
+      map_title: Supporters By Country
+      ranking_title: Most Popular Supporters
       graphs_title: Time Based Line Charts
     sorting:
       sort_by: Sort by

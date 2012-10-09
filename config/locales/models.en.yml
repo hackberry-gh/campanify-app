@@ -2,22 +2,22 @@ en:
   activerecord:  
     models:
       content/media: Media
-      content/post: Post
-      user: User
+      content/post: Article
+      user: Supporter
     attributes:
       media:
         title: Title 
         description: Description 
         file: File        
         position: Position         
-        translations_attributes: Translation Attributes
+        translations_attributes: Translations Attributes
       post:
         title: Title
         body: Body
         published_at: Published At 
-        user_id: User
+        user_id: Author
         locale: Language
-        translations_attributes: Translation Attributes
+        translations_attributes: Translations Attributes
       user:
         email: Email
         password: Password

@@ -1,12 +1,12 @@
 en:
   user_mailer:
     after_signup_email:
-      subject: "Hi, this is post signup mail coming from campanify.it"
+      subject: "Thank you! our campaign stronger with you."
       body: |
-        <h1>Post Signup Email</h1>
-        <p>And this is the body of email.
-        You can use reach user information on this email with below helpers.</p>
-        <h2>Simple Fields</h2>
+        <h1>Thank you</h1>
+        <p>World is going to be more peaceful place because of people like you</p>
+        <p>Your details as a supporter listed below, and don't forget you can always change these information on our website</p>
+        <h2>Details</h2>
         <ul>
           <li>id: %{id}</li>        
           <li>first_name: %{first_name}</li>
@@ -28,15 +28,29 @@ en:
           <li>branch: %{branch}</li>
           <li>language: %{language}</li>                
         </ul>
-        <h2>Tokens</h2>
+        <h2>Tokens and Links</h2>
         <ul>  
-          <li>Authentication token provides efortless signins for user, 
-          if you are add this token into your links, which user can signin, 
-          then user will signin the site directly</li>
-          <li>authentication_token: %{authentication_token}</li>
-          <li>Reset password token usually empty unless user request a new password
-          from forgot my password flow or set by settings</li>
-          <li>reset_password_token: %{reset_password_token}</li>
-          <li>Confirmation token to confirm user</li>
-          <li>confirmation_token: %{confirmation_token}</li>                    
+          <li>Authentication token provides efortless signins for supporters, 
+          by clicking below link, you will be automatically signed into campaign site.
+          <br/>
+          authentication_token: %{authentication_token}
+          <br/>
+          %{authentication_link}
+          </li>
+          <li>If supporters forgot their password and request a new one, or 
+          Campaign flow implemented such a flow which requires password
+          you may see here a token and a link to reset your password.
+          <br/>
+          reset_password_token: %{reset_password_token}
+          <br/>
+          %{reset_password_link}
+          </li>
+          <li>Some campaign requires a real user confirmation to avoid
+          bots and spams, if so you may see a confirmation token and
+          link to confirm your account.
+          <br/>
+          confirmation_token: %{confirmation_token}
+          <br/>
+          %{confirmation_link}
+          </li>                    
         </ul>
