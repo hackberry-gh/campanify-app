@@ -1,0 +1,131 @@
+<h2>Appearance::Template Model</h2>
+<p>Templates are view part of your MVC pattern. If you are familiar with Rails view templates
+	then you can think your app/view folder is 
+	<a href="/admin/appearance_templates" target="_vlank">admin/appearance_templates</a>
+</p>
+<p>Layout templates are main view files and contain header and footer of your theme.</p>
+<p>Editing templates requires knowledge on Rails view templates.
+<h3>The hierarchical structure of templates</h3>
+<ul>	
+	<li>layouts
+		<ul>
+			<li>application.html.erb</li>
+			<li>embed.html.erb</li>
+			<li>preview.html.erb</li>
+		</ul>
+		</li>	
+	<li>content
+		<ul>
+			<li>events
+				<ul>
+					<li>_map.html.erb</li>
+					<li>index.html.erb</li>
+					<li>show.html.erb</li>
+				</ul>	
+				</li>
+			<li>media
+				<ul>
+					<li>new.html.erb</li>
+					<li>show.html.erb</li>
+				</ul>	
+				</li>
+			<li>pages
+				<ul>
+					<li>show.html.erb</li>
+				</ul>
+				</li>
+			<li>posts
+				<ul>
+					<li>_form.html.erb</li>
+					<li>index.html.erb</li>
+					<li>preview.html.erb</li>
+					<li>show.html.erb</li>
+				</ul>	
+				</li>
+			<li>widgets
+				<ul>
+					<li>show.html.erb</li>
+				</ul>
+				</li>
+		</ul>	
+		</li>	
+	<li>users
+		<ul>
+			<li>index.html.erb</li>			
+			<li>show.html.erb</li>			
+			<li>confirmations
+				<ul>
+					<li>new.html.erb</li>
+				</ul>
+				</li>
+			<li>mailer
+				<ul>
+					<li>confirmation_instructions.html.erb</li>
+					<li>reset_password_instructions.html.erb</li>
+					<li>unlock_instructions.html.erb</li>										
+				</ul>				
+				</li>
+			<li>passwords
+				<ul>
+					<li>new.html.erb</li>
+					<li>edit.html.erb</li>					
+				</ul>
+				</li>
+			<li>registrations
+				<ul>
+					<li>new.html.erb</li>
+					<li>edit.html.erb</li>					
+				</ul>
+				</li>
+			<li>sessions
+				<ul>
+					<li>new.html.erb</li>
+				</ul>
+				</li>
+			<li>shared
+				<ul>
+					<li>_links.html.erb</li>
+				</ul>
+				</li>
+		</ul>	
+		</li>	
+	<li>analytics
+		<ul>
+			<li>index.html.erb</li>
+			<li>ranking.html.erb</li>			
+		</ul>
+		</li>
+	<li>shared
+		<ul>
+			<li>_add_this.html.erb</li>
+			<li>_comments.html.erb</li>
+			<li>_fb_js_sdk.html.erb</li>
+			<li>_footer.html.erb</li>
+			<li>_header.html.erb</li>
+			<li>_js_bindings.html.erb</li>
+			<li>_notifications.html.erb</li>
+			<li>_ograph.html.erb</li>
+			<li>_sharing.html.erb</li>
+			<li>_spinner.html.erb</li>
+		</ul>	
+		</li>
+	<li>user_mailer
+		<ul>
+			<li>after_signup_email.html.erb</li>			
+		</ul>
+		</li>
+</ul>	
+<h3>Attributes</h3>
+<p>Body, Path, Format, Handler, Locale, Partial</p>
+<h4>Body</h4>
+<p>Content of your template</p>	
+<h4>Path</h4>
+<p>Physical path of your template</p>
+<h4>Format of your template</h4>
+<p>Possible values are html, json, xml, js, text</p>
+<h4>Handler type</h4>
+<p>Possible values are erb, builder, haml, coffee</p>
+<h4>Locale</h4>
+<p>Language of your template, default is `en`</p>
+<h4>Partial</h4>
+<p>Boolean value to set template partial or not</p>
