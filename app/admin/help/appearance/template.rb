@@ -1,4 +1,4 @@
-ActiveAdmin.register_page "Template", :namespace => "help" do
+ActiveAdmin.register_page "Template", :namespace => "docs" do
   menu :label => "Template", :parent => "Appearance"
   content do
     render "index"

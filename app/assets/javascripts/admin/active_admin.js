@@ -184,6 +184,12 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	
+	// help menu item
+	if ( !$("body").hasClass("docs_namespace") ) { 
+		$("#header ul.header-item").append($('<li id="docs"><a href="/docs/welcome">Docs</a></li>'));
+	} else {
+		$("#header ul.header-item li#dashboard a").text("Adminstration").attr("href", "/admin");
+	}
+
 });
 
