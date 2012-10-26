@@ -190,6 +190,7 @@ $(document).ready(function(){
 	} else {
 		$("#header ul.header-item li#dashboard a").text("Adminstration").attr("href", "/admin");
 	}
+	
 
 });
 
