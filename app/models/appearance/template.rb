@@ -10,8 +10,8 @@ class Appearance::Template < ActiveRecord::Base
     def find_templates(name, prefix, partial, details)
       conditions = {
         :path => normalize_path(name, prefix),
-        :locale => normalize_array(details[:locale]).first, 
-        :format => normalize_array(details[:formats]).first, 
+        :locale => normalize_array(details[:locale]), 
+        :format => normalize_array(details[:formats]), 
         :handler => normalize_array(details[:handlers]), 
         :partial => partial || false
       }
