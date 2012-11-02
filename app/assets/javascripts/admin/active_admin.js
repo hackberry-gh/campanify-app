@@ -191,6 +191,13 @@ $(document).ready(function(){
 		$("#header ul.header-item li#dashboard a").text("Adminstration").attr("href", "/admin");
 	}
 	
+	//trans clone
+	$("#translations_cloning a#clone").click(function(){
+		window.location.href = "/admin/translations/clone?from=" + 
+			$("#translations_cloning select#from").val() + 
+			"&to=" + $("#translations_cloning select#to").val();
+	});
+	
 
 });
 

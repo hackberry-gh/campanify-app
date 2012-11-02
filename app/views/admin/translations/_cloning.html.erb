@@ -1,0 +1,15 @@
+<div id="translations_cloning">
+	<h4>Cloning</h4>
+	<div>
+		<label>From</label>
+		<%= select_tag "from", options_for_select(I18n.available_locales) %>
+	</div>
+	<div>
+		<label>To</label>
+		<%= select_tag "to", options_for_select(I18n.available_locales) %>
+	</div>
+	<div>
+		<br/>
+		<a id="clone" class="table_tools_button ">Clone!</a>
+	</div>	
+</div>

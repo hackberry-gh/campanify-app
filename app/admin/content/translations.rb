@@ -29,6 +29,19 @@ ActiveAdmin.register Translation, :as => "Translation" do
     end
   end
   
+  collection_action :clone, :method => :get do
+      if params[:from] != params[:to]
+        Translation.where(locale: params[:from]).each do |translation|
+            I18n.backend.store_translations(params[:to],{translation.key => translation.value}, :escape => false)
+        end
+        redirect_to admin_translations_path, :notice => "Translations clonned"        
+      else
+        redirect_to admin_translations_path, :alert => "Translations has not been clonned"          
+      end
+
+
+  end
+  
   index do
     column :locale
     column :key    
@@ -40,7 +53,7 @@ ActiveAdmin.register Translation, :as => "Translation" do
     f.inputs do
       f.input :locale, {:as => :select, :collection => I18n.available_locales, 
                         :hint => "leave blank to create in all languages"}.
-                        merge!(f.object.new_record? ? {} : {:input_html => {:disabled => true}})
+                        merge!(f.object.new_record? ? {} : {:input_html => {:readonly => true}})
       f.input :key
       f.input :value, :as => :code, :mode => "html"
       # f.input :interpolations, :as => :array, :hint => "Comma seperated list"
@@ -66,4 +79,11 @@ ActiveAdmin.register Translation, :as => "Translation" do
       end
     end
   end
+  
+  sidebar :filters, :only => :index do
+    div do
+      render "cloning"
+    end
+  end
+  
 end
