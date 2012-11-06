@@ -22,7 +22,7 @@ class ContentSweeper < ActionController::Caching::Sweeper
   def expire_cache_for(content)
     I18n.available_locales.each do |locale|
       
-      expire_index(content,locale, 'none')
+      expire_index(content, locale, 'none')
       expire_show(content, locale, 'none')      
       
       Settings.branches.keys.each do |branch|
