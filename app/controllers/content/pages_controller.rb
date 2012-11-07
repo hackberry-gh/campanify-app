@@ -1,16 +1,22 @@
 class Content::PagesController < ::CampanifyController
+  
+  before_filter :set_resource_and_widgets, :only => :show
+  
   include Campanify::Controllers::ContentController
   scopes :published
   finder_method :find_by_slug
   
   def show
-  	@resource = scope.send(finder_method, params[:id])
   	redirect_to '/404' and return if @resource.nil? 
-  	add_widgets_into_asset_render_list(@resource)
   	render :layout => false if request.xhr?
   end
   
   private 
+  
+  def set_resource_and_widgets
+    @resource = scope.send(finder_method, params[:id])
+    add_widgets_into_asset_render_list(@resource) if @resource
+  end
   
   def add_widgets_into_asset_render_list(resource)
     resource.widgets.each{ |w| rendering_widgets << w.slug }

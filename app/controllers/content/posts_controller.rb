@@ -1,16 +1,16 @@
 class Content::PostsController < ::CampanifyController
 
-  include Campanify::Controllers::ContentController
-  include Campanify::Controllers::ParanoidController    
-    
   before_filter :authenticate_user!, :only => [:create, :delete, :edit, :update]
   
-  scopes :published
-  finder_method :find_by_slug
+  include Campanify::Controllers::ParanoidController    
   
   respond_to :html, :json
   
   helper_method :author?
+  
+  include Campanify::Controllers::ContentController  
+  scopes :published
+  finder_method :find_by_slug
   
   def create
     @resource = Content::Post.create(params[:content_post])
