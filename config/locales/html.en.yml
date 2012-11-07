@@ -98,6 +98,8 @@ en:
       map_title: Supporters By Country
       ranking_title: Most Popular Supporters
       graphs_title: Time Based Line Charts
+      users: Supporters
+      content_posts: Articles
     sorting:
       sort_by: Sort by
       popularity: popularity
