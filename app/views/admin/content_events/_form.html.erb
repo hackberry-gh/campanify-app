@@ -1,3 +1,4 @@
+
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
 var map,marker;
@@ -95,6 +96,7 @@ function handleNoGeolocation(errorFlag, latLng) {
 }
 
 function initialize() {
+
   var latLng = new google.maps.LatLng(41, 29);
 
   map = new google.maps.Map(document.getElementById('map_canvas'), {
@@ -106,12 +108,13 @@ function initialize() {
 	// Try HTML5 geolocation
 	if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
+			
 			<% if @content_event.new_record? %>
 			latLng = new google.maps.LatLng(position.coords.latitude,
 				position.coords.longitude);
 			<% else %>
-			latLng = new google.maps.LatLng(<%=@content_event.venue["latitude"]%>,
-				<%=@content_event.venue["longitude"]%>);
+			latLng = new google.maps.LatLng(<%= @content_event.venue[:latitude] %>,
+				<%= @content_event.venue[:longitude] %>);
 			<% end %>			
 
 				centerMap(latLng);

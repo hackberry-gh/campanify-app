@@ -4,7 +4,8 @@
 $(document).ready(function(){
 	var editor = null;
 	var current_textarea = null;
-	if ( $("textarea.code").length > 0 ){
+
+	if ( $("textarea.code").length > 0 && navigator.userAgent.match(/mobile/i) === null){
 		var textarea = $("textarea.code").first();
 		var id = textarea.attr("id") + "_ace";
 		var div = $('<div id=\"' + id + '"></div>').insertAfter(textarea);

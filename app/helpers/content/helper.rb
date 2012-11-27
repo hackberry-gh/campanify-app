@@ -10,16 +10,6 @@ module Content
       (get_content(obj) || "").html_safe if obj
     end
 
-    def render_widgets(parent)
-      buffer = ""    
-      if widgets = parent.widgets.ordered
-        widgets.each do |widget|
-          buffer << (get_content(widget) || "")
-        end
-      end
-      buffer.html_safe
-    end
-
     private
 
     def get_content(obj)

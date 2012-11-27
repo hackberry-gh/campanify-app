@@ -5,6 +5,25 @@ module Campanify
       class Track < ActiveRecord::Base
         self.table_name = "history_tracks"
         attr_accessible :value, :tracker, :ip, :owner_id, :target_id, :target_type
+        
+        scope :by_period, lambda{ |period| where("date_trunc('#{period}', created_at) = ?", Time.now.utc.send("beginning_of_#{period}").to_s(:db))}
+        scope :by_tracker, lambda{ |tracker| where(tracker: tracker) }
+        
+        def self.periodic_rows_sum(parent, child, tracker, uniq = false)
+          scope = select("extract('#{child}' from created_at) as time, sum(value)").
+          where("tracker = '#{tracker}' AND date_trunc('#{parent}', created_at) = '#{Time.now.utc.send("beginning_of_#{parent}").to_s(:db)}'").
+          group("time").order("time ASC")
+          scope = scope.group(:ip) if uniq
+          scope          
+        end 
+        
+        def self.periodic_rows_avarage(parent, child, tracker, uniq = false)
+          scope = select("extract('#{child}' from created_at) as time, avg(value)").
+          where("tracker = '#{tracker}' AND date_trunc('#{parent}', created_at) = '#{Time.now.utc.send("beginning_of_#{parent}").to_s(:db)}'").
+          group("time").order("time ASC")
+          scope = scope.group(:ip) if uniq          
+          scope
+        end
       end
 
       extend ActiveSupport::Concern
@@ -71,6 +90,9 @@ module Campanify
             :target_id => self.id, :target_type => self.class.name)
           end
         end
+        
+        # invalidate cache fucker
+        self.save
         
       end 
       

@@ -14,9 +14,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     if resource.save
 
-      # add recruitment to the referrer
-      self.referrer.inc_recruits(resource) if self.referrer
-      self.referrer = nil
+      # add recruitment to the referer
+      current_referer.inc_recruits(resource) if current_referer
+      self.class.current_referer = nil
 
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?

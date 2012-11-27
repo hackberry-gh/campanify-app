@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120913225300) do
+ActiveRecord::Schema.define(:version => 20121127151519) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -187,12 +187,11 @@ ActiveRecord::Schema.define(:version => 20120913225300) do
     t.string   "title"
     t.string   "slug"
     t.text     "body"
-    t.integer  "position",   :default => 1
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
-  add_index "content_widgets", ["id", "position"], :name => "index_content_widgets_on_id_and_position"
+  add_index "content_widgets", ["slug"], :name => "index_content_widgets_on_slug"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -229,13 +228,6 @@ ActiveRecord::Schema.define(:version => 20120913225300) do
   end
 
   add_index "likers_posts", ["liker_id", "post_id"], :name => "index_likers_posts_on_liker_id_and_post_id"
-
-  create_table "pages_widgets", :id => false, :force => true do |t|
-    t.integer "page_id"
-    t.integer "widget_id"
-  end
-
-  add_index "pages_widgets", ["page_id", "widget_id"], :name => "index_pages_widgets_on_page_id_and_widget_id"
 
   create_table "settings", :force => true do |t|
     t.text "data"

@@ -38,7 +38,6 @@ ActiveAdmin.register Content::Page do
     end
     f.inputs do
       f.input :published_at, :as => :datetime
-      f.input :widgets, :as => :check_boxes
     end
     f.buttons
   end

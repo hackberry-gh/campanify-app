@@ -90,6 +90,7 @@ en:
       posts: Posts
       popularity: Popularity       
     analytics:
+      loading: Loading...
       hourly: Hourly
       daily: Daily
       weekly: Weekly   
@@ -100,6 +101,9 @@ en:
       graphs_title: Time Based Line Charts
       users: Supporters
       content_posts: Articles
+      rank: Rank
+      popularity: Popularity
+      user: User
     sorting:
       sort_by: Sort by
       popularity: popularity

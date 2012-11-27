@@ -4,7 +4,6 @@ ActiveAdmin.register Content::Widget do
 
   index do
     column :title
-    column :position
     default_actions
   end
   
@@ -16,9 +15,6 @@ ActiveAdmin.register Content::Widget do
 
         lf.input :locale, :as => :hidden
       end
-    end
-    f.inputs do
-      f.input :position, :as => :number
     end
     f.buttons
   end

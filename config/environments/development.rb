@@ -43,6 +43,7 @@ Campanify::Application.configure do
   config.i18n.fallbacks = true
 
   # only when debug caching
-  config.action_controller.perform_caching = true  
-  config.cache_store = :dalli_store
+  # config.cache_classes = true
+  #   config.action_controller.perform_caching = true  
+  #   config.cache_store = :dalli_store
 end

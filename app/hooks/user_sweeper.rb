@@ -51,10 +51,10 @@ class UserSweeper < ActionController::Caching::Sweeper
     expire_fragment "views/#{cache_key}"
   end
   
-  if ENV['PLAN'] != "free"
-    handle_asynchronously :after_create
-    handle_asynchronously :after_update
-    handle_asynchronously :after_destroy  
-  end
+  # if ENV['PLAN'] != "free"
+  #   handle_asynchronously :after_create
+  #   handle_asynchronously :after_update
+  #   handle_asynchronously :after_destroy  
+  # end
   
 end

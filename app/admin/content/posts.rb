@@ -3,6 +3,8 @@ ActiveAdmin.register Content::Post do
   menu :parent => "Content", :priority => 3, :if => proc{ can?(:read, Content::Post) }  
   scope :published
   scope :unpublished
+  actions :index, :show, :edit, :update, :destroy
+  
   member_action :unpublish do
     Content::Post.find(params[:id]).unpublish!
     redirect_to admin_content_posts_path, :notice => "Post has been unpublished successfully"    

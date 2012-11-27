@@ -7,10 +7,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       
-      # add recruitment to the referrer
-      if self.referrer && @user.created_by_facebook_connect
-        self.referrer.inc_recruits(resource) 
-        self.referrer = nil
+      # add recruitment to the referer
+      if current_referer && @user.created_by_facebook_connect
+        current_referer.inc_recruits(resource) 
+        self.class.current_referer = nil
         @user.created_by_facebook_connect = false
       end
       

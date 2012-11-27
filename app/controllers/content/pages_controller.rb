@@ -19,7 +19,6 @@ class Content::PagesController < ::CampanifyController
   end
   
   def add_widgets_into_asset_render_list(resource)
-    resource.widgets.each{ |w| rendering_widgets << w.slug }
   	if included_widgets = resource.body.match(/<% include_widget ("*.*") %>/)
   	  for i in (0..(included_widgets.size-1))
   	    included_widget = included_widgets[i]

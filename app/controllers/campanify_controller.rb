@@ -1,7 +1,7 @@
 class CampanifyController < ApplicationController
   include Campanify::Controllers::TemplateController  
+  include Campanify::Controllers::IpCountryBranchController       
   include Campanify::Controllers::ReferralsController 
-  include Campanify::Controllers::IpCountryBranchController     
   include Campanify::Cache
   
   helper_method :timezone
