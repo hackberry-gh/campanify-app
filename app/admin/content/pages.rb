@@ -42,4 +42,18 @@ ActiveAdmin.register Content::Page do
     f.buttons
   end
   
+  show do |page|
+    attributes_table do
+      row :title
+      row :slug      
+      row :body do
+        content_tag :pre, "#{page.body}"
+      end
+      row :published_at
+      row :created_at      
+      row :updated_at            
+    end
+    active_admin_comments
+  end
+  
 end
