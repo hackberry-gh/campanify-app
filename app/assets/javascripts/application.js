@@ -74,6 +74,12 @@
 		},
 		addMarker: function(map, marker) {
 			marker.map = map;
+			if (marker.position) {
+				marker.position = new google.maps.LatLng(
+					marker.position.latitude, 
+					marker.position.longitude
+				);
+			}
 		  google.maps.event.addListener(new google.maps.Marker(marker), 'click', function() {
 				if ( $.campanify.infowindow !== undefined) {
 					$.campanify.infowindow.close();
