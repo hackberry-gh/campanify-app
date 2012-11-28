@@ -74,7 +74,7 @@
 		},
 		addMarker: function(map, marker) {
 			marker.map = map;
-			if (marker.position) {
+			if (marker.position.latitude && marker.position.longitude) {
 				marker.position = new google.maps.LatLng(
 					marker.position.latitude, 
 					marker.position.longitude
