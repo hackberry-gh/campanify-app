@@ -18,14 +18,6 @@ module Campanify
         class_variable_set :@@_finder_method, :find_by_id
         
         helper_method :content_class, :content_class_name, :scope
-
-        caches_action :index, 
-                      layout: false, 
-                      :cache_path => :index_cache_path.to_proc
-        caches_action :show, 
-                      layout: false, 
-                      :cache_path => :show_cache_path.to_proc                
-        cache_sweeper :content_sweeper
         
       end
       
@@ -39,14 +31,6 @@ module Campanify
   	  	redirect_to '/404' and return if @resource.nil? 
   	  	render :layout => false if request.xhr?
   	  end
-  	  
-  	  def index_cache_path
-        _cache_key(content_class_name, "index", params[:page] || 1, params[:sort] || "none", I18n.locale, current_branch || "none")
-      end
-
-      def show_cache_path
-        _cache_key(content_class_name, "show", params[:id], I18n.locale, current_branch || "none")    
-      end
   	  
   	  private
       

@@ -3,6 +3,7 @@ class Content::PagesController < ::CampanifyController
   before_filter :set_resource_and_widgets, :only => :show
   
   include Campanify::Controllers::ContentController
+  include Campanify::Controllers::ActionCacheController
   scopes :published
   finder_method :find_by_slug
   

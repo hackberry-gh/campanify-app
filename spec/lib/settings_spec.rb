@@ -53,4 +53,9 @@ describe Settings do
 		Settings.user_setting("fields", "GB").should eq(Settings.branches["GB"]["user"]["fields"])
 		Settings.user_setting("fields", "NON_EXISTS_BRANCH").should eq(Settings.user["fields"])    
 	end
+
+	it "validates yaml format" do
+		Settings.instance.data["modules"] = "mallformed array"
+		-> { Settings.instance.save! }.should raise_error(ActiveRecord::RecordInvalid)
+	end
 end

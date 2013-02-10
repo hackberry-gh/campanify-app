@@ -7,7 +7,7 @@ module Campanify
 
     # include Mongoid::Document
     # 
-    # field :keys, type: Arra
+    # field :keys, type: Array
 
     # returns cached value if available, writes new one if not
     def _cache(*keys, &block)

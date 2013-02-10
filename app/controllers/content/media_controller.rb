@@ -7,6 +7,7 @@ class Content::MediaController < ::CampanifyController
   layout "embed"
   
   include Campanify::Controllers::ContentController
+  include Campanify::Controllers::ActionCacheController
   scopes nil
   finder_method :find_by_id
   

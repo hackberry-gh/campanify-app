@@ -35,13 +35,13 @@ class ContentSweeper < ActionController::Caching::Sweeper
     @controller ||= ActionController::Base.new 
     total_pages = (content.class.count.to_f / Settings.pagination["per"]).ceil
     (1..total_pages).each do |page|
-      cache_key = _cache_key(content.class.name, "index", page, "none", locale, branch)
-      expire_action cache_key
-      expire_fragment "views/#{cache_key}"
-      
-      cache_key = _cache_key(content.class.name, "index", page, "popularity", locale, branch)
-      expire_action cache_key
-      expire_fragment "views/#{cache_key}"
+
+      %w(none date popularity).each do |sort|
+        cache_key = _cache_key(content.class.name, "index", page, sort, locale, branch)
+        expire_action cache_key
+        expire_fragment "#{cache_key}"
+      end
+
     end
   end
   def expire_show(content,locale,branch)
@@ -49,11 +49,11 @@ class ContentSweeper < ActionController::Caching::Sweeper
     if content.respond_to?(:slug)
       cache_key = _cache_key(content.class.name, "show", content.slug, locale, branch)
       expire_action cache_key
-      expire_fragment "views/#{cache_key}"
+      expire_fragment "#{cache_key}"
     else
       cache_key = _cache_key(content.class.name, "show", content.id, locale, branch)
       expire_action cache_key
-      expire_fragment "views/#{cache_key}"
+      expire_fragment "#{cache_key}"
     end
   end
   

@@ -3,6 +3,7 @@ class Content::WidgetsController < ::CampanifyController
   layout "embed"
   
   include Campanify::Controllers::ContentController
+  include Campanify::Controllers::ActionCacheController
   scopes 
   finder_method :find_by_id
   

@@ -28,7 +28,7 @@ class UsersController < CampanifyController
 
   # PUT, add a visit to user
   def visits
-    @user.inc_visits
+    @user.inc_visits unless me?
     render nothing: true
   end
 	

@@ -11,6 +11,8 @@ class Content::PostsController < ::CampanifyController
   include Campanify::Controllers::ContentController  
   scopes :published
   finder_method :find_by_slug
+
+  helper_method :index_cache_path, :show_cache_path
   
   def create
     @resource = Content::Post.create(params[:content_post])
@@ -64,6 +66,15 @@ class Content::PostsController < ::CampanifyController
   
   def preview
     render layout: "preview"
+  end
+
+  # CACHE HELPERS
+  def index_cache_path
+    _cache_key(content_class_name, "index", params[:page] || 1, params[:sort] || "none", I18n.locale, current_branch || "none")
+  end
+
+  def show_cache_path
+    _cache_key(content_class_name, "show", params[:id], I18n.locale, current_branch || "none")    
   end
   
   private 
