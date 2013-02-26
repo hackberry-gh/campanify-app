@@ -51,20 +51,12 @@ module ApplicationHelper
     Settings.send(object)['comments'].present? && Settings.modules.include?(object.to_s)
   end
 
-  def users_enabled?
-    Settings.modules.include?("users")
-  end
-  
-  def events_enabled?
-    Settings.modules.include?("events")
-  end
-  
-  def posts_enabled?
-    Settings.modules.include?("posts")
-  end
-  
-  def analytics_enabled?
-    Settings.modules.include?("analytics")
+  Settings.modules.each do |m|
+    class_eval <<-CODE
+    def #{m}_enabled?
+      Settings.modules.include?("#{m}")
+    end
+    CODE
   end
   
   def can_post?

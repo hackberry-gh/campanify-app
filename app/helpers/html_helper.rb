@@ -34,4 +34,5 @@ module HtmlHelper
       javascript_include_tag "widgets/#{js}" if File.exists?("#{Rails.root}/app/assets/javascripts/widgets/#{js}.js")
     }.join("\n").html_safe
   end
+
 end

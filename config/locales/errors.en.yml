@@ -2,6 +2,7 @@ en:
   errors:
     format: ! '%{attribute} %{message}'
     messages:
+      general: An error occured, please try again later
       accepted: must be accepted
       blank: can't be blank
       confirmation: doesn't match confirmation

@@ -96,6 +96,9 @@ end
 ::Devise::PasswordsController.send :include, Campanify::Controllers::IpCountryBranchController     
 ::Devise::ConfirmationsController.send :include, Campanify::Controllers::IpCountryBranchController     
 ::Devise::UnlocksController.send :include, Campanify::Controllers::IpCountryBranchController     
+::Devise::PasswordsController.send :include, Campanify::Controllers::TemplateController     
+::Devise::ConfirmationsController.send :include, Campanify::Controllers::TemplateController     
+::Devise::UnlocksController.send :include, Campanify::Controllers::TemplateController     
 ::ActionMailer::Base.send :include, Campanify::Controllers::TemplateController
 ::ActionMailer::Base.send :include, Campanify::Cache
 

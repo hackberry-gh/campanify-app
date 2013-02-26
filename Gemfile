@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', 												'3.2.7'
+gem 'rails', 												'3.2.11'
 gem 'pg'
 gem 'unicorn'
 gem 'acts_as_singleton'
@@ -15,7 +15,7 @@ gem 'globalize3',
 			:git => "git://github.com/svenfuchs/globalize3.git"
 gem 'routing-filter'			
 gem 'rmagick',											'~> 2.13.1'			
-gem 'carrierwave'
+gem 'carrierwave', :git => "git://github.com/jnicklas/carrierwave.git"
 gem "fog" 													
 gem 'koala'												
 gem "httparty", 										"~> 0.8.3"
@@ -36,6 +36,7 @@ gem 'memcachier'
 gem 'dalli'
 gem 'seedbank'
 gem 'timecop'
+gem 'devise_invitable'
 
 	
 group :assets do
@@ -43,7 +44,7 @@ group :assets do
   gem 'coffee-rails', 							'~> 3.2.1'
   gem 'uglifier', 									'>= 1.0.3'
   gem 'asset_sync'
- 	gem 'turbo-sprockets-rails3'	
+ 	gem "turbo-sprockets-rails3", 		"~> 0.3.6"
 end
 
 gem 'jquery-rails'

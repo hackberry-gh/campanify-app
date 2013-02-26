@@ -1,5 +1,7 @@
 ActiveAdmin.register Appearance::Template do
   
+  scope :partials
+
   controller.authorize_resource :class => Appearance::Template
     
   menu :parent => "Appearance", :priority => 2, :if => proc{ can?(:read, Appearance::Template) }

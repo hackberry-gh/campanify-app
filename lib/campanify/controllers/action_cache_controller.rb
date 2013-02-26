@@ -12,6 +12,7 @@ module Campanify
                       :cache_path => :show_cache_path.to_proc                
         cache_sweeper :content_sweeper
 
+        helper_method :index_cache_path, :show_cache_path
       end
 
       def index_cache_path

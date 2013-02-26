@@ -21,7 +21,7 @@ Campanify::Application.routes.draw do
         put 'unlike'
       end
     end
-    resources :media,   :module => 'content', :only => [:show, :create, :new]
+    resources :media,   :module => 'content', :only => [:create, :new]
   end
   
   if Settings.modules.include?("analytics") 
@@ -30,6 +30,10 @@ Campanify::Application.routes.draw do
     match "analytics/ranking" => "analytics#ranking"        
     match "analytics/graphs" => "analytics#graphs"            
   end
+
+  if Settings.modules.include?("media")
+    resources :media,   :module => 'content', :only => [:index, :show]
+  end
   
   resources :pages,   :module => "content", :only => [:show]
   resources :widgets, :module => "content", :only => [:show]
@@ -37,8 +41,13 @@ Campanify::Application.routes.draw do
   devise_for :users, :controllers => {
     :registrations => "users/registrations",
     :sessions => "users/sessions",
-    :omniauth_callbacks => "users/omniauth_callbacks"    
+    :omniauth_callbacks => "users/omniauth_callbacks",
+    :invitations => "users/invitations"
   }
+
+  devise_scope :user do
+    post "users/invitation/send" => "users/invitations#send_to_contacts"
+  end
 
   if Settings.modules.include?("users")
     resources :users, :only => [:index, :show] do

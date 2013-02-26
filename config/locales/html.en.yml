@@ -28,6 +28,7 @@ en:
       users: Supporters
       posts: Articles
       events: Events
+      media: Media
       login: Sign in
       me: Me
       logout: Sign out
@@ -48,6 +49,8 @@ en:
       unlike: Unlike
       like: Like  
     media:
+      title: Media Gallery
+      empty: "Nothings here"
       new:
         title: Media Gallery  
         submit: Upload
@@ -84,6 +87,7 @@ en:
       recruitments: Recruitments
       last_hour: Last Hour
       today: Today
+      this_week: This Week
       this_month: This Month
       this_year: This Year
       total: Total

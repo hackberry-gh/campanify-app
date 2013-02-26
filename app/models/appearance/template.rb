@@ -4,6 +4,7 @@ class Appearance::Template < ActiveRecord::Base
   
     include Singleton
     include Campanify::Cache
+    include Campanify::ActiveWidget
 
     protected
 
@@ -43,6 +44,10 @@ class Appearance::Template < ActiveRecord::Base
         :updated_at => record.updated_at,
         :virtual_path => virtual_path(record.path, record.partial)
       }
+
+      # add widgets into render list from template's body
+      add_widgets_into_asset_render_list(record)
+
       ActionView::Template.new(source, identifier, handler, details)
     end
     
@@ -66,6 +71,8 @@ class Appearance::Template < ActiveRecord::Base
   validates :handler, inclusion: ActionView::Template::Handlers.extensions.map(&:to_s)
   
   after_save :clear_cache
+
+  scope :partials, where(partial: true)
   
   private
   

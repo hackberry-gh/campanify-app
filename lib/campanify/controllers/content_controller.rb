@@ -5,17 +5,17 @@ module Campanify
       
       module ClassMethods
         def finder_method(method)
-          class_variable_set :@@_finder_method, method
+          instance_variable_set :@_finder_method, method
         end
 
         def scopes(*scopes)
-          class_variable_set :@@_scoped, scopes
+          instance_variable_set :@_scopes, scopes
         end
       end
       
       included do
-        class_variable_set :@@_scopes, nil
-        class_variable_set :@@_finder_method, :find_by_id
+        instance_variable_set :@_scopes, nil
+        instance_variable_set :@_finder_method, :find_by_id
         
         helper_method :content_class, :content_class_name, :scope
         
@@ -29,17 +29,18 @@ module Campanify
   	  def show
   	  	@resource = scope.send(finder_method, params[:id])
   	  	redirect_to '/404' and return if @resource.nil? 
+        add_widgets_into_asset_render_list(@resource) if @resource.respond_to?(:body)
   	  	render :layout => false if request.xhr?
   	  end
   	  
   	  private
       
       def finder_method
-        self.class.class_variable_get :@@_finder_method
+        self.class.instance_variable_get :@_finder_method
       end
 
       def scopes
-        self.class.class_variable_get :@@_scopes
+        self.class.instance_variable_get :@_scopes
       end
       
       def content_class

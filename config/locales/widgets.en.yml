@@ -1,0 +1,4 @@
+en:
+  widgets:
+    open_inviter:
+      success: "people has been invited"

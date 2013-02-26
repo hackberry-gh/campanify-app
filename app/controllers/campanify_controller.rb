@@ -14,5 +14,4 @@ class CampanifyController < ApplicationController
     end
   end
 
-
 end

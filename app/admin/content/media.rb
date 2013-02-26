@@ -1,14 +1,22 @@
 ActiveAdmin.register Content::Media do
+  
   controller.authorize_resource :class => Content::Media
   menu :parent => "Content", :priority => 5, :if => proc{ can?(:read, Content::Media) }
+  
+  scope :site
+  scope :user
 
   index do
     column :title
     column :media do |content_medium|
-      if %w(jpg jpeg gif png).include?(content_medium.file.url.split(".").last)
-        image_tag content_medium.file.thumb
-      else
-        content_medium.file
+      if content_medium.file.present?
+        if %w(jpg jpeg gif png).include?(content_medium.file.url.split(".").last)
+          image_tag content_medium.file.thumb
+        else
+          content_medium.file
+        end
+      elsif content_medium.external_link?
+        content_medium.description
       end
     end
     column :versions do |content_medium|
@@ -38,10 +46,14 @@ ActiveAdmin.register Content::Media do
       row :title
       row :description        
       row :media do
-        if %w(jpg jpeg gif png).include?(content_medium.file.url.split(".").last)
-          image_tag content_medium.file, :style => "width:100%"
-        else
-          content_medium.file
+        if content_medium.file.present?
+          if %w(jpg jpeg gif png).include?(content_medium.file.url.split(".").last)
+            image_tag content_medium.file, :style => "width:100%"
+          else
+            content_medium.file
+          end
+        elsif content_medium.external_link?
+          content_medium.description
         end
       end
       row :urls do

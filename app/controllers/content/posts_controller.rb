@@ -6,13 +6,11 @@ class Content::PostsController < ::CampanifyController
   
   respond_to :html, :json
   
-  helper_method :author?
+  helper_method :author?, :index_cache_path, :show_cache_path
   
   include Campanify::Controllers::ContentController  
   scopes :published
   finder_method :find_by_slug
-
-  helper_method :index_cache_path, :show_cache_path
   
   def create
     @resource = Content::Post.create(params[:content_post])
@@ -37,13 +35,6 @@ class Content::PostsController < ::CampanifyController
     @resource = Content::Post.find(params[:id])
     @resource.destroy if author?
     render :json => {:redirect_to => posts_path}
-  end
-  
-  def index
-    scope = Content::Post.published
-    scope = scope.send(params[:sort] ||= "date")
-    @resources = scope.page(params[:page]).per(Settings.pagination["per"])
-  	render :layout => false if request.xhr?
   end
   
   def like
@@ -82,4 +73,13 @@ class Content::PostsController < ::CampanifyController
   def author?
 	  current_user == @resource.user if @resource
   end
+
+  def scope
+    scoped = content_class
+    if scopes
+      scopes.each { |scope| scoped = scoped.send(scope) if scoped.respond_to?(scope) }
+    end
+    scoped = scoped.send(params[:sort] ||= "date")
+    scoped
+  end 
 end

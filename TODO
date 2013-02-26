@@ -1,3 +1,5 @@
 TODO: write documentation
 TODO: add soft truncate option for users table, keep count but download & delete records
 TODO: template engine!
+TODO: add ability to custom validations on signup form
+TODO: add gender and meta fields to user
