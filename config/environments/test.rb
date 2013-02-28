@@ -1,3 +1,6 @@
+# realtime output
+$stdout.sync = true
+
 # .env loading for development
 Hash[File.open(".env").read.split("\n").map{|v| v.split("=")}].each do |k,v|
   ENV[k] = v
@@ -39,4 +42,6 @@ Campanify::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.action_mailer.default_url_options = { :host => 'localhost:5000' }  
 end

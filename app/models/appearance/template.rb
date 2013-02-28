@@ -17,7 +17,7 @@ class Appearance::Template < ActiveRecord::Base
         :partial => partial || false
       }
       templates = _cache Appearance::Template::Resolver, conditions.values do
-        Appearance::Template.where(conditions).all
+        templates = Appearance::Template.where(conditions).all
       end
       templates.map do |record| 
         initialize_template(record)
@@ -78,6 +78,6 @@ class Appearance::Template < ActiveRecord::Base
   
   def clear_cache
     Resolver.instance.clear_cache
-    _expire_cache self.path, self.locale, self.format, self.handler, self.partial
+    _expire_cache Appearance::Template::Resolver, self.path, self.locale, self.format, self.handler, self.partial
   end
 end

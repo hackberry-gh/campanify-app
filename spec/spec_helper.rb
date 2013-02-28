@@ -42,7 +42,11 @@ RSpec.configure do |config|
   #     --seed 1234
   # config.order = "random"
   
+  config.include Devise::TestHelpers, :type => :controller
+  config.extend ControllerMacros, :type => :controller
+  
   config.before :suite do
+    Settings.reset!
     DatabaseCleaner.strategy = :truncation
   end
 
@@ -53,5 +57,9 @@ RSpec.configure do |config|
   config.after :each do
     DatabaseCleaner.clean
     Rails.cache.clear
+    Thread.current[:branch] = nil
+    Thread.current[:ip] = nil
+    Thread.current[:country] = nil
+    Thread.current[:browser_language] = nil
   end
 end

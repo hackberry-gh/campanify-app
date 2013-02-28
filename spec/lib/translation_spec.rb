@@ -4,7 +4,7 @@ describe Translation do
 
   it "fallbacks into simple backend if translation record not available" do
     I18n.locale = :en
-    I18n.t('hello').should eq("Hello")
+    I18n.t('language').should eq("English")
   end
 
   it "supports dynamic creation" do

@@ -156,8 +156,8 @@ class User < ActiveRecord::Base
   
   # Before Validation if new record?
   def set_defaults
-    self.branch = current_branch    
-    self.language = I18n.locale    
+    self.branch = current_branch unless self.branch
+    self.language = I18n.locale unless self.language    
     skip_reconfirmation!
     skip_confirmation! unless confirmation_required? || invited_to_signup_for_new_record?
     self.reset_authentication_token 

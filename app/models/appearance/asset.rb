@@ -1,7 +1,20 @@
 require "yui/compressor"
-require "aws/s3"
 
 class Appearance::Asset < ActiveRecord::Base
+
+  class AssetStringIO < StringIO
+    attr_accessor :filepath
+
+    def initialize(*args)
+      super(*args[1..-1])
+      @filepath = args[0]
+    end
+
+    def original_filename
+      File.basename(filepath)
+    end
+  end
+
   VALID_TYPES = {css: "text/css", js: "application/javascript"}
   
   attr_accessible :body, :content_type, :filename
@@ -18,16 +31,6 @@ class Appearance::Asset < ActiveRecord::Base
   scope :js, where(content_type: VALID_TYPES[:js])
   scope :css, where(content_type: VALID_TYPES[:css])  
   
-  @@host_type   = Settings.assets["host_type"]
-  cattr_reader :host_type
-  
-  @@asset_path  = "#{Rails.root}/public/assets"
-  cattr_reader :asset_path
-  
-  @@s3_bucket   = ENV["FOG_DIRECTORY"]
-  @@s3_key      = ENV["AWS_ACCESS_KEY_ID"]
-  @@s3_secret   = ENV["AWS_SECRET_ACCESS_KEY"]
-  
   def compile
     case content_type
     when VALID_TYPES[:css]
@@ -39,26 +42,30 @@ class Appearance::Asset < ActiveRecord::Base
   end
 
   def url
-    if @@host_type=="s3"
-      "http://s3.amazonaws.com/#{@@s3_bucket}/#{filename}"
+    if storage == "fog"
+      "//storage.googleapis.com/#{ENV['FOG_DIRECTORY']}/#{file_path}"
     else
       "/assets/#{filename}"
     end
   end
 
   def value
-    if @@host_type=="s3"
-      s3_establish_connection!
-      AWS::S3::S3Object.find(filename, @@s3_bucket).value
+    if storage == "fog"
+      @value ||= begin
+        uploader.retrieve_from_store!(filename)
+        uploader.file.read
+      end
     else
-      File.open("#{Rails.root}/public/assets/#{self.filename}", "r").read
+      File.open(file_path, "r").read
     end
   end
 
   def exists?
-    if @@host_type=="s3"
-      s3_establish_connection!
-      AWS::S3::S3Object.exists? filename, @@s3_bucket
+    if storage == "fog"
+      @exists ||= begin
+        uploader.retrieve_from_store!(filename)
+        uploader.file.exists?
+      end
     else
       File.exists?(file_path)
     end
@@ -77,33 +84,45 @@ class Appearance::Asset < ActiveRecord::Base
   end
 
   def upload
-    if @@host_type=="s3"
-      s3_establish_connection!
-      AWS::S3::S3Object.store(filename, self.compressed_body, @@s3_bucket, 
-      content_type: content_type, access: :public_read)
+    if storage == "fog"
+      # file = Tempfile.new(filename)
+      # begin
+      #   file.write(compressed_body)
+      #   uploader.store!(file)
+      # ensure
+      #   file.close
+      #   file.unlink
+      # end   
+      uploader.store!(AssetStringIO.new(filename, compressed_body))
     else
-      Dir.mkdir(self.class.asset_path) unless File.directory?(self.class.asset_path)
+      Dir.mkdir(asset_path) unless File.directory?(asset_path)
       File.open(file_path, "w+") { |f| f.write(compressed_body) }
     end
   end
 
   def unlink
-    if @@host_type=="s3"
-      s3_establish_connection!
-      AWS::S3::S3Object.delete(filename, @@s3_bucket)
+    if storage == "fog"
+      uploader.retrieve_from_store!(filename)
+      uploader.remove!
     else
       File.unlink(file_path)
     end
   end
 
   def file_path
-    "#{self.class.asset_path}/#{filename}"
+    "#{asset_path}/#{filename}"
   end
-  
-  def s3_establish_connection!
-    AWS::S3::Base.establish_connection!(
-    :access_key_id     => @@s3_key, 
-    :secret_access_key => @@s3_secret
-    )
+
+  def storage
+    @storage ||= Settings.assets["storage"]
   end
+
+  def asset_path
+    @asset_path ||= storage == "fog" ? "assets" : "#{Rails.root}/public/assets"
+  end  
+
+  def uploader
+    @uploader ||= AssetUploader.new
+  end
+
 end

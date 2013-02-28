@@ -103,7 +103,7 @@ module Campanify
         scope = scope.where("date_trunc('#{period}', created_at) = ?", 
         Time.now.utc.send("beginning_of_#{period}").to_s(:db)) unless period.nil?
         if uniq
-          scope.sum(:value, :group => :ip).keys.count
+          scope.sum(:value, :group => :ip).values.inject{|sum,x| sum + x  } || 0
         else
           scope.sum(:value)
         end

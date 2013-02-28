@@ -54,7 +54,7 @@ ActiveAdmin.register Settings, :as => "Settings" do
       - timezone<br/>
       - all changes under i18n<br/>
       - adding a new branch<br/>
-      - assets.host_type<br/>
+      - assets.storage<br/>
       - media.storage<br/>
       - all changes under devise_settings<br/>
       - page.home_page_slug

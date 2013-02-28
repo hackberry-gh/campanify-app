@@ -2,6 +2,7 @@ en:
   user_mailer:
     after_signup_email:
       subject: "Thank you! our campaign stronger with you."
+      signin_link_title: Sign In
       body: |
         <h1>Thank you</h1>
         <p>World is going to be more peaceful place because of people like you</p>

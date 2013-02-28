@@ -15,8 +15,6 @@ if defined?(Bundler)
   Bundler.require(:default, :assets, Rails.env)
 end
 
-$stdout.sync = true if Rails.env.development?
-
 module Campanify
   class Application < Rails::Application
     

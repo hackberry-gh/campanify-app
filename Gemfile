@@ -9,7 +9,6 @@ gem 'i18n-active_record',
       :branch => 'rails-3.2',
       :require => 'i18n/active_record'
 gem "yui-compressor", 							"~> 0.9.6"
-gem "aws-s3", 											"~> 0.6.3"
 gem "devise", 											"~> 2.1.2"
 gem 'globalize3', 
 			:git => "git://github.com/svenfuchs/globalize3.git"
