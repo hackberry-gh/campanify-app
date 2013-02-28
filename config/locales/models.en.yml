@@ -4,6 +4,7 @@ en:
       content/media: Media
       content/post: Article
       user: Supporter
+      csv_import: Import
     attributes:
       media:
         title: Title 

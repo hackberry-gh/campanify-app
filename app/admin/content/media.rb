@@ -7,6 +7,7 @@ ActiveAdmin.register Content::Media do
   scope :user
 
   index do
+    selectable_column
     column :title
     column :media do |content_medium|
       if content_medium.file.present?

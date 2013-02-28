@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130226234859) do
+ActiveRecord::Schema.define(:version => 20130227234647) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -192,6 +192,13 @@ ActiveRecord::Schema.define(:version => 20130226234859) do
   end
 
   add_index "content_widgets", ["slug"], :name => "index_content_widgets_on_slug"
+
+  create_table "csv_imports", :force => true do |t|
+    t.string   "filename"
+    t.text     "results"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0

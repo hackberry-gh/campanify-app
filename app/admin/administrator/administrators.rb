@@ -58,6 +58,7 @@ ActiveAdmin.register Administrator do
   end
     
   index do
+    selectable_column
     column :full_name
     column :email
     column :phone

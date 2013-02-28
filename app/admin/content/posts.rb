@@ -21,6 +21,7 @@ ActiveAdmin.register Content::Post do
   end
 
   index do
+    selectable_column
     column :user do |content_post|
       link_to content_post.user.email, admin_user_path(content_post.user) if content_post.user
     end

@@ -25,7 +25,7 @@ gem 'geoip'
 gem 'cancan'
 gem 'heroku-api'
 gem 'heroku',												'~> 2.32.8'
-gem 'activeadmin',									'~> 0.4.4'
+gem 'activeadmin',									'~> 0.5.1'
 gem "omniauth-facebook"
 gem 'redcarpet'
 gem 'i18n_country_select', 

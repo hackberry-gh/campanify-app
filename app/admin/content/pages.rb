@@ -19,6 +19,7 @@ ActiveAdmin.register Content::Page do
   end
 
   index do
+    selectable_column
     column :title
     column :published do |content_page|
       publish_status = content_page.published? ? "published" : "unpublished"      

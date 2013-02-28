@@ -5,6 +5,7 @@ ActiveAdmin.register Appearance::Asset do
   menu :parent => "Appearance", :priority => 1, :if => proc{ can?(:read, Appearance::Asset) }
   
   index do
+    selectable_column
     column :filename
     column :content_type    
     default_actions

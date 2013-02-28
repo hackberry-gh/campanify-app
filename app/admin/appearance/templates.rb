@@ -7,6 +7,7 @@ ActiveAdmin.register Appearance::Template do
   menu :parent => "Appearance", :priority => 2, :if => proc{ can?(:read, Appearance::Template) }
   
   index do
+    selectable_column
     column :path
     column :format
     column :handler

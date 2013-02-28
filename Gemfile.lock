@@ -53,11 +53,12 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    activeadmin (0.4.4)
+    activeadmin (0.5.1)
+      arbre (>= 1.0.1)
       bourbon (>= 1.0.0)
       devise (>= 1.1.2)
       fastercsv
-      formtastic (~> 2.1.1)
+      formtastic (>= 2.0.0)
       inherited_resources (>= 1.3.1)
       jquery-rails (>= 1.0.0)
       kaminari (>= 0.13.0)
@@ -81,6 +82,8 @@ GEM
     acts_as_singleton (0.0.8)
       activerecord (>= 3.1.0)
     addressable (2.3.2)
+    arbre (1.0.1)
+      activesupport (>= 3.0.0)
     arel (3.0.2)
     asset_sync (0.5.0)
       activemodel
@@ -90,8 +93,9 @@ GEM
       mime-types
       xml-simple
     bcrypt-ruby (3.0.1)
-    bourbon (2.1.1)
-      sass (>= 3.1)
+    bourbon (3.0.1)
+      sass (>= 3.2.0)
+      thor
     builder (3.0.4)
     cancan (1.6.8)
     capybara (1.1.2)
@@ -148,8 +152,8 @@ GEM
       nokogiri (~> 1.5.0)
       ruby-hmac
     formatador (0.2.3)
-    formtastic (2.1.1)
-      actionpack (~> 3.0)
+    formtastic (2.2.1)
+      actionpack (>= 3.0)
     geoip (1.1.2)
     has_scope (0.5.1)
     hashie (1.2.0)
@@ -339,7 +343,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activeadmin (~> 0.4.4)
+  activeadmin (~> 0.5.1)
   acts_as_singleton
   asset_sync
   aws-s3 (~> 0.6.3)

@@ -43,6 +43,7 @@ ActiveAdmin.register Translation, :as => "Translation" do
   end
   
   index do
+    selectable_column
     column :locale
     column :key    
     column :value        

@@ -4,6 +4,7 @@ ActiveAdmin.register Content::Event do
   menu :parent => "Content", :priority => 4, :if => proc{ can?(:read, Content::Event) }
   
   index do
+    selectable_column
     column :name
     column :fb_id do |event|
       if event.fb_id

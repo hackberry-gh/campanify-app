@@ -1,0 +1,9 @@
+<%= semantic_form_for :users, :url => import_csv_admin_users_path, :method => :post do |f| %>
+
+	<%= f.inputs do %>
+		<%= f.input :csv, as: :file %>
+	<% end %>
+
+	<%= f.submit "Submit" %>	
+
+<% end %>

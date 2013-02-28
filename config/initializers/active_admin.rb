@@ -86,6 +86,13 @@ ActiveAdmin.setup do |config|
   # Default:
   # config.logout_link_method = :get
 
+  # == Root
+  #
+  # Set the action to call for the root path. You can set different
+  # roots for each namespace.
+  #
+  # Default:
+  config.root_to = 'users#index'
 
   # == Admin Comments
   #
@@ -104,14 +111,19 @@ ActiveAdmin.setup do |config|
   #   end
 
 
+  # == Batch Actions
+  #
+  # Enable and disable Batch Actions
+  #
+  config.batch_actions = true
+
+
   # == Controller Filters
   #
   # You can add before, after and around filters to all of your
-  # Active Admin resources from here.
+  # Active Admin resources and pages from here.
   #
-  config.before_filter do
-    I18n.locale = :en
-  end
+  config.before_filter { I18n.locale = :en }
 
 
   # == Register Stylesheets & Javascripts
@@ -121,17 +133,22 @@ ActiveAdmin.setup do |config|
   # and feel.
   #
   # To load a stylesheet:
-  #   config.register_stylesheet 'my_stylesheet.css'
-  #
+  config.clear_stylesheets!
+  config.register_stylesheet 'admin/active_admin.css'
+
   # You can provide an options hash for more control, which is passed along to stylesheet_link_tag():
   #   config.register_stylesheet 'my_print_stylesheet.css', :media => :print
   #
   # To load a javascript file:
-  #   config.register_javascript 'my_javascript.js'
-  config.clear_stylesheets!
-  config.register_stylesheet 'admin/active_admin.css'
-
   config.clear_javascripts!
   config.register_javascript 'admin/active_admin.js'
-  
+
+
+  # == CSV options
+  #
+  # Set the CSV builder separator (default is ",")
+  # config.csv_column_separator = ','
+  #
+  # Set the CSV builder options (default is {})
+  # config.csv_options = {}
 end

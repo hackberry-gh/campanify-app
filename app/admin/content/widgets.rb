@@ -3,6 +3,7 @@ ActiveAdmin.register Content::Widget do
   menu :parent => "Content", :priority => 2, :if => proc{ can?(:read, Content::Widget) }
 
   index do
+    selectable_column
     column :title
     default_actions
   end
