@@ -108,9 +108,9 @@ require 'campanify/validators/file_size_validator'
 require 'carrierwave/orm/activerecord'
 CarrierWave.configure do |config|
   config.fog_credentials = {
-    :provider               => 'AWS',                   # required
-    :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],       # required
-    :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],    # required
+    :provider                          => 'Google',                
+    :google_storage_access_key_id      => ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'], 
+    :google_storage_secret_access_key  => ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'],
     # :region                 => 'eu-west-1'  # optional, defaults to 'us-east-1'
   }
   config.fog_directory  = ENV['FOG_DIRECTORY']                    # required

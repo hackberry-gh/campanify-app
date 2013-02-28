@@ -6,5 +6,6 @@ namespace :db do
     system "rake db:migrate"
     system "rake db:seed:original"
     system "rake db:seed:themes_default_install"
+    system "bundle exec rake db:test:prepare"
   end
 end

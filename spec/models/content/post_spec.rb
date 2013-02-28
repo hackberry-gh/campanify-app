@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Content::Post do
   it "has slug and publishable" do
-    post = Content::Post.create!(title: "Test Post", body: "Test Post Body")
+    user = User.create!(email: "test@test.com", branch: "GB")
+    post = Content::Post.create!(title: "Test Post", body: "Test Post Body", user_id: user.id)
     post.published?.should eq(true)
     post.slug.should eq('test-post')
     post.unpublish!

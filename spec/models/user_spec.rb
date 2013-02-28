@@ -7,18 +7,18 @@ describe User do
   end
   
   it "validates fields dynamicaly based on settings" do
-    -> {User.create!(email: "test@test.com")}.should raise_error(ActiveRecord::RecordInvalid)
+    -> { User.create!(email: "test@test.com") }.should raise_error(ActiveRecord::RecordInvalid)
     User.create!(email: "test@test.com", branch: "GB").new_record?.should eql(false)
   end
   
   it "tracks visits with date and ip" do
-    user = User.create!(email: "test@test.com", branch: "GB")
+    user = User.create!(email: "test@test123456.com", branch: "GB")
     user.current_ip = "1.1.1.1"    
     user.inc_visits
     # user.reload
-    t = Time.now
-    visits_hash = {t.year => {t.month => {t.day => {t.hour => {"#{user.id}_#{user.current_ip}" => 1}}}}}
-    user.visits.should eq(visits_hash)
+    # t = Time.now
+    # visits_hash = {t.year => {t.month => {t.day => {t.hour => {"#{user.id}_#{user.current_ip}" => 1}}}}}
+    user.total_visits.should eq(1)
     user.dec_visits
     # user.reload
     user.daily_visits.should eq(0)

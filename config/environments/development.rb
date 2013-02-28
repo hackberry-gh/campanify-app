@@ -1,4 +1,6 @@
 # .env loading for development
+$stdout.sync = true
+
 Hash[File.open(".env").read.split("\n").map{|v| v.split("=")}].each do |k,v|
   ENV[k] = v
 end
