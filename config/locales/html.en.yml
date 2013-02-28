@@ -36,6 +36,11 @@ en:
     registration_form:
       legend: 'Wake up! <a href="/pages/about">Because</a> our home needs your help!'
       submit: "Count me in ↩"  
+      select_day: Select day
+      select_month: Select month
+      select_year: Select year
+      female: Female
+      male: Male
     events:
       title: Events
       empty: No upcoming events

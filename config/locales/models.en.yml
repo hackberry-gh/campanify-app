@@ -3,6 +3,11 @@ en:
     models:
       content/media: Media
       content/post: Article
+      content/page: Page
+      content/widget: Widget
+      content/event: Event
+      appearance/asset: Asset
+      appearance/template: Template
       user: Supporter
       csv_import: Import
     attributes:
@@ -30,6 +35,7 @@ en:
         display_name: Display Name 
         birth_year: Birth Year 
         birth_date: Birth Date 
+        gender: Gender
         country: Country 
         region: Region 
         city: City 

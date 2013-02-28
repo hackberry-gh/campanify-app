@@ -32,7 +32,7 @@
 					error = JSON.parse(error);
 				}
 			}catch(err){
-				error = {error: error};
+				error = {errors: [t.errors.general]};
 			}
 			return error;
 		},
@@ -44,19 +44,22 @@
 			}
 		},
 		processErrors: function(form, event, xhr, status) {
-			var responseObject = campanify.parseErrors(xhr),
+			var errors = xhr.status == 422 ? campanify.parseErrors(xhr).errors : 
+					[t.errors.general],
 			 		errorList = $('<ul />'),
 					count = 0,
 					errTitle = t.errors.template.replace("$count",count).
 						replace("$resource",form.data('translated-member'));					
-						
-			$.each(responseObject.errors, function(field,errors) {
+			
+			
+			$.each(errors, function(field,errors) {
 				var fieldName = $.campanify.humanizeField(form, field);
 				errorList.append('<li>' + fieldName + ' ' + errors.join(", ") + '</li>');
 				count++;
 			});
 			
 			errorList.prepend($("<h3>"+errTitle+"</h3>"));		
+			
 
 			form.find('#error_explanation').html(errorList).show();
 		},

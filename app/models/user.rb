@@ -30,6 +30,8 @@ class User < ActiveRecord::Base
   validate :validations_from_settings
   
   before_validation :set_defaults, :if => "new_record?"
+
+  before_validation :parse_meta_attributes
   
   after_create :send_password_instructions
 
@@ -146,6 +148,22 @@ class User < ActiveRecord::Base
     super(options.merge(except: [:visits, :recruits]))
   end
 
+  def method_missing(method, *args, &block)
+    method = method.to_s
+    if method.include?("meta_")
+      key = method.gsub("meta_","")
+      if key.include?("=")
+        key = key.gsub("=","")
+        value = self.meta[key] = args.shift
+      else
+        value = self.meta[key]
+      end  
+    else
+      super(method.to_sym, *args, &block)
+    end
+    value
+  end
+
   private 
 
   def validations_from_settings
@@ -177,6 +195,21 @@ class User < ActiveRecord::Base
 
   def invited_to_signup_for_new_record?
     (invited_by && new_record?)
+  end
+
+  def parse_meta_attributes
+    meta_attributes.each do |attr|
+      self.meta[attr.to_s.gsub("meta_","")] = self.send(attr)
+    end
+  end
+
+  def mass_assignment_authorizer(role = :default)
+    self.class.send :attr_accessor, *meta_attributes
+    super(:default) + super(role) + meta_attributes
+  end
+
+  def meta_attributes
+    @meta_attributes ||= Settings.user_setting("fields", current_branch).clone.delete_if{|s| puts s;!s.include?("meta_")}
   end
              
 end

@@ -18,6 +18,7 @@ ActiveAdmin.register Settings, :as => "Settings" do
     end
     def update
       Settings.instance.data = YAML::load(params[:settings][:data])
+      puts Settings.instance.data
       if Settings.instance.save
         redirect_to admin_setting_path(Settings.instance.id),
         :notice => "Settings saved successfully"

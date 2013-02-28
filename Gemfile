@@ -36,6 +36,7 @@ gem 'dalli'
 gem 'seedbank'
 gem 'timecop'
 gem 'devise_invitable'
+gem 'quiet_assets'
 
 	
 group :assets do

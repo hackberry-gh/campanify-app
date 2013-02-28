@@ -83,6 +83,11 @@
 		ajaxError(function(event, jqXHR, ajaxSettings, thrownError) {
 		  $.campanify.handle403Error(jqXHR);
 		});
+
+		//addthis
+		if(typeof addthis != "undefined"){
+			addthis.init();
+		}
 		
 		
 })( jQuery );

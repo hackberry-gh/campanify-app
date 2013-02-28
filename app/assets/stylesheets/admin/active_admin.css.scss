@@ -27,9 +27,16 @@
 // .active_admin       applies to any Active Admin namespace
 // .admin_namespace    applies to the admin namespace (eg: /admin)
 // .other_namespace    applies to a custom namespace named other (eg: /other)
+@mixin code-font{
+		font-size: 1em;
+		font-style: normal;
+		font-weight: normal;
+		font-family: 'Monaco', 'Menlo', 'Droid Sans Mono', 'Courier New', monospace !important;
+	}
 body.active_admin, body.docs{
+	
 	pre{
-		font: 1em monaco, courier;
+		@include code-font;
 		border: 1px solid #C9D0D6;
 		-webkit-border-radius: 3px;
 		-moz-border-radius: 3px;
@@ -43,12 +50,13 @@ body.active_admin, body.docs{
 	 	word-wrap: break-word;	
 	}
 	textarea.code{
-		font: 1em monaco, courier !important;
+		@include code-font;
 		background: #333;
 		color: #f0f0f0;
 		height:auto;
 	}
 	.ace_editor{
+		@include code-font;
 		position:relative !important;
 		width:78.5%;
 		height:400px;
@@ -69,8 +77,11 @@ body.active_admin, body.docs{
 		-moz-border-radius-bottomleft: 3px;
 		border-bottom-left-radius: 3px;	
 	}
+	.ace_fold-widget{
+		margin: 0 -12px 1px 1px !important;
+	}
 	textarea{
-		font: 1em monaco, courier !important;
+		@include code-font;
 		height:100px;
 	}
 	a.table_tools_button.active{
