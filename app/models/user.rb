@@ -169,7 +169,9 @@ class User < ActiveRecord::Base
 
   def validations_from_settings
 
-    validates = Marshal::load(Marshal.dump(setting("validates")))
+    validates = Marshal::load(Marshal.dump(
+      Settings.user_setting("validates", current_branch))
+    )
     validates.recursive_symbolize_keys!
     # has_new_validations = false
     validates.each do |field, options|

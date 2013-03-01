@@ -22,7 +22,10 @@ ActiveAdmin.register CsvImport do
   form do |f|
     f.inputs do 
       f.input :file, as: :file
-      f.input :model, as: :select, collection: [User]
+      f.input :model, as: :select, collection: [
+        User, Content::Page, Content::Widget, Content::Article,
+        Content::Event, Content::Media, Translation
+      ]
       f.input :uniq_field, :hint => "email, etc"
     end
     f.actions

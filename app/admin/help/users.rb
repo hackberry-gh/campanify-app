@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "User", :namespace => "docs" do
-  menu :label => "User"
+  menu :label => "Supporter"
   content do
     render "index"
   end

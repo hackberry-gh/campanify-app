@@ -1,7 +1,23 @@
 TODO: write documentation
 TODO: add soft truncate option for users table, keep count but download & delete records
 TODO: template engine!
-TODO: Connect with Twitter
+TODO: Connect with Twitter (change fb column names)
 TODO: Basic API with login feature
 TODO: Point System
-TODO: Scheduled Emails
+TODO: Scheduled Emails (project based)
+TODO: Event System
+TODO: Convet charts into google charts
+
+Point
+belongs_to :user
+belongs_to :level
+amount: integer
+source_type: string
+source_id: string
+action: string
+
+Level
+slug: string
+minimum_points: integer
+meta: Hash
+order: integer
