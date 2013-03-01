@@ -27,7 +27,8 @@ class User < ActiveRecord::Base
   
   attr_accessor   :created_by_facebook_connect
                     
-  validate :validations_from_settings
+  # validate :validations_from_settings
+  before_validation :validations_from_settings
   
   before_validation :set_defaults, :if => "new_record?"
 
@@ -167,21 +168,33 @@ class User < ActiveRecord::Base
   private 
 
   def validations_from_settings
-    
+
     validates = Marshal::load(Marshal.dump(setting("validates")))
     validates.recursive_symbolize_keys!
-    has_new_validations = false
+    # has_new_validations = false
     validates.each do |field, options|
-      validators = self.class.validators_on(field)
-      
-      if validators.empty? || !validators.map(&:kind).include?(options.keys.first)
-        has_new_validations = true
-        options.to_validation_options!
-        self.class.validates(field, options)
+
+      options.each do |kind, validate_options|
+
+        validators = self.class.validators_on(field)
+
+        if validators.empty? || !validators.map(&:kind).include?(kind)
+          # has_new_validations = true
+          
+          # self.class.validates(field, options)
+          if validate_options.is_a?(Hash)
+            validate_options.to_validation_options!
+            puts field, validate_options
+            send :"validates_#{kind}_of", field, validate_options
+          else  
+            send :"validates_#{kind}_of", field
+          end
+        end
+
       end
     end
 
-    run_validations! if has_new_validations
+    # run_validations! if has_new_validations
 
   end
   

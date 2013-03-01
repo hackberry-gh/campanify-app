@@ -30,8 +30,11 @@ class UserObserver < ActiveRecord::Observer
   end
 
   # sends mail
-  def mail(method, user)
-    UserMailer.send(method, user)
+  def mail(mail, user)
+    puts "MAIL #{mail}, #{user}"
+    email = UserMailer.email(mail, user)
+    puts "email #{email}"
+    email
   end
 
   # posts user data to given url
