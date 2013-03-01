@@ -167,9 +167,22 @@ class User < ActiveRecord::Base
   private 
 
   def validations_from_settings
-    setting("validates").each do |field|
-      validates_presence_of field.to_sym
+    
+    validates = Marshal::load(Marshal.dump(setting("validates")))
+    validates.recursive_symbolize_keys!
+    has_new_validations = false
+    validates.each do |field, options|
+      validators = self.class.validators_on(field)
+      
+      if validators.empty? || !validators.map(&:kind).include?(options.keys.first)
+        has_new_validations = true
+        options.to_validation_options!
+        self.class.validates(field, options)
+      end
     end
+
+    run_validations! if has_new_validations
+
   end
   
   # Before Validation if new record?
@@ -209,7 +222,7 @@ class User < ActiveRecord::Base
   end
 
   def meta_attributes
-    @meta_attributes ||= Settings.user_setting("fields", current_branch).clone.delete_if{|s| puts s;!s.include?("meta_")}
+    @meta_attributes ||= Settings.user_setting("fields", current_branch).clone.delete_if{|s| !s.include?("meta_")}
   end
              
 end

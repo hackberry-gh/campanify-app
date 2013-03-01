@@ -10,7 +10,7 @@ module Campanify
 		end
 
 		def rendering_widgets
-			self.class.current_rendering_widgets
+			self.class.current_rendering_widgets || []
 		end
 
 	  private

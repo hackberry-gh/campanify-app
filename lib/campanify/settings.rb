@@ -72,7 +72,7 @@ module Campanify
       errors.add(:base, "User:Abilities must be a hash") unless self.data["user"]["abilities"].is_a?(Hash)
       errors.add(:base, "User:Fields must be an array") unless self.data["user"]["fields"].is_a?(Array)
       errors.add(:base, "User:Options must be a hash") unless self.data["user"]["options"].is_a?(Hash)
-      errors.add(:base, "User:Validates must be an array") unless self.data["user"]["validates"].is_a?(Array)
+      errors.add(:base, "User:Validates must be a hash") unless self.data["user"]["validates"].is_a?(Hash)
       errors.add(:base, "User:PasswordRequied must be a string") unless self.data["user"]["password_required"].is_a?(String)
       errors.add(:base, "User:ConfirmationRequied must be a string") unless self.data["user"]["confirmation_required"].is_a?(String)
       errors.add(:base, "User:Redirects must be a hash") unless self.data["user"]["redirects"].is_a?(Hash)

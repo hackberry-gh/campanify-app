@@ -76,6 +76,10 @@ module HtmlHelper
         :"data-label" => t("activerecord.attributes.user.avatar"), 
         :placeholder => t("activerecord.attributes.user.avatar")) + 
       "</label>")
+    when :password 
+      f.password_field field,
+        :"data-label" => t("activerecord.attributes.user.#{field}"),
+        :placeholder => t("activerecord.attributes.user.#{field}") 
     else
       f.text_field field,
         :"data-label" => t("activerecord.attributes.user.#{field}"),

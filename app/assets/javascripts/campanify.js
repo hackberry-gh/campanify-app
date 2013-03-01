@@ -32,7 +32,8 @@
 					error = JSON.parse(error);
 				}
 			}catch(err){
-				error = {errors: [t.errors.general]};
+
+				error = {"errors":{"":[t.errors.general]}};
 			}
 			return error;
 		},
@@ -45,18 +46,19 @@
 		},
 		processErrors: function(form, event, xhr, status) {
 			var errors = xhr.status == 422 ? campanify.parseErrors(xhr).errors : 
-					[t.errors.general],
+					{"": [t.errors.general]},
 			 		errorList = $('<ul />'),
 					count = 0,
-					errTitle = t.errors.template.replace("$count",count).
-						replace("$resource",form.data('translated-member'));					
+					errTitle = "";					
 			
-			
-			$.each(errors, function(field,errors) {
+			$.each(errors, function(field, errors) {
 				var fieldName = $.campanify.humanizeField(form, field);
 				errorList.append('<li>' + fieldName + ' ' + errors.join(", ") + '</li>');
 				count++;
 			});
+
+			errTitle = t.errors.template.replace("$count",count).
+				replace("$resource",form.data('translated-member'));
 			
 			errorList.prepend($("<h3>"+errTitle+"</h3>"));		
 			
