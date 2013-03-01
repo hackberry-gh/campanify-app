@@ -46,12 +46,12 @@ RSpec.configure do |config|
   config.extend ControllerMacros, :type => :controller
   
   config.before :suite do
-    Settings.reset!
     DatabaseCleaner.strategy = :truncation
   end
 
   config.before :each do
     DatabaseCleaner.start
+    Settings.reset!
   end
 
   config.after :each do

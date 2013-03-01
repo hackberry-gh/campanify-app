@@ -6,7 +6,7 @@ describe UserMailer do
         
     user = User.create!(email: "test@test2.com", branch: "GB")
         
-    let(:mail) { UserMailer.after_signup_email(user) }
+    let(:mail) { UserMailer.email("after_signup_email", user) }
 
     it "renders the headers" do
       mail.subject.should eq(I18n.t('user_mailer.after_signup_email.subject'))
