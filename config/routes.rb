@@ -16,10 +16,14 @@ Campanify::Application.routes.draw do
         get 'page/:page', :action => :index
         post 'preview'        
       end
-      member do
-        put 'like'
-        put 'unlike'
+      
+      if Settings.modules.include?("analytics")
+        member do
+          put 'like'
+          put 'unlike'
+        end
       end
+
     end
     resources :media,   :module => 'content', :only => [:create, :new]
   end
@@ -54,9 +58,13 @@ Campanify::Application.routes.draw do
       collection do
         get 'page/:page', :action => :index
       end
-      member do
-        put :visits
+
+      Settings.modules.include?("analytics")
+        member do
+          put :visits
+        end
       end
+      
     end
   end
   

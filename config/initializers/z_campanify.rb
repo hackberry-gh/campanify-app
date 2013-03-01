@@ -87,6 +87,7 @@ Devise.setup do |config|
   config.mailer_sender = Settings.mailer["sender"]
   config.allow_unconfirmed_access_for = Settings.user['confirmation_required'] == "strict" ? 0 : Settings.devise_settings['allow_unconfirmed_access_for'].days
   config.reset_password_within = Settings.devise_settings['reset_password_within'].days
+  config.invitation_limit = Settings.devise_settings["invitation_limit"]
   require "omniauth-facebook"
   config.omniauth :facebook, Settings.facebook['app_id'], Settings.facebook['app_secret'], 
                   {:scope => Settings.facebook['scope']}

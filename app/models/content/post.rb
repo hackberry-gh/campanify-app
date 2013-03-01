@@ -3,8 +3,11 @@ class Content::Post < ActiveRecord::Base
   include Campanify::Models::Slug  
   include Campanify::Models::Publishable 
   include Campanify::Models::Sanitized
-  include Campanify::Models::History
-  include Campanify::Models::Popularity  
+  
+  if Settings.modules.include?("analytics")
+    include Campanify::Models::History
+    include Campanify::Models::Popularity  
+  end
    
   attr_accessible :body, :published_at, :title, :user_id
 
@@ -14,32 +17,36 @@ class Content::Post < ActiveRecord::Base
   before_save :sanitize_inputs
   validates_presence_of :title, :body, :user_id
 
-  track :likes
+  Settings.modules.include?("analytics")
+    track :likes
   
-  has_and_belongs_to_many :likers, :class_name => "User", :join_table => "likers_posts", :association_foreign_key => "liker_id"
-  
-  scope :popularity, order('popularity DESC')
-  scope :date, order('published_at DESC')
-  
-  def liked?(user)
-    likers.include?(user)
-  end
-  
-  alias_method :inc_likes_org, :inc_likes
-  alias_method :dec_likes_org, :dec_likes  
-  def inc_likes(owner = self)
-    if owner.is_a?(User)
-      likers << owner
-      inc_likes_org(owner)
+    has_and_belongs_to_many :likers, :class_name => "User", :join_table => "likers_posts", :association_foreign_key => "liker_id"
+    
+    scope :popularity, order('popularity DESC')
+
+    scope :date, order('published_at DESC')
+    
+    def liked?(user)
+      likers.include?(user)
     end
-  end
-  
-  def dec_likes(owner = self)
-    if owner.is_a?(User)
-      likers.delete(owner)
-      dec_likes_org(owner)
+    
+    alias_method :inc_likes_org, :inc_likes
+    alias_method :dec_likes_org, :dec_likes  
+    def inc_likes(owner = self)
+      if owner.is_a?(User)
+        likers << owner
+        inc_likes_org(owner)
+      end
     end
-  end  
+    
+    def dec_likes(owner = self)
+      if owner.is_a?(User)
+        likers.delete(owner)
+        dec_likes_org(owner)
+      end
+    end  
+
+  end
   
   private
   

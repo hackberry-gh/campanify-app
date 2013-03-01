@@ -1,9 +1,13 @@
 class User < ActiveRecord::Base
-  
-  include Campanify::Models::History
+
   include Campanify::ThreadedAttributes
   include Campanify::Models::Sanitized
-  include Campanify::Models::Popularity
+
+  if Settings.modules.include?("analytics")
+    include Campanify::Models::History
+    include Campanify::Models::Popularity
+  end
+  
 
   FEMALE = 1
   MALE = 2
@@ -47,7 +51,10 @@ class User < ActiveRecord::Base
   scope :date, order('created_at DESC')
   
   threaded  :branch
-  track     :visits, :recruits
+
+  if Settings.modules.include?("analytics")
+    track     :visits, :recruits
+  end
   
   mount_uploader :avatar, AvatarUploader
   validates :avatar, 

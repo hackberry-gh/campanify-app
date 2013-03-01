@@ -37,22 +37,24 @@ class Content::PostsController < ::CampanifyController
     render :json => {:redirect_to => posts_path}
   end
   
-  def like
-  	@resource = Content::Post.published.find_by_id(params[:id])
-  	if @resource.inc_likes(current_user)
-      render :json => @resource, :location => post_path(@resource)
-	  else
-      render :json => @resource, :location => posts_path, :status => 422
+  if Settings.modules.include?("analytics")
+    def like
+    	@resource = Content::Post.published.find_by_id(params[:id])
+    	if @resource.inc_likes(current_user)
+        render :json => @resource, :location => post_path(@resource)
+  	  else
+        render :json => @resource, :location => posts_path, :status => 422
+      end
     end
-  end
-  
-  def unlike
-  	@resource = Content::Post.published.find_by_id(params[:id])
-  	if @resource.dec_likes(current_user)
-      render :json => @resource, :location => post_path(@resource)
-	  else
-      render :json => @resource, :location => posts_path, :status => 422
-    end	
+    
+    def unlike
+    	@resource = Content::Post.published.find_by_id(params[:id])
+    	if @resource.dec_likes(current_user)
+        render :json => @resource, :location => post_path(@resource)
+  	  else
+        render :json => @resource, :location => posts_path, :status => 422
+      end	
+    end
   end
   
   def preview

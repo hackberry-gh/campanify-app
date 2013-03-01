@@ -5,10 +5,10 @@ module Campanify
       extend ActiveSupport::Concern
       
       included do
-        if self.included_modules.include?(Campanify::Models::History)
-          attr_accessor :dirty_tracks
-          attr_accessible :popularity, :dirty_tracks        
-        end
+        raise ArgumentError, "Popularity module needs History Module included" unless self.included_modules.include?(Campanify::Models::History)
+        
+        attr_accessor :dirty_tracks
+        attr_accessible :popularity, :dirty_tracks        
       end
       
       private

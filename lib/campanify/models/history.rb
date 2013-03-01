@@ -29,6 +29,7 @@ module Campanify
       extend ActiveSupport::Concern
 
       module ClassMethods
+        
         def track(*args)
           args.each do |field_name|
             tracking_fields << field_name unless tracking_fields.include?(field_name)
@@ -91,7 +92,12 @@ module Campanify
           end
         end
         
-        # invalidate cache fucker
+        # populate cache columns if available
+        cache_setter = :"cached_#{field_name}="
+        if self.respond_to?(cache_setter)
+          self.send cache_setter, count(field_name, true, owner, self)
+        end
+        # we need to save model to invalidate cache
         self.save
         
       end 

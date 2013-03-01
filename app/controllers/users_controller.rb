@@ -2,8 +2,12 @@ class UsersController < CampanifyController
   
   include Campanify::Controllers::ParanoidController    
     
-  before_filter  :safe_request!, :only => [:visits, :recruited]
-  before_filter  :ensure_user!, :only => [:show, :visits, :recruited]
+  if Settings.modules.include?("analytics")
+    before_filter  :safe_request!, :only => [:visits]
+    before_filter  :ensure_user!, :only => [:show, :visits]
+  else
+    before_filter  :ensure_user!, :only => [:show]
+  end
   
   helper_method :me?
   
@@ -27,9 +31,11 @@ class UsersController < CampanifyController
   end
 
   # PUT, add a visit to user
-  def visits
-    @user.inc_visits unless me?
-    render nothing: true
+  Settings.modules.include?("analytics")
+    def visits
+      @user.inc_visits unless me?
+      render nothing: true
+    end
   end
 	
 	def index_cache_path
