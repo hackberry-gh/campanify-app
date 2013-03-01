@@ -52,7 +52,6 @@ class UserObserver < ActiveRecord::Observer
   def facebook
     #TODO: implement facebook
   end
-  
 
   # def locate(user)
   #     begin

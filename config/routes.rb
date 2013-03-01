@@ -59,7 +59,7 @@ Campanify::Application.routes.draw do
         get 'page/:page', :action => :index
       end
 
-      Settings.modules.include?("analytics")
+      if Settings.modules.include?("analytics")
         member do
           put :visits
         end

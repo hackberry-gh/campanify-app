@@ -31,7 +31,7 @@ class UsersController < CampanifyController
   end
 
   # PUT, add a visit to user
-  Settings.modules.include?("analytics")
+  if Settings.modules.include?("analytics")
     def visits
       @user.inc_visits unless me?
       render nothing: true

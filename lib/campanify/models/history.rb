@@ -62,7 +62,12 @@ module Campanify
             end            
             def hourly_#{field_name}(uniq = true, owner = :all, target = self)
               count("#{field_name}", uniq, owner, target, 'hour')
-            end                
+            end 
+
+            def #{field_name}
+              cache_getter = :"cached_uniq_#{field_name}"
+              (self.respond_to?(cache_getter) ? self.send(cache_getter) : total_#{field_name}) || 0
+            end               
 
             CODE
           end
@@ -81,24 +86,30 @@ module Campanify
       def update_historical_field(field_name, action, value, owner)
         
         if current_ip && owner
+          uniq = false
           start_time = Time.now.utc.beginning_of_hour
           end_time = Time.now.utc.end_of_hour
           if current = Track.where('tracker = ? AND ip = ? AND owner_id = ? AND target_id = ? AND target_type = ? AND created_at >= ? AND created_at <= ?', 
             field_name, current_ip, owner.id, self.id, self.class.name, start_time, end_time).first
             current.update_column(:value, calculate(current.value, action, value))            
           else
+            uniq = true
             current = Track.create!(:value => calculate(0, action, value), :tracker => field_name, :ip => current_ip, :owner_id => owner.id, 
             :target_id => self.id, :target_type => self.class.name)
           end
+
+          # populate cache columns if available
+          cache_setter = :"cached_uniq_#{field_name}="
+          # update cache on uniq or decremental updates
+          # because set and inc doesn't affect uniq counts if they are redundant
+          if (uniq || action == "dec") && self.respond_to?(cache_setter)
+            self.send cache_setter, count(field_name, true, owner, self)
+          end
+          # we need to save model to invalidate cache
+          updated = self.save
+
+          {track: current, updated: updated, uniq: uniq}
         end
-        
-        # populate cache columns if available
-        cache_setter = :"cached_#{field_name}="
-        if self.respond_to?(cache_setter)
-          self.send cache_setter, count(field_name, true, owner, self)
-        end
-        # we need to save model to invalidate cache
-        self.save
         
       end 
       
@@ -109,7 +120,7 @@ module Campanify
         scope = scope.where("date_trunc('#{period}', created_at) = ?", 
         Time.now.utc.send("beginning_of_#{period}").to_s(:db)) unless period.nil?
         if uniq
-          scope.sum(:value, :group => :ip).values.inject{|sum,x| sum + x  } || 0
+          scope.sum(:value, :group => :ip).delete_if{|k,v| v == 0}.keys.count
         else
           scope.sum(:value)
         end
@@ -125,7 +136,7 @@ module Campanify
         when "set"
           current = value
         end
-        current
+        [0,current].max
       end
 
     end

@@ -17,12 +17,14 @@ class Content::Post < ActiveRecord::Base
   before_save :sanitize_inputs
   validates_presence_of :title, :body, :user_id
 
-  Settings.modules.include?("analytics")
+  if Settings.modules.include?("analytics")
     track :likes
   
     has_and_belongs_to_many :likers, :class_name => "User", :join_table => "likers_posts", :association_foreign_key => "liker_id"
     
-    scope :popularity, order('popularity DESC')
+    if Settings.modules.include?("analytics")
+      scope :popularity, order('popularity DESC')
+    end
 
     scope :date, order('published_at DESC')
     

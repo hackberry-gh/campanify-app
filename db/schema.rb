@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130227234647) do
+ActiveRecord::Schema.define(:version => 20130301142050) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -229,12 +229,39 @@ ActiveRecord::Schema.define(:version => 20130227234647) do
 
   add_index "history_tracks", ["target_id", "target_type", "tracker", "ip", "owner_id", "created_at"], :name => "history_index"
 
+  create_table "levels", :force => true do |t|
+    t.string   "slug"
+    t.integer  "sequence"
+    t.text     "meta"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "levels", ["sequence"], :name => "index_levels_on_sequence"
+  add_index "levels", ["slug"], :name => "index_levels_on_slug"
+
   create_table "likers_posts", :id => false, :force => true do |t|
     t.integer "liker_id"
     t.integer "post_id"
   end
 
   add_index "likers_posts", ["liker_id", "post_id"], :name => "index_likers_posts_on_liker_id_and_post_id"
+
+  create_table "points", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "level_id"
+    t.integer  "amount"
+    t.string   "source_type"
+    t.integer  "source_id"
+    t.string   "action"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "points", ["action"], :name => "index_points_on_action"
+  add_index "points", ["level_id"], :name => "index_points_on_level_id"
+  add_index "points", ["source_id"], :name => "index_points_on_source_id"
+  add_index "points", ["user_id"], :name => "index_points_on_user_id"
 
   create_table "settings", :force => true do |t|
     t.text "data"
@@ -299,6 +326,8 @@ ActiveRecord::Schema.define(:version => 20130227234647) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "gender"
+    t.integer  "cached_uniq_visits"
+    t.integer  "cached_uniq_recruits"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

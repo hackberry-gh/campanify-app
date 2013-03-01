@@ -2,12 +2,12 @@ class User < ActiveRecord::Base
 
   include Campanify::ThreadedAttributes
   include Campanify::Models::Sanitized
+  include Watchdog
 
   if Settings.modules.include?("analytics")
     include Campanify::Models::History
     include Campanify::Models::Popularity
   end
-  
 
   FEMALE = 1
   MALE = 2
@@ -45,15 +45,30 @@ class User < ActiveRecord::Base
   has_many :posts, :class_name => "Content::Post", :dependent => :destroy
   has_many :media, :class_name => "Content::Media", :dependent => :destroy
   
+  if Settings.modules.include?("points")
+    watch :inc_visits, :inc_recruits
+    has_many :levels, :through => :points, source: :level
+    has_many :points, :dependent => :destroy
+    def level
+      levels.last || Level.first
+    end
+    def total_amount_of_points
+      self.points.sum(:amount)
+    end
+    def total_amount_of_level_points
+      self.points.where(level_id: level.id).sum(:amount)
+    end
+  end
+
   serialize :meta, Hash
   
-  scope :popularity, order('popularity DESC')
   scope :date, order('created_at DESC')
   
   threaded  :branch
 
   if Settings.modules.include?("analytics")
-    track     :visits, :recruits
+    scope :popularity, order('popularity DESC')
+    track :visits, :recruits
   end
   
   mount_uploader :avatar, AvatarUploader

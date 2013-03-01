@@ -14,12 +14,15 @@ module Campanify
       private
       
       def update_historical_field(field_name, action, value, owner)
-        self.dirty_tracks = {}
-        self.class.tracking_fields.each do |tf|
-          self.dirty_tracks[tf] = self.send("total_#{tf}".to_sym)
+        if current_ip && owner
+          self.dirty_tracks = {}
+          self.class.tracking_fields.each do |tf|
+            self.dirty_tracks[tf] = self.send("total_#{tf}".to_sym)
+          end
+          result = super(field_name, action, value, owner)     
+          update_popularity   
+          result
         end
-        super(field_name, action, value, owner)     
-        update_popularity   
       end
       
       def update_popularity
