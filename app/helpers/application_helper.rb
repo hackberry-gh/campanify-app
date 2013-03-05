@@ -72,7 +72,7 @@ module ApplicationHelper
   end
 
   def user_options
-    Settings.user_setting("options",current_branch).map(&:to_sym)
+    Settings.user_setting("options",current_branch)
   end
 
   def password_always_required?
