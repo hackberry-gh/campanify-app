@@ -18,6 +18,7 @@
 /db/seeds
 /db/seeds.rb
 /config/settings.yml
+/config/asset_sync.yml
 /app/views/analytics
 /app/views/content
 /app/views/layouts
