@@ -35,6 +35,27 @@ module HtmlHelper
     }.join("\n").html_safe
   end
 
+  def new_user_form(&block)
+    form_for(User.new, :as => :user, :url => registration_path(:user), 
+    :remote => true,
+    :html => {
+    :"data-collection" => "users",  
+    :"data-member" => "user",
+    :"data-type" => "json",
+    :"data-post-action" => "after_sign_up",
+    :"data-find_by" => "id",    
+    :"data-translated-member" => t('activerecord.models.user')
+    }, &block)
+  end
+
+  def querystring_fields
+    buffer = ""
+    querystring_params.each do |key,value|
+      buffer << "<input type=\"hidden\" name=\"user[meta][request_params][#{key}]\" value=\"#{value}\" />"
+    end
+    raw(buffer)
+  end
+
   def formatted_user_field(f,field)
     case field 
     when :country
@@ -78,6 +99,7 @@ module HtmlHelper
       "</label>")
     when :password 
       f.password_field field,
+        :autocomplete => "off",
         :"data-label" => t("activerecord.attributes.user.#{field}"),
         :placeholder => t("activerecord.attributes.user.#{field}") 
     else
@@ -85,6 +107,15 @@ module HtmlHelper
         :"data-label" => t("activerecord.attributes.user.#{field}"),
         :placeholder => t("activerecord.attributes.user.#{field}")
     end
+  end
+
+  def formatted_user_option(f,field,checked=false)
+    buffer = f.label field
+    buffer << f.check_box(field, {
+          :checked => checked,
+          :"data-label" => t("activerecord.attributes.user.#{field}")
+        })
+    buffer    
   end
 
 end

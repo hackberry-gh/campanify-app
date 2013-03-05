@@ -66,5 +66,21 @@ module ApplicationHelper
   def can_comment?(object)
     comments_available?(object) && Settings.user_setting("abilities")['can_comment'] && current_user.present?
   end
+
+  def user_fields
+    Settings.user_setting("fields", current_branch).map(&:to_sym)
+  end
+
+  def user_options
+    Settings.user_setting("options",current_branch).map(&:to_sym)
+  end
+
+  def password_always_required?
+    Settings.user_setting("password_required",current_branch) == "always"
+  end
+
+  def password_required?
+    Settings.user_setting('password_required', current_branch) != "never"
+  end
   
 end

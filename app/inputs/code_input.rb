@@ -1,5 +1,11 @@
 class CodeInput < Formtastic::Inputs::TextInput
   
+  def options
+    {
+      :label => false
+    }.merge(super)
+  end
+
   def input_html_options
     {
       :class => "code",

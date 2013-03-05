@@ -2,6 +2,7 @@ ActiveAdmin.register User do
   controller.authorize_resource  
   menu :parent => "Supporters", :if => proc{ can?(:read, User) }
   actions :index, :show, :edit, :update, :destroy
+  
   index do
     selectable_column
     column :full_name

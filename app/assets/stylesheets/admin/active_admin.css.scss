@@ -58,7 +58,7 @@ body.active_admin, body.docs{
 	.ace_editor{
 		@include code-font;
 		position:relative !important;
-		width:78.5%;
+		width:100%;
 		height:400px;
 	}
 	.ace_scroller{

@@ -57,7 +57,7 @@ $(document).ready(function(){
 					success: function(data) {
 						$.campanify.hideLoading();
 						$("form#open-inviter").replaceWith($("<p>" + data.invitations.length + 
-							" " + t.widgets.open_inviter.invited+"</p>"))
+							" " + t.widgets.open_inviter.success+"</p>"))
 
 					}
 				})

@@ -1,6 +1,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require campanify
+//= require analytics
+//= require maps
+
 
 (function($, undefined) {
 	$(document).ready(function() {
@@ -72,7 +75,7 @@
 			})
 		});
 
-		//global error handler
+		//global ajax handlers
 		$(document).
 		ajaxSend(function(event, jqXHR, ajaxSettings, thrownError) {
 		  $.campanify.showLoading();

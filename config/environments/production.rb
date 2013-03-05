@@ -47,13 +47,16 @@ Campanify::Application.configure do
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w(
-  jquery.sparkline.js modernizr.js admin/active_admin.js admin/active_admin.css
+  vendor/jquery.sparkline.js 
+  vendor/modernizr.js 
+  admin/active_admin.js admin/active_admin.css
   vendor/markitup/jquery.markitup.js
   vendor/markitup/sets/markdown/set.js
   vendor/markitup/sets/markdown/style.css
   vendor/markitup/skins/campanify/style.css  
   widgets/flex-slider.js
-  widgets/flex-slider.css  
+  widgets/flex-slider.css
+  widgets/open-inviter.js  
   )
 
   # Disable delivery errors, bad email addresses will be ignored
