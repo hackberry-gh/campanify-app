@@ -2,17 +2,25 @@ ActiveAdmin.register Translation, :as => "Translation" do
   controller.authorize_resource :class => Translation 
   menu :parent => "Content", :priority => 6, :if => proc{ can?(:read, Translation) }
   actions :index, :new, :create, :edit, :update, :destroy
-  config.clear_sidebar_sections!
+  # config.clear_sidebar_sections!
+
+  %w(authentication errors html sharing widgets models mails).each do |scope_name|
+  scope :"#{scope_name}"
+  end
+
+  config.per_page = 100
+  
   controller do
     # before_filter :set_interpolations, :only => [:create, :update]
-    skip_before_filter :skip_sidebar!
+    # skip_before_filter :skip_sidebar!
     # def set_interpolations
     #   params[:translation][:interpolations] = params[:translation][:interpolations].split(",").map(&:parameterize)
     # end
-    def index
-      scope = params[:filter_by_locale] ? Translation.locale(params[:filter_by_locale]) : Translation
-      @translations =  scope.page(1).per(scope.count)
-    end
+    # def index
+    #   # scope = params[:filter_by_locale] ? Translation.locale(params[:filter_by_locale]) : Translation
+    #   # @translations =  scope.page(1).per(scope.count)
+    #   active_admin_collection = params[:filter_by_locale] ? active_admin_collection.locale(params[:filter_by_locale]) : active_admin_collection
+    # end
     def create
       if params[:translation][:locale].present?
         I18n.backend.store_translations(params[:translation][:locale],{params[:translation][:key] => params[:translation][:value]}, :escape => false)
@@ -63,25 +71,25 @@ ActiveAdmin.register Translation, :as => "Translation" do
     f.buttons
   end
   
-  sidebar :filters, :only => :index do
-    div do
-      h4 "Filter by Language"
-      nav do
-        span do 
-          link_to "All", admin_translations_path,
-          :class => "table_tools_button #{ params[:filter_by_locale].nil?  ? "active" : nil}"
-        end
-        I18n.available_locales.each do |l|
-          span do
-            link_to l.to_s.titleize, admin_translations_path(params.merge(:filter_by_locale => l)), 
-            :class => "table_tools_button #{ params[:filter_by_locale] == l.to_s  ? "active" : nil}"
-          end
-        end
-      end
-    end
-  end
+  # sidebar :filters, :only => :index do
+  #   div do
+  #     h4 "Filter by Language"
+  #     nav do
+  #       span do 
+  #         link_to "All", admin_translations_path,
+  #         :class => "table_tools_button #{ params[:filter_by_locale].nil?  ? "active" : nil}"
+  #       end
+  #       I18n.available_locales.each do |l|
+  #         span do
+  #           link_to l.to_s.titleize, admin_translations_path(params.merge(:filter_by_locale => l)), 
+  #           :class => "table_tools_button #{ params[:filter_by_locale] == l.to_s  ? "active" : nil}"
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
   
-  sidebar :filters, :only => :index do
+  sidebar "Cloning", :only => :index do
     div do
       render "cloning"
     end

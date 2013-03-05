@@ -25,11 +25,13 @@ gem 'cancan'
 gem 'heroku-api'
 gem 'heroku',												'~> 2.32.8'
 gem 'activeadmin',									'~> 0.5.1'
+gem 'omniauth-twitter'
 gem "omniauth-facebook"
 gem 'redcarpet'
 gem 'i18n_country_select', 
 			:git => 'git://github.com/lemmycaution/i18n_country_select.git'
 gem 'ox'
+gem 'oj'
 gem 'newrelic_rpm'
 gem 'memcachier'
 gem 'dalli'
@@ -37,6 +39,7 @@ gem 'seedbank'
 gem 'timecop'
 gem 'devise_invitable'
 gem 'quiet_assets'
+gem 'twitter_oauth'
 
 	
 group :assets do

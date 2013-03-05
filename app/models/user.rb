@@ -27,9 +27,11 @@ class User < ActiveRecord::Base
                   :country, :region, :city, :address, :post_code, :phone, :mobile_phone, 
                   :branch, :language, :send_updates, :legal_aggrement, 
                   :provider, :uid, :avatar, :remove_avatar, :remote_avatar_url,
+                  :tw_screen_name, :tw_token, :tw_secret, :fb_token,
                   :meta
   
   attr_accessor   :created_by_facebook_connect
+  attr_accessor   :created_by_twitter_connect
                     
   # validate :validations_from_settings
   before_validation :validations_from_settings
@@ -85,16 +87,48 @@ class User < ActiveRecord::Base
     user = User.find_by_email(auth.info.email)
     unless user
       pass = Devise.friendly_token      
-      user = User.create(first_name: auth.extra.raw_info.first_name,
-      last_name: auth.extra.raw_info.last_name,
-      provider: auth.provider,
-      uid: auth.uid,
-      email: auth.info.email,
-      password: pass,
-      password_confirmation: pass,
-      remote_avatar_url: "http://graph.facebook.com/#{auth.uid}/picture?type=normal"
+      user = User.create(
+        first_name: auth.extra.raw_info.first_name,
+        last_name: auth.extra.raw_info.last_name,
+        provider: auth.provider,
+        uid: auth.uid,
+        email: auth.info.email,
+        password: pass,
+        password_confirmation: pass,
+        fb_token: auth.credentials.token,
+        remote_avatar_url: "http://graph.facebook.com/#{auth.uid}/picture?type=normal"
       )
       user.created_by_facebook_connect = true
+    else
+      user.update_attribute(:fb_token, auth.credentials.token) if auth.credentials.token
+    end
+    user
+  end
+
+  def self.find_for_twitter_oauth(access_token, signed_in_resource=nil)
+    data = access_token.extra.raw_info
+    user = User.where(:uid => access_token.uid, :provider => access_token.provider).first
+    unless user
+      pass = Devise.friendly_token      
+      user = User.create(
+        :first_name => data.name, 
+        :provider => "#{access_token.provider}", 
+        :uid => "#{access_token.uid}", 
+        :email => "#{data.screen_name}@twitter.com",
+        :password => pass, 
+        :password_confirmation => pass, 
+        :tw_screen_name => data.screen_name, 
+        :tw_token => access_token.credentials.token,
+        :tw_secret => access_token.credentials.secret,
+        remote_avatar_url: data.profile_image_url
+        ) 
+      user.created_by_twitter_connect = true
+    else
+      user.update_attributes(
+        :tw_screen_name => data.screen_name, 
+        :tw_token => access_token.credentials.token,
+        :tw_secret => access_token.credentials.secret
+      ) if access_token.credentials.token && access_token.credentials.secret
     end
     user
   end

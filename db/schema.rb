@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130301142050) do
+ActiveRecord::Schema.define(:version => 20130304220008) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -328,6 +328,10 @@ ActiveRecord::Schema.define(:version => 20130301142050) do
     t.integer  "gender"
     t.integer  "cached_uniq_visits"
     t.integer  "cached_uniq_recruits"
+    t.string   "tw_screen_name"
+    t.string   "tw_token"
+    t.string   "tw_secret"
+    t.string   "fb_token"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

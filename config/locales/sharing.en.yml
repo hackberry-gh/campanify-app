@@ -1,0 +1,11 @@
+en:
+  sharing:
+    user:
+      title: I just join a cause on Campanify.it to make world more peaceful place
+      description: "Our home, earth needs your help, because there is still war, famine, poverty, racism and so on. Give us a hand."
+      tweet: "I just join a cause on @campanify to make world more peaceful place"
+    default:
+      title: Campanify.it trying to make world more peaceful place
+      description: "Our home, earth needs your help, because there is still war, famine, poverty, racism and so on. Give us a hand."
+      tweet: "@campanify trying to make world more peaceful place"
+      image: campanify-logo-96.png 

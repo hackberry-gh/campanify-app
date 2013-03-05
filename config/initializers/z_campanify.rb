@@ -3,6 +3,15 @@ require 'i18n/backend/active_record'
 
 Translation = I18n::Backend::ActiveRecord::Translation
 
+Translation.class_eval do
+  %w(errors html sharing widgets).each do |scope_name|
+  scope :"#{scope_name}", lookup("#{scope_name}")
+  end
+  scope :authentication, where("key LIKE '%devise%' AND key NOT LIKE '%devise.mail%'")
+  scope :models, lookup("activerecord")
+  scope :mails, where("key LIKE '%mail%' AND NOT LIKE '%activerecord%'")
+end
+
 I18n::Backend::ActiveRecord::Missing.class_eval do
   def translate(locale, key, options = {})
     super
@@ -91,6 +100,8 @@ Devise.setup do |config|
   require "omniauth-facebook"
   config.omniauth :facebook, Settings.facebook['app_id'], Settings.facebook['app_secret'], 
                   {:scope => Settings.facebook['scope']}
+  require "omniauth-twitter"
+  config.omniauth :twitter, Settings.twitter['consumer_key'], Settings.twitter['consumer_secret']
 end
 
 # controllers

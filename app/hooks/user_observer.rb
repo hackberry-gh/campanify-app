@@ -43,45 +43,41 @@ class UserObserver < ActiveRecord::Observer
     end
   end
 
-  # not implemented yet
-  def tweet
-    #TODO: implement tweet
+  def tweet(message_id, user)
+    begin
+      tweet = tw_client(user).update(I18n.t(message_id)) if user.tw_token && user.tw_secret
+    rescue Exception => e
+      puts "ERROR on UserObserver.tweet -> #{e.message}" 
+    end
   end
 
   # not implemented yet      
-  def facebook
-    #TODO: implement facebook
+  def facebook(message_id, user)
+    begin
+      post = fb_client(user).put_connections("me", "feed", :message => I18n.t(message_id)) if user.fb_token
+    rescue Exception => e
+      puts "ERROR on UserObserver.tweet -> #{e.message}" 
+    end
   end
 
-  # def locate(user)
-  #     begin
-  #       url="http://maps.googleapis.com/maps/api/geocode/json?address=country:#{user.country.to_s}&sensor=false"
-  #       response = HTTParty.get url
-  #       if response["status"] = "OK"
-  #         country_name = I18n.t(user.country.to_s, :scope => :countries)        
-  #         location = nil
-  #         response["results"].each do |loc|
-  #           loc["address_components"].each do |add|
-  #             location = loc["geometry"]["location"] if add["long_name"].include?(country_name)
-  #           end
-  #         end
-  #         if location
-  #           user.meta[:location] = location
-  #           user.save(validate: false)
-  #         end
-  #       else
-  #         user.meta[:location] = false                          
-  #         user.save(validate: false)
-  #       end
-  #     rescue Exception => e
-  #       user.meta[:location] = false
-  #       user.save(validate: false)          
-  #     end
-  #   end
+  def tw_client(user = nil)
+    @tw_client ||= TwitterOAuth::Client.new(
+        :consumer_key => Settings.twitter["consumer_key"],
+        :consumer_secret => Settings.twitter["consumer_secret"],
+        :token => user.tw_token,
+        :secret => user.tw_secret
+    )
+  end
+
+  def fb_client(user = nil)
+    @fb_client ||= Koala::Facebook::API.new(user.fb_token)
+  end
 
   if ENV['PLAN'] != "free"
     handle_asynchronously :after_create
     handle_asynchronously :after_update
     handle_asynchronously :after_delete  
   end
+
+
 end
