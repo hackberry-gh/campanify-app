@@ -4,10 +4,11 @@ TODO: template engine!
 TODO: Connect with Twitter
 TODO: Basic API with login feature
 TODO: Scheduled Emails (project based)
-TODO: Event System
 TODO: Convet charts into google charts
 TODO: SQL OPTIMIZATIONS!!!
 TODO: convert serialized field into OJSON
 TODO: optimize media views
 TODO: mailgun for mails
 TODO: make cache table for every uniq Model.count method
+TODO: invitation mail non html!
+TODO: do more test, still buggy

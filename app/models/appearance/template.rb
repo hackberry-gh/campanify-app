@@ -16,9 +16,9 @@ class Appearance::Template < ActiveRecord::Base
         :handler => normalize_array(details[:handlers]), 
         :partial => partial || false
       }
-      templates = _cache Appearance::Template::Resolver, conditions.values do
+      # templates = _cache Appearance::Template::Resolver, conditions.values do
         templates = Appearance::Template.where(conditions).all
-      end
+      # end
       templates.map do |record| 
         initialize_template(record)
       end

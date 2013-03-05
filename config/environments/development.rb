@@ -44,8 +44,15 @@ Campanify::Application.configure do
   
   config.i18n.fallbacks = true
 
+  # stdout for unicorn
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger.const_get(
+    ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'DEBUG'
+  )
+
   # only when debug caching
   # config.cache_classes = true
-  #   config.action_controller.perform_caching = true  
-  #   config.cache_store = :dalli_store
+  # config.action_controller.perform_caching = true  
+  # config.cache_store = :dalli_store
+  # config.threadsafe!
 end

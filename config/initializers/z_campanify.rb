@@ -107,10 +107,12 @@ end
 # controllers
 ::Devise::PasswordsController.send :include, Campanify::Controllers::IpCountryBranchController     
 ::Devise::ConfirmationsController.send :include, Campanify::Controllers::IpCountryBranchController     
-::Devise::UnlocksController.send :include, Campanify::Controllers::IpCountryBranchController     
+::Devise::UnlocksController.send :include, Campanify::Controllers::IpCountryBranchController 
+
 ::Devise::PasswordsController.send :include, Campanify::Controllers::TemplateController     
 ::Devise::ConfirmationsController.send :include, Campanify::Controllers::TemplateController     
 ::Devise::UnlocksController.send :include, Campanify::Controllers::TemplateController     
+
 ::ActionMailer::Base.send :include, Campanify::Controllers::TemplateController
 ::ActionMailer::Base.send :include, Campanify::Cache
 
@@ -123,11 +125,8 @@ CarrierWave.configure do |config|
     :provider                          => 'Google',                
     :google_storage_access_key_id      => ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'], 
     :google_storage_secret_access_key  => ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'],
-    # :region                 => 'eu-west-1'  # optional, defaults to 'us-east-1'
   }
   config.fog_directory  = ENV['FOG_DIRECTORY']                    # required
-  # config.fog_host       = 'https://assets.example.com'          # optional, defaults to nil
-  # config.fog_public     = false                                 # optional, defaults to true
   config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
 end
 

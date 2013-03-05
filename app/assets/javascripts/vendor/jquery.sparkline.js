@@ -593,9 +593,9 @@
         if (height === undefined) {
             height = $(this).innerHeight();
         }
-        if ($.browser.hasCanvas) {
+        if (Modernizr.canvas) {
             target = new VCanvas_canvas(width, height, this, interact);
-        } else if ($.browser.msie) {
+        } else if (navigator.appName == 'Microsoft Internet Explorer') {
             target = new VCanvas_vml(width, height, this);
         } else {
             return false;
@@ -2496,12 +2496,12 @@
     // Setup a very simple "virtual canvas" to make drawing the few shapes we need easier
     // This is accessible as $(foo).simpledraw()
 
-    if ($.browser.msie && !document.namespaces.v) {
+    if (navigator.appName == 'Microsoft Internet Explorer' && !document.namespaces.v) {
         document.namespaces.add('v', 'urn:schemas-microsoft-com:vml', '#default#VML');
     }
 
-    if ($.browser.hasCanvas === undefined) {
-        $.browser.hasCanvas = document.createElement('canvas').getContext !== undefined;
+    if (Modernizr.canvas === undefined) {
+        Modernizr.canvas = document.createElement('canvas').getContext !== undefined;
     }
 
     VShape = createClass({

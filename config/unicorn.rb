@@ -18,6 +18,7 @@ before_fork do |server, worker|
     Resque.redis.quit
     Rails.logger.info('Disconnected from Redis')
   end
+
 end
 
 after_fork do |server, worker|

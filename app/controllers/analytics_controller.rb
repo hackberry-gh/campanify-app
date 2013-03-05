@@ -5,9 +5,12 @@ class AnalyticsController < CampanifyController
   
   def map
     @data = _smart_cache 10.minutes, "analytics_map" do 
-      { :user_counts_by_country => User.find_by_sql("SELECT count(country) as user_count, country FROM users WHERE country IS NOT NULL GROUP BY country ORDER BY user_count DESC").map{|u| u.country = I18n.t(u.country, scope: :countries); u} }
-    end  
-    puts @data
+      sql = 'SELECT count(country) as user_count, country FROM users WHERE country IS NOT NULL GROUP BY country ORDER BY user_count DESC'
+      { :user_counts_by_country => ActiveRecord::Base.connection.execute(sql).to_a.each{ |u| 
+          u["country"] = I18n.t(u["country"], scope: :countries)
+        } 
+      }
+    end
     render :json => @data
   end
   

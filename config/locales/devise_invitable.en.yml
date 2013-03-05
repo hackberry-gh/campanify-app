@@ -13,6 +13,7 @@ en:
         submit_button: "Set my password"
     mailer:
       invitation_instructions:
+        link_title: Accept Invitation
         subject: 'Invitation instructions'
         body: |
           <p>Hello %{email}!</p>

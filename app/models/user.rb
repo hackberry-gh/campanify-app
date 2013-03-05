@@ -225,6 +225,8 @@ class User < ActiveRecord::Base
 
   def validations_from_settings
 
+    puts "current_branch #{current_branch}"
+
     validates = Marshal::load(Marshal.dump(
       Settings.user_setting("validates", current_branch))
     )
