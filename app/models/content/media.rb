@@ -1,6 +1,7 @@
 class Content::Media < ActiveRecord::Base
+  include Campanify::CounterCacher
   attr_accessible :description, :position, :title, :translations_attributes, :file, :user_id
-  belongs_to :user
+  belongs_to :user, :counter_cache => true
   translates :title, :description, :fallbacks_for_empty_translations => true
   mount_uploader :file, MediaUploader
   accepts_nested_attributes_for :translations

@@ -15,7 +15,7 @@ class AssetUploader < CarrierWave::Uploader::Base
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     dir = Settings.assets["storage"] == "file" ? "#{Rails.root}/public/" : ""
-    "#{dir}assets/"
+    "#{dir}theme_assets/"
   end
 
 

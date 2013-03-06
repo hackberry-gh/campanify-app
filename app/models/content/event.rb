@@ -1,6 +1,7 @@
 class Content::Event < ActiveRecord::Base
   include Campanify::Models::Slug  
   include FacebookHelper
+  include Campanify::CounterCacher
   attr_accessible :description, :end_time, :fb_id, :location, :name, :parent, 
                   :privacy, :start_time, :venue, :locale, :translations_attributes
   translates :name, :description, :fallbacks_for_empty_translations => true  

@@ -17,7 +17,6 @@ class CsvImport < ActiveRecord::Base
   	uploader = CsvUploader.new
     uploader.store!(file)
     self.filename = uploader.file.filename
-    puts "SELF FILENAME #{self.filename}"
   end
 
   def import

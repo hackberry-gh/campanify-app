@@ -3,6 +3,7 @@ class Content::Post < ActiveRecord::Base
   include Campanify::Models::Slug  
   include Campanify::Models::Publishable 
   include Campanify::Models::Sanitized
+  include Campanify::CounterCacher
   
   if Settings.modules.include?("analytics")
     include Campanify::Models::History
@@ -12,7 +13,7 @@ class Content::Post < ActiveRecord::Base
   attr_accessible :body, :published_at, :title, :user_id
 
   slug :title
-  belongs_to :user
+  belongs_to :user, :counter_cache => true
 
   before_save :sanitize_inputs
   validates_presence_of :title, :body, :user_id

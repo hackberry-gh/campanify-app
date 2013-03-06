@@ -45,7 +45,7 @@ class Appearance::Asset < ActiveRecord::Base
     if storage == "fog"
       "//storage.googleapis.com/#{ENV['FOG_DIRECTORY']}/#{file_path}"
     else
-      "/assets/#{filename}"
+      "/theme_assets/#{filename}"
     end
   end
 
@@ -118,7 +118,7 @@ class Appearance::Asset < ActiveRecord::Base
   end
 
   def asset_path
-    @asset_path ||= storage == "fog" ? "assets" : "#{Rails.root}/public/assets"
+    @asset_path ||= storage == "fog" ? "theme_assets" : "#{Rails.root}/public/theme_assets"
   end  
 
   def uploader

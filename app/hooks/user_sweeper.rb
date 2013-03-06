@@ -33,7 +33,7 @@ class UserSweeper < ActionController::Caching::Sweeper
   end
   def expire_index(locale,branch)
     @controller ||= ActionController::Base.new 
-    total_pages = (User.count.to_f / Settings.pagination["per"]).ceil
+    total_pages = (User.cached_count.to_f / Settings.pagination["per"]).ceil
     (1..total_pages).each do |page|
       # cache_key = _cache_key("user", "index", page, locale, branch)
       cache_key = _cache_key("user", "index", page, "none", locale, branch)      

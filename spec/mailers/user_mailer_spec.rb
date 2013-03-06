@@ -4,7 +4,7 @@ describe UserMailer do
   
   describe "after_signup_email" do
         
-    user = User.create!(email: "test@test2.com", branch: "GB")
+    user = User.find_or_create_by_email!(email: "test@test2.com")
         
     let(:mail) { UserMailer.email("after_signup_email", user) }
 
@@ -19,8 +19,6 @@ describe UserMailer do
       # mail.body.encoded.should match(body)
       mail.body.encoded.should include(user.id.to_s)      
     end
-    
-    user.destroy
     
   end
 

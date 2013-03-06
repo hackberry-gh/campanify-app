@@ -4,7 +4,7 @@ module Watchdog
     def self.notify(actor, action, target = nil)
       
       # give point only for uniq and incremental actions
-      if Level.count > 0 && actor && action && target && target[:uniq] && !action.to_s.include?("dec")
+      if Level.cached_count > 0 && actor && action && target && target[:uniq] && !action.to_s.include?("dec")
 
         point_action = target[:track].tracker
 

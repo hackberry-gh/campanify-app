@@ -1,4 +1,6 @@
 class Level < ActiveRecord::Base
+  include Campanify::CounterCacher
+  
   attr_accessible :meta, :sequence, :slug
   has_many :points, :dependent => :destroy
   has_many :users, :through => :points, :source => :user

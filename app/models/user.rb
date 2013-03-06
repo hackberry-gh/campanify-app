@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
   include Campanify::ThreadedAttributes
   include Campanify::Models::Sanitized
+  include Campanify::CounterCacher
   include Watchdog
 
   if Settings.modules.include?("analytics")
@@ -224,8 +225,6 @@ class User < ActiveRecord::Base
   private 
 
   def validations_from_settings
-
-    puts "current_branch #{current_branch}"
 
     validates = Marshal::load(Marshal.dump(
       Settings.user_setting("validates", current_branch))

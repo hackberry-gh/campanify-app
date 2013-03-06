@@ -1,5 +1,6 @@
 class Content::Widget < ActiveRecord::Base
   include Campanify::Models::Slug
+  include Campanify::CounterCacher
   attr_accessible :body, :position, :title, :locale, :translations_attributes
   translates :title, :body, :fallbacks_for_empty_translations => true  
   slug :title

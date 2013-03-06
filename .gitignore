@@ -15,6 +15,7 @@
 /tmp
 /public/uploads
 /public/assets
+/public/theme_assets
 /db/seeds
 /db/seeds.rb
 /config/settings.yml

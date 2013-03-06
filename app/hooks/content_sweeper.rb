@@ -33,7 +33,7 @@ class ContentSweeper < ActionController::Caching::Sweeper
   end
   def expire_index(content,locale,branch)
     @controller ||= ActionController::Base.new 
-    total_pages = (content.class.count.to_f / Settings.pagination["per"]).ceil
+    total_pages = (content.class.cached_count.to_f / Settings.pagination["per"]).ceil
     (1..total_pages).each do |page|
 
       %w(none date popularity).each do |sort|

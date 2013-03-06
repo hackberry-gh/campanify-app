@@ -36,14 +36,14 @@ class AnalyticsController < CampanifyController
           :weekly => counts_by_period(User,'dow', 'week').map{|u| [u.time,u.counts]},
           :monthly => counts_by_period(User,'day', 'month').map{|u| [u.time,u.counts]},
           :yearly => counts_by_period(User,'month', 'year').map{|u| [u.time,u.counts]},          
-          :total => User.count(:id)
+          :total => User.cached_count
         },
         :content_posts => {
           :daily => counts_by_period(Content::Post,'hour', 'day').map{|u| [u.time,u.counts]} ,
           :weekly => counts_by_period(Content::Post,'dow', 'week').map{|u| [u.time,u.counts]},
           :monthly => counts_by_period(Content::Post,'day', 'month').map{|u| [u.time,u.counts]},
           :yearly => counts_by_period(Content::Post,'month', 'year').map{|u| [u.time,u.counts]},          
-          :total => Content::Post.count(:id)
+          :total => Content::Post.cached_count
         }
       }
     end  
