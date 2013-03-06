@@ -1,3 +1,5 @@
+require "#{Rails.root}/app/models/counter_cache"
+
 class CreateCounterCaches < ActiveRecord::Migration
   def change
     create_table :counter_caches do |t|
