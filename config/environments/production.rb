@@ -47,7 +47,6 @@ Campanify::Application.configure do
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w(
-  vendor/jquery.js
   vendor/jquery.sparkline.js 
   vendor/modernizr.js 
   admin/active_admin.js admin/active_admin.css
