@@ -25,9 +25,9 @@ class CsvUploader < CarrierWave::Uploader::Base
     %w(csv)
   end
 
-  def filename
-    "#{Time.now.to_i.to_s}_#{original_filename}" if original_filename
-  end
+  # def filename
+  #   "#{Time.now.to_i.to_s}_#{original_filename}" if original_filename
+  # end
 
   def move_to_cache
     false

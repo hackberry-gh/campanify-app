@@ -230,7 +230,6 @@ class User < ActiveRecord::Base
       Settings.user_setting("validates", current_branch))
     )
     validates.recursive_symbolize_keys!
-    # has_new_validations = false
     validates.each do |field, options|
 
       options.each do |kind, validate_options|
@@ -238,12 +237,8 @@ class User < ActiveRecord::Base
         validators = self.class.validators_on(field)
 
         if validators.empty? || !validators.map(&:kind).include?(kind)
-          # has_new_validations = true
-          
-          # self.class.validates(field, options)
           if validate_options.is_a?(Hash)
             validate_options.to_validation_options!
-            puts field, validate_options
             send :"validates_#{kind}_of", field, validate_options
           else  
             send :"validates_#{kind}_of", field
@@ -252,9 +247,7 @@ class User < ActiveRecord::Base
 
       end
     end
-
-    # run_validations! if has_new_validations
-
+    
   end
   
   # Before Validation if new record?

@@ -17,7 +17,7 @@ module Campanify
       end
 
       def defaults
-        @@defaults ||= YAML::load(File.read("#{Rails.root}/config/settings.yml"))[Rails.env]  	    
+        @@defaults ||= YAML::load(File.read("#{Rails.root}/config/settings.yml"))[Rails.env]        
       end
 
       def instance
@@ -77,7 +77,7 @@ module Campanify
       errors.add(:base, "User:ConfirmationRequied must be a string") unless self.data["user"]["confirmation_required"].is_a?(String)
       errors.add(:base, "User:Redirects must be a hash") unless self.data["user"]["redirects"].is_a?(Hash)
       errors.add(:base, "User:Hooks must be a hash") unless self.data["user"]["hooks"].is_a?(Hash)
-      errors.add(:base, "User:Hooks:AfterCreate must be an array") unless self.data["user"]["hooks"]["after_create"].is_a?(Array)
+      errors.add(:base, "User:Hooks:AfterCreate must be an hash") unless self.data["user"]["hooks"]["after_create"].is_a?(Hash)
       errors.add(:base, "Timezone must be a string") unless self.data["timezone"].is_a?(String)
       errors.add(:base, "I18n must be a hash") unless self.data["i18n"].is_a?(Hash)
       errors.add(:base, "I18n:DefaultLocale must be a string") unless self.data["i18n"]["default_locale"].is_a?(String)
@@ -94,7 +94,7 @@ module Campanify
       errors.add(:base, "Users must be a hash") unless self.data["users"].is_a?(Hash)
       errors.add(:base, "Facebook must be a hash") unless self.data["facebook"].is_a?(Hash)
     end
-  	
+    
   end
 end
 

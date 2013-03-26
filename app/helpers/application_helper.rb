@@ -51,7 +51,7 @@ module ApplicationHelper
     Settings.send(object)['comments'].present? && Settings.modules.include?(object.to_s)
   end
 
-  Settings.modules.each do |m|
+  %w(analytics users posts events media points).each do |m|
     class_eval <<-CODE
     def #{m}_enabled?
       Settings.modules.include?("#{m}")

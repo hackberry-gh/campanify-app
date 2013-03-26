@@ -9,7 +9,7 @@ ActiveAdmin.register CsvImport do
     default_actions          
   end
   show do |csv_import|
-		attributes_table do
+    attributes_table do
       row :filename
       row :results do
         content_tag :pre, "#{csv_import.results}"
@@ -23,10 +23,10 @@ ActiveAdmin.register CsvImport do
     f.inputs do 
       f.input :file, as: :file
       f.input :model, as: :select, collection: [
-        User, Content::Page, Content::Widget, Content::Article,
-        Content::Event, Content::Media, Translation
+        User, Content::Page, Content::Post, Content::Event, Content::Widget, Content::Media
       ]
-      f.input :uniq_field, :hint => "email, etc"
+      f.input :uniq_field, :hint => "email, id, etc"
+      f.input :validate, as: :boolean, :hint => "you should set this true for User model"
     end
     f.actions
   end

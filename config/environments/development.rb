@@ -51,8 +51,8 @@ Campanify::Application.configure do
   )
 
   # only when debug caching
-  # config.cache_classes = true
-  # config.action_controller.perform_caching = true  
-  # config.cache_store = :dalli_store
-  # config.threadsafe!
+  config.cache_classes = true
+  config.action_controller.perform_caching = true  
+  config.cache_store = :dalli_store
+  config.threadsafe!
 end

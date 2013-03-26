@@ -29,7 +29,7 @@
 											"/" + locale + "/" + form.data('collection') + "/" + data[form.data('find_by')] : 
 											redirects[form.data('post-action')]) + 
 											"?" + qs.join("&");
-		});
+		
 
 		// language dropdown
 		$("#language").change(function() {
@@ -91,6 +91,8 @@
 		if(typeof addthis != "undefined"){
 			addthis.init();
 		}
+
+		});
 		
 		
 })( jQuery );

@@ -54,11 +54,13 @@ class Appearance::Template < ActiveRecord::Base
     # Make paths as "users/user" become "users/_user" for partials.
     def virtual_path(path, partial) 
       return path unless partial
+      path = path.gsub("_","")
       if index = path.rindex("/")
         path.insert(index + 1, "_")
       else
         "_#{path}"
       end 
+
     end
       
   end
@@ -78,6 +80,6 @@ class Appearance::Template < ActiveRecord::Base
   
   def clear_cache
     Resolver.instance.clear_cache
-    _expire_cache Appearance::Template::Resolver, self.path, self.locale, self.format, self.handler, self.partial
+    # _expire_cache Appearance::Template::Resolver, self.path, self.locale, self.format, self.handler, self.partial
   end
 end

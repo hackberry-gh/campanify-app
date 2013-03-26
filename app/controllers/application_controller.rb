@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
 
   include Campanify::ActiveWidget
+  include MobileDetector
 
   protect_from_forgery
   

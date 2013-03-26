@@ -29,7 +29,7 @@ module Campanify
   	  def show
   	  	@resource = scope.send(finder_method, params[:id])
   	  	redirect_to '/404' and return if @resource.nil? 
-        add_widgets_into_asset_render_list(@resource) if @resource.respond_to?(:body)
+        # add_widgets_into_asset_render_list(@resource) if @resource.respond_to?(:body)
   	  	render :layout => false if request.xhr?
   	  end
   	  

@@ -4,7 +4,7 @@ module Campanify
       extend ActiveSupport::Concern
 
       included do
-      	caches_action :index, 
+        caches_action :index, 
                       layout: false, 
                       :cache_path => :index_cache_path.to_proc
         caches_action :show, 
@@ -20,7 +20,7 @@ module Campanify
       end
 
       def show_cache_path
-        _cache_key(content_class_name, "show", params[:id], I18n.locale, current_branch || "none")    
+        _cache_key(content_class_name, "show", params[:id], I18n.locale, current_branch || "none")   
       end
     end
   end
