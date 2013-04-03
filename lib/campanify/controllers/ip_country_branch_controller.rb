@@ -44,7 +44,8 @@ module Campanify
       
       def client_ip
         return Settings.developemnt["ip"] if Rails.env.development?
-        request.headers["HTTP_X_REAL_IP"] || (request.headers["HTTP_X_FORWARDED_FOR"] ? request.headers["HTTP_X_FORWARDED_FOR"].split(",").first : nil) || request.remote_ip || request.ip
+        # request.headers["HTTP_X_REAL_IP"] || (request.headers["HTTP_X_FORWARDED_FOR"] ? request.headers["HTTP_X_FORWARDED_FOR"].split(",").first : nil) || request.remote_ip || request.ip
+        request.headers["HTTP_X_REAL_IP"] || request.remote_ip || request.ip
       end
       
       def override_by_url

@@ -42,6 +42,7 @@ gem 'timecop'
 gem 'devise_invitable'
 gem 'quiet_assets'
 gem 'twitter_oauth'
+gem 'rails-i18n'
 
 	
 group :assets do
