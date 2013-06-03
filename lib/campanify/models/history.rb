@@ -106,7 +106,7 @@ module Campanify
             self.send cache_setter, count(field_name, true, owner, self)
           end
           # we need to save model to invalidate cache
-          updated = self.save
+          updated = self.save(validate: false)
 
           {track: current, updated: updated, uniq: uniq}
         end

@@ -7,15 +7,15 @@ class ContentSweeper < ActionController::Caching::Sweeper
   observe Content::Page, Content::Widget
 
   def after_create(content)
-    Delayed::Job.enqueue(Jobs::ContentSweeperJob.new(content.class.to_s,content.id,false), run_at: Time.now - 10.minutes)
+    Delayed::Job.enqueue(Jobs::ContentSweeperJob.new(content.class.to_s,content.id,false), run_at: Time.now)
   end
 
   def after_update(content)
-    Delayed::Job.enqueue(Jobs::ContentSweeperJob.new(content.class.to_s,content.id,true), run_at: Time.now - 10.minutes)
+    Delayed::Job.enqueue(Jobs::ContentSweeperJob.new(content.class.to_s,content.id,true), run_at: Time.now)
   end
 
   def after_destroy(content)
-    Delayed::Job.enqueue(Jobs::ContentSweeperJob.new(content.class.to_s,content.id,false), run_at: Time.now - 10.minutes)
+    Delayed::Job.enqueue(Jobs::ContentSweeperJob.new(content.class.to_s,content.id,false), run_at: Time.now)
   end
 
 end
