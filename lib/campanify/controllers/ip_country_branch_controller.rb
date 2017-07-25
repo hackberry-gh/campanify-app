@@ -19,14 +19,14 @@ module Campanify
       private
     
       def set_current_remote_ip
-        self.class.current_ip = Rails.env.production? ? client_ip : Settings.development['ip']
+        self.class.current_ip = (Rails.env.production? || Rails.env.staging? ) ? client_ip : Settings.development['ip']
       end
     
       def set_current_country_and_branch
         if params[:force_country]
           self.class.current_country= params[:force_country]
         else
-          self.class.current_country = GeoIP.new("#{Rails.root}/db/geo_ip.dat").country(current_ip).country_code2     
+          self.class.current_country = Campanify.geoip.country(current_ip).country_code2     
         end
         self.class.current_branch = get_branch_from_country
       end
@@ -43,9 +43,12 @@ module Campanify
       private
       
       def client_ip
-        return Settings.developemnt["ip"] if Rails.env.development?
-        # request.headers["HTTP_X_REAL_IP"] || (request.headers["HTTP_X_FORWARDED_FOR"] ? request.headers["HTTP_X_FORWARDED_FOR"].split(",").first : nil) || request.remote_ip || request.ip
-        request.headers["HTTP_X_REAL_IP"] || request.remote_ip || request.ip
+        
+        # if request.host.include?("heroku")
+          request.headers["HTTP_X_REAL_IP"] || request.remote_ip || request.ip
+        # else 
+        #   request.headers["HTTP_X_REAL_IP"] || (request.headers["HTTP_X_FORWARDED_FOR"] ? request.headers["HTTP_X_FORWARDED_FOR"].split(",").first : nil) || request.remote_ip || request.ip
+        # end
       end
       
       def override_by_url
