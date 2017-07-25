@@ -10,75 +10,40 @@ Translation.class_eval do
   scope :authentication, where("key LIKE '%devise%' AND key NOT LIKE '%devise.mail%'")
   scope :models, lookup("activerecord")
   scope :mails, where("key LIKE '%mail%' AND NOT LIKE '%activerecord%'")
+  validates_presence_of :value
 end
 
 I18n::Backend::ActiveRecord::Missing.class_eval do
+  
   def translate(locale, key, options = {})
-    super
-  rescue I18n::MissingTranslationData => e
-    unless options[:count] and !I18n.t('i18n.plural.keys', :locale => locale).is_a?(Array)
-      self.store_default_translations(locale, key, options)
-    end
-    raise e
-  end
-end
-
-I18n::Backend::ActiveRecord::Implementation.class_eval do
-  protected
-  def lookup(locale, key, scope = [], options = {})
-    key = normalize_flat_keys(locale, key, scope, options[:separator])
-    result = Translation.locale(locale).lookup(key).all
-
-    if result.empty?
-      nil
-    elsif result.first.key == key
-      result.first.value
+    if valid_keys.include? key.to_s.split(".").first
+      super
     else
-      # chop_range = (key.size + FLATTEN_SEPARATOR.size)..-1
-      # result = result.inject({}) do |hash, r|
-      #   hash[r.key.slice(chop_range)] = r.value
-      #   hash
-      # end
-      # result.deep_symbolize_keys
-      chop_range = (key.size + ".".size)..-1                                
-      result = result.inject({}) do |hash, r|
-        choped_key = r.key.slice(chop_range)
-        unless choped_key.include?(".")
-          hash[choped_key] = r.value
-        else
-          sub_keys = choped_key.split(".")
-          sub_key = sub_keys.first
-          hash[sub_key] = lookup(locale, sub_key, key, options)
-        end
-        hash
-      end
-      result.deep_symbolize_keys      
-    end
-
-  rescue ::ActiveRecord::StatementInvalid
-    # is the translations table missing?
-    nil
+      I18n.backend.backends[1].translate locale, key, options
+    end  
+  end
+  
+  def valid_keys
+    @valid_keys ||= Translation.where(locale: "en").all.map{|t| t.key.split(".").first}.compact.uniq
   end
 end
 
 I18n::Backend::ActiveRecord.send(:include, I18n::Backend::ActiveRecord::Missing)
 I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Memoize)
 I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Flatten)
-I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Pluralization)
-I18n::Backend::Simple.send(:include, I18n::Backend::Memoize)
-I18n::Backend::Simple.send(:include, I18n::Backend::Pluralization)
-
 I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Cache)
-I18n.cache_store = ActiveSupport::Cache.lookup_store(:memory_store)
+I18n::Backend::Simple.send(:include, I18n::Backend::Memoize)
+I18n::Backend::Simple.send(:include, I18n::Backend::Cache)
 
-I18n.backend = I18n::Backend::Chain.new(I18n::Backend::ActiveRecord.new, I18n::Backend::Simple.new)
+I18n.cache_store = ActiveSupport::Cache.lookup_store(:memory_store)
+I18n.backend = I18n::Backend::Chain.new(I18n::Backend::ActiveRecord.new, I18n::Backend::Simple.new) 
 
 I18n.class_eval do
   def self.available_locales
-    Settings.i18n['available_locales'].map(&:to_sym)
+    Settings.i18n['available_locales'].map(&:to_sym).sort
   end
   def self.completed_locales
-    Settings.i18n['completed_locales'].map(&:to_sym)
+    Settings.i18n['completed_locales'].map(&:to_sym).sort
   end
 end
 
@@ -86,9 +51,11 @@ end
 Campanify::Application.configure do
   # when u r a gem below is working
   # ::ActionMailer::Base.default_url_options = { :host => Settings.mailer["host"] }          
+  I18n.enforce_available_locales = false
   config.action_mailer.default_url_options = { :host => Settings.mailer["host"] }
   config.i18n.default_locale = Settings.i18n['default_locale']
   config.time_zone = Settings.timezone
+  config.i18n.available_locales = I18n.available_locales
 end
 
 # devise
@@ -126,7 +93,7 @@ CarrierWave.configure do |config|
     :google_storage_access_key_id      => ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'], 
     :google_storage_secret_access_key  => ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'],
   }
-  config.fog_directory  = ENV['FOG_DIRECTORY']                    # required
+  config.fog_directory  = ENV['FOG_DIRECTORY']
   config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
 end
 
@@ -137,9 +104,10 @@ module Formtastic
       index = options[:child_index] || "#{self.object.class.to_s.parameterize}-#{self.object.object_id}"
       linker = ActiveSupport::SafeBuffer.new
       fields = ActiveSupport::SafeBuffer.new
-      ::I18n.available_locales.each do |locale|
+      Thread.current[:admin_locales].each do |locale|
         linker << self.template.content_tag(:li,
-                  self.template.content_tag(:a, locale, :href => "#lang-#{locale}-#{index}" )
+                  self.template.content_tag(:a, locale, :href => "#lang-#{locale}-#{index}" ),
+                  :class => locale
         )
         fields << self.template.content_tag(:div,
         self.semantic_fields_for(*(args.dup << self.object.translation_for(locale)), &proc),
@@ -164,15 +132,37 @@ module ActiveAdmin
   end
 end
 
+module Campanify
+  def self.geoip
+    @@geoip ||= GeoIP.new("#{Rails.root}/db/GeoIP-106_20130402.dat")
+  end
+end
+
 # Sendgrid
-if Rails.env.production?
+if Rails.env.production? || Rails.env.staging?
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
     :port           => '587',
     :authentication => :plain,
     :user_name      => ENV['SENDGRID_USERNAME'],
     :password       => ENV['SENDGRID_PASSWORD'],
-    :domain         => 'heroku.com'
+    :domain         => 'heroku.com',
+    :enable_starttls_auto => true
   }
+  
   ActionMailer::Base.delivery_method = :smtp
+end
+
+# no fog uploads for development please
+if Rails.env.development?
+  Settings.reset!
+  Settings.theme = "sta"
+  Settings.media["storage"] = "file"
+  Settings.assets["storage"] = "file"
+  Settings.instance.save!
+end
+
+Twitter.configure do |config|
+  config.consumer_key = Settings.twitter["consumer_key"]
+  config.consumer_secret = Settings.twitter["consumer_secret"]
 end
